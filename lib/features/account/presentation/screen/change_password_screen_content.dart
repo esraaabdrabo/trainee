@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/core/errors/app_errors.dart';
+import 'package:upgrade_traine_project/core/ui/error_ui/error_viewer/error_viewer.dart';
 
 import '../../../../core/common/style/gaps.dart';
 import '../../../../core/ui/widgets/custom_appbar.dart';
@@ -96,9 +98,18 @@ class _ChangePasswordScreenContentState
   }
 
   void _createNewPassword() {
-    if (sn.formKey.currentState!.validate())
-      sn.accountCubit.changePassword(ChangePasswordRequest(
-          currentPassword: sn.oldPasswordController.text,
-          newPassword: sn.newPasswordController.text));
+    if (sn.formKey.currentState!.validate()) {
+      if (sn.oldPasswordController.text != sn.newPasswordController.text) {
+        sn.accountCubit.changePassword(ChangePasswordRequest(
+            currentPassword: sn.oldPasswordController.text,
+            newPassword: sn.newPasswordController.text));
+      } else {
+        ErrorViewer.showError(
+            context: context,
+            error: AppErrors.customError(
+                message: Translation.of(context).invalidPassword),
+            callback: () {});
+      }
+    }
   }
 }
