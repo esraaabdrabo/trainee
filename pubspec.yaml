@@ -1,0 +1,259 @@
+name: upgrade_traine_project
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.2+3
+
+environment:
+  sdk: '>=2.18.5 <3.0.0'
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  # Localization dependency
+  intl: ^0.18.0
+  # State management
+  flutter_bloc: ^8.0.0
+  # A wrapper around InheritedWidget to make them easier to use and more reusable
+  provider: ^6.0.1
+  # Compare objects
+  equatable: ^2.0.3
+  # RX programing
+  #  rxdart: ^0.27.3
+  # Service locator
+  get_it: ^7.2.0
+  injectable: ^2.1.0
+  # Prints beautiful logs
+  logger: ^1.1.0
+  # Functional programming in Dart
+  dartz: ^0.10.1-nullsafety.1
+  # Shared preferences
+  shared_preferences: ^2.0.9
+  #  Http client for Dart
+  dio: ^4.0.4
+  # Pretty Dio logger is a Dio interceptor that logs network calls in a pretty, easy to read format
+  pretty_dio_logger: ^1.2.0-beta-1
+  # adapting screen and font size
+  flutter_screenutil: ^5.0.1
+  # Scroll component drop-down refresh
+  pull_to_refresh: ^2.0.0
+  # Launching a URL in the mobile platform. Supports iOS and Android.
+  url_launcher: ^6.0.17
+  # Simple widget wrapper to enable modal progress HUD
+  modal_progress_hud_nsn: ^0.3.0
+  # This Flutter plugin provides an API for querying information about an application package.
+  package_info: ^2.0.2
+  # Get device information
+  device_info: ^2.0.3
+  # Show native toast
+  fluttertoast: ^8.0.8
+  # A Flutter plugin for finding commonly used locations on the filesystem.
+  # Supports iOS, Android, Linux and MacOS. Not all methods are supported on all platforms.
+  path_provider: ^2.0.7
+  # A set of high-level APIs over PointyCastle for two-way cryptography.
+  encrypt: ^5.0.1
+  # Flutter Modal Bottom Sheet
+  modal_bottom_sheet: ^2.0.0
+  # Google supported fonts
+  # Code generation for immutable classes with simple syntax
+  freezed_annotation: ^2.2.0
+  # Changing them with beautiful and easy way with animations
+  animated_theme_switcher: ^2.0.5
+  # Global error catcher stuff
+  # Provides APIs for debugging and error logging
+  logging: ^1.0.2
+  # A crash reporting library for Dart that sends crash reports to Sentry.io.
+  sentry: ^6.2.0
+  # Rendering lottie animations
+  lottie: ^2.0.0
+  # A set of widgets that can be used to define a readable responsive UI for widgets
+  responsive_builder: ^0.4.1
+  # Determine the type of handheld device on Flutter,  Like if the device is a Tablet or is iPhoneX or later or has notch.
+  flutter_device_type: ^0.4.0
+
+  flutter_localizations: # Add this line
+    sdk: flutter         # Add this line
+
+  dots_indicator: ^2.0.0
+
+  firebase_auth: ^4.2.1
+
+  internet_connection_checker: ^0.0.1+3
+
+  change_app_package_name: ^1.0.0
+
+  intl_phone_number_input: ^0.7.0+2
+
+  google_maps_flutter: ^2.1.1
+
+  google_api_headers: ^1.5.0
+
+  pinput: ^2.2.16
+
+  pin_code_fields: ^7.4.0
+
+  flutter_rating_bar: ^4.0.0
+
+  google_maps_webservice: ^0.0.19
+
+  carousel_slider: ^4.0.0
+
+  flutter_typeahead: ^4.1.1
+
+  flutter_polyline_points: ^1.0.0
+
+  uuid: ^3.0.5
+
+  image_picker: ^0.8.4+5
+
+  permission_handler: ^10.2.0
+
+  location: ^4.3.0
+
+  shimmer: ^2.0.0
+
+  cached_network_image: ^3.2.0
+
+  flutter_google_places: ^0.3.0
+
+  geolocator: ^9.0.2
+
+  geocoding: ^2.0.2
+
+  video_player: ^2.2.19
+
+  font_awesome_flutter: ^10.4.0
+
+  firebase_dynamic_links: ^5.0.6
+
+  firebase_messaging: ^14.6.2
+  firebase_core: ^2.3.0
+
+  flutter_share: ^2.0.0
+
+  after_layout: ^1.1.0
+
+  mvc_pattern: ^8.12.0
+
+  cloud_firestore: ^4.6.0
+
+  firebase_storage: ^11.1.2
+
+  http_parser: ^4.0.2
+  google_fonts: ^4.0.4
+  agora_uikit: ^1.3.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+    # A build system for Dart code generation and modular compilation
+  build_runner: ^2.3.3
+
+    # Dependency injection code generator
+  injectable_generator: ^2.1.2
+    # Freezed package code generator
+  freezed: ^2.3.0
+    # Used in freezed package
+  json_serializable: ^6.1.1
+    # For more health code
+  linter: ^1.15.0
+    # Change native code splash
+  flutter_native_splash:
+
+  moyasar: ^2.0.0
+
+  unicode_moyasar: ^1.0.3
+
+  flutter_chat_bubble: ^2.0.2
+
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^2.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/png/
+    - assets/images/png/error/
+    - assets/images/png/temp/
+    - assets/anim/lottie/
+    - assets/anim/lottie/error/
+    - assets/map_styles/
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: Tajawal
+      fonts:
+        - asset: assets/fonts/Tajawal-Black.ttf
+        - asset: assets/fonts/Tajawal-Bold.ttf
+        - asset: assets/fonts/Tajawal-ExtraBold.ttf
+        - asset: assets/fonts/Tajawal-ExtraLight.ttf
+        - asset: assets/fonts/Tajawal-Light.ttf
+        - asset: assets/fonts/Tajawal-Medium.ttf
+        - asset: assets/fonts/Tajawal-Regular.ttf
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/png/launcher.png"
+
+# Enable intl translation and make name of it [Translation]
+flutter_intl:
+  enabled: true
+  class_name: Translation
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

@@ -1,0 +1,114 @@
+{
+  "project_info": {
+    "project_number": "986744272624",
+    "project_id": "yacotch-fca1b",
+    "storage_bucket": "yacotch-fca1b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986744272624:android:f781a35a18cdeefc5b3435",
+        "android_client_info": {
+          "package_name": "com.yacotch.partner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "986744272624-7e9ba5g2bicugmvhja9pktrv4dc9k4ua.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yacotch.partner",
+            "certificate_hash": "45ecf5d9b33255cbf5468bd1d413d9926c02e413"
+          }
+        },
+        {
+          "client_id": "986744272624-arv66cph8sq1bc27krqbvck86i7k4ff3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yacotch.partner",
+            "certificate_hash": "313e13e367a69a57e64b48444bdece73f6c0995c"
+          }
+        },
+        {
+          "client_id": "986744272624-thtc5smp6s6voufmmhr8q84pbs7gppll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2s3AZYiC2TLTz3tXM2xnd0dTIujLn0FA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "986744272624-thtc5smp6s6voufmmhr8q84pbs7gppll.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "986744272624-5m2nar553e7gik00b92ic2hd04ch6hge.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.yacotch.user"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986744272624:android:3f93a4b20806a5ae5b3435",
+        "android_client_info": {
+          "package_name": "com.yacotch.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "986744272624-etu723al2t99hhfv6m3d4sbkvqvj9f7e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yacotch.user",
+            "certificate_hash": "313e13e367a69a57e64b48444bdece73f6c0995c"
+          }
+        },
+        {
+          "client_id": "986744272624-i40nlthc8ujg58favh12cqoaoqb5gc56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yacotch.user",
+            "certificate_hash": "a337a81dc76c69d191d44cf1658b3a9bda1e7b14"
+          }
+        },
+        {
+          "client_id": "986744272624-thtc5smp6s6voufmmhr8q84pbs7gppll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2s3AZYiC2TLTz3tXM2xnd0dTIujLn0FA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "986744272624-thtc5smp6s6voufmmhr8q84pbs7gppll.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "986744272624-5m2nar553e7gik00b92ic2hd04ch6hge.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.yacotch.user"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
