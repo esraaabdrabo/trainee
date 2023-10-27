@@ -64,7 +64,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   showNewMessageDialog(
                     context: context,
                     title: Translation.of(context).password_changed,
-                    onPressed: () => Nav.pop(),
+                    onPressed: () => Nav.pop(context),
                   );
                 },
               );
