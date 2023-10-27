@@ -61,14 +61,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   setState(() {
                     sn.isLoading = false;
                   });
-                  final pref = await SpUtil.getInstance();
                   showNewMessageDialog(
-                      context: context,
-                      title: Translation.of(context).password_changed,
-                      onPressed: () {
-                        pref.clear();
-                        Nav.off(LoginScreen.routeName, cleanHistory: true,context: context);
-                      });
+                    context: context,
+                    title: Translation.of(context).password_changed,
+                    onPressed: () => Nav.pop(),
+                  );
                 },
               );
             },
