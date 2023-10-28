@@ -185,5 +185,8 @@
   "numberOfAbsenece": "عدد مرات الغياب",
   "newpass_cannotbe_as_old":"كلمة المرور الجديدة لا يمكن ان تكون مثل القديمة",
   "male":"ذكر",
-"female":"أنثى"
+"female":"أنثى",
+"select_your_location": "اختر موقعك على الخريطة",
+"invalid_email":"البريد الالكتروني غير صالح",
+"enter_num_only": "أدخل أرقام فقط"
 }

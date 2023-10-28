@@ -52,6 +52,6 @@ class EditProfileError extends ProfileState {}
 class EditProfileSuccess extends ProfileState {}
 
 class EditProfileIMGSuccess extends ProfileState {
-  String url;
+  final String url;
   EditProfileIMGSuccess({required this.url});
 }

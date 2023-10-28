@@ -5,8 +5,6 @@ import '../../../../generated/l10n.dart';
 import '../screen/../state_m/provider/edit_profile_screen_notifier.dart';
 import 'edit_profile_screen_content.dart';
 
-
-
 class EditProfileScreen extends StatefulWidget {
   static const String routeName = "/EditProfileScreen";
 
@@ -32,20 +30,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-       return ChangeNotifierProvider<EditProfileScreenNotifier>.value(
-        value: sn,
-        child: Scaffold(
-          appBar: TransparentAppBar(title: Translation.of(context).edit_profile,),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          body: const EditProfileScreenContent(),
+    return ChangeNotifierProvider<EditProfileScreenNotifier>.value(
+      value: sn,
+      child: Scaffold(
+        appBar: TransparentAppBar(
+          title: Translation.of(context).edit_profile,
+        ),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        body: const EditProfileScreenContent(),
       ),
-      );
-    }
-
-
+    );
+  }
 }
-  
-
- 
-
-

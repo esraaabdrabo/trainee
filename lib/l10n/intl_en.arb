@@ -185,5 +185,8 @@
   "numberOfAbsenece": "Absence Days",
   "newpass_cannotbe_as_old":"The new password can not be same as the old one",
   "male":"Male",
-"female":"Female"
+"female":"Female",
+"select_your_location":"Select your location on the map",
+"invalid_email":"Invalid Email Format",
+"enter_num_only":"Enter only numbers" 
 }

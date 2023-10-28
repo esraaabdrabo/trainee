@@ -7,7 +7,6 @@ import '../../../../core/common/session_data.dart';
 import '../../../../core/constants/app/app_constants.dart';
 import '../../../../core/navigation/nav.dart';
 import '../../../../core/ui/widgets/blur_widget.dart';
-import '../../../../core/ui/widgets/custom_text.dart';
 import '../../../../core/ui/widgets/route_aware_widget.dart';
 import '../../../../generated/l10n.dart';
 import '../../../chat/screen/chat_screen.dart';
@@ -56,13 +55,25 @@ class _NavigatorScreenState extends RouteAwareState<NavigatorScreen> {
   }
 
   Widget _buildBottomNavigationBar() {
+    List<String> titles = [
+      Translation.of(context).homePage,
+      Translation.of(context).mail,
+      Translation.of(context).search,
+      Translation.of(context).profile,
+      Translation.of(context).more
+    ];
+    List<dynamic> icons = [
+      AppConstants.HOME_ICON,
+      AppConstants.MAIL_ICON,
+      AppConstants.SEARCH_ICON,
+      AppConstants.HOME_ICON,
+      Icons.more_horiz
+    ];
     return SizedBox(
       width: 1.sw,
-      height: 58.h,
+      height: 66.h,
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 12.w,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 12.w),
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -83,46 +94,15 @@ class _NavigatorScreenState extends RouteAwareState<NavigatorScreen> {
                     fontSize: AppConstants.textSize12,
                     fontWeight: FontWeight.bold),
                 selectedItemColor: AppColors.accentColorLight,
-                items: [
-                  BottomNavigationBarItem(
-                      icon:  Padding(
-                        padding: EdgeInsets.only(bottom: 0.0),
-                        child: ImageIcon(AssetImage(
-                          AppConstants.HOME_ICON,
-                        )),
-                      ),
-                      label: Translation.of(context).homePage),
-                  BottomNavigationBarItem(
-                      icon:  Padding(
-                        padding: EdgeInsets.only(bottom: 0.0),
-                        child: ImageIcon(AssetImage(
-                          AppConstants.MAIL_ICON,
-                        )),
-                      ),
-                      label: Translation.of(context).mail),
-                  BottomNavigationBarItem(
-                      icon:  Padding(
-                        padding: EdgeInsets.only(bottom: 0.0),
-                        child: ImageIcon(AssetImage(
-                          AppConstants.SEARCH_ICON,
-                        )),
-                      ),
-                      label: Translation.of(context).search),
-                  BottomNavigationBarItem(
-                      icon:  const Padding(
-                        padding: EdgeInsets.only(bottom: 0.0),
-                        child: ImageIcon(AssetImage(
-                          AppConstants.PROFILE_ICON,
-                        )),
-                      ),
-                      label: Translation.of(context).profile),
-                  BottomNavigationBarItem(
-                      icon:  const Padding(
-                        padding: EdgeInsets.only(bottom:0.0),
-                        child: Icon(Icons.more_horiz),
-                      ),
-                      label: Translation.of(context).more),
-                ],
+                items: List.generate(
+                    5,
+                    (index) => BottomNavigationBarItem(
+                        icon: Padding(
+                            padding: EdgeInsets.only(bottom: 8.h),
+                            child: icons[index] is IconData
+                                ? Icon(icons[index])
+                                : ImageIcon(AssetImage(icons[index]))),
+                        label: titles[index])),
                 onTap: (value) {
                   _onItemTapped(value);
                 },
@@ -152,7 +132,7 @@ class _NavigatorScreenState extends RouteAwareState<NavigatorScreen> {
       _onItemTapped(2);
       print('nnnav');
     } else {
-      Nav.off(NavigatorScreen.routeName, cleanHistory: true,context: context);
+      Nav.off(NavigatorScreen.routeName, cleanHistory: true, context: context);
       print('nnnot');
     }
   }

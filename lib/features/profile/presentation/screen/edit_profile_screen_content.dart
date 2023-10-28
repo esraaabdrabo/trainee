@@ -1,16 +1,21 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/core/common/validators.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/ui/error_ui/error_viewer/toast/show_error_toast.dart';
 import 'package:upgrade_traine_project/core/ui/toast.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/waiting_widget.dart';
 import 'package:upgrade_traine_project/features/profile/presentation/state_m/constants.dart';
 import 'package:upgrade_traine_project/features/profile/presentation/state_m/cubit/profile_cubit.dart';
+import 'package:upgrade_traine_project/features/profile/presentation/state_m/functions.dart';
 import 'package:upgrade_traine_project/features/profile/presentation/state_m/provider/profile_screen_notifier.dart';
 import 'package:upgrade_traine_project/features/profile/presentation/widget/edit/gender.dart';
 import '../../../../core/common/app_colors.dart';
@@ -49,8 +54,19 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    initControllers();
+    super.initState();
+  }
 
+  void initControllers() {
+    pos = LatLng(
+        BlocProvider.of<ProfileCubit>(context).profileModel!.result!.latitude ??
+            0,
+        BlocProvider.of<ProfileCubit>(context)
+                .profileModel!
+                .result!
+                .longitude ??
+            0);
     nameController.text =
         BlocProvider.of<ProfileCubit>(context).profileModel!.result!.name ?? "";
     phoneController.text = BlocProvider.of<ProfileCubit>(context)
@@ -58,6 +74,8 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
             .result!
             .phoneNumber ??
         "";
+    //todo
+    //this is not null
     birthDateController.text = BlocProvider.of<ProfileCubit>(context)
             .profileModel!
             .result!
@@ -65,25 +83,29 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
         "";
     gender.text =
         "${BlocProvider.of<ProfileCubit>(context).profileModel!.result!.gender ?? 1}";
-    heightController.text =
-        BlocProvider.of<ProfileCubit>(context).profileModel!.result!.length ??
-            "0";
-    weightController.text =
-        BlocProvider.of<ProfileCubit>(context).profileModel!.result!.weight ??
-            "0";
+    heightController.text = EdirProfileFunctions.isNull(
+            BlocProvider.of<ProfileCubit>(context).profileModel!.result!.length)
+        ? "0"
+        : BlocProvider.of<ProfileCubit>(context).profileModel!.result!.length!;
+    weightController.text = EdirProfileFunctions.isNull(
+            BlocProvider.of<ProfileCubit>(context).profileModel!.result!.weight)
+        ? "0"
+        : BlocProvider.of<ProfileCubit>(context).profileModel!.result!.weight!;
     countryCode = BlocProvider.of<ProfileCubit>(context)
             .profileModel!
             .result!
             .countryCode ??
         "";
+
     id = BlocProvider.of<ProfileCubit>(context).profileModel!.result!.id;
-    super.initState();
+    url = BlocProvider.of<ProfileCubit>(context).profileModel!.result!.imageUrl;
   }
 
   GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
+    print(url ?? "nuslkjdljsd");
     sn = Provider.of<EditProfileScreenNotifier>(context);
     sn.context = context;
     return Form(
@@ -111,6 +133,7 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
                 EditGenderWidget(gender),
                 Gaps.vGap24,
                 _buildTextFiledWidget(
+                    keboardType: TextInputType.datetime,
                     onTap: () async {
                       var date = await showDatePicker(
                           builder: (context, child) {
@@ -136,10 +159,14 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
                 Gaps.vGap24,
                 _buildTextFiledWidget(
                     title: Translation.of(context).weight,
+                    keboardType: TextInputType.number,
+                    validator: (input) => Validators.isNumber(input!, context),
                     textEditingController: weightController),
                 Gaps.vGap24,
                 _buildTextFiledWidget(
                     title: Translation.of(context).height,
+                    keboardType: TextInputType.number,
+                    validator: (input) => Validators.isNumber(input!, context),
                     textEditingController: heightController),
                 Gaps.vGap24,
                 // _buildTextFiledWidget(title: Translation.of(context).bmi),
@@ -154,7 +181,7 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
                         }));
                       },
                       child: CustomText(
-                        text: "حدد موقعك علي الخريطه ",
+                        text: LanguageHelper.tr(context).select_your_location,
                         color: AppColors.accentColorLight,
                         fontSize: AppConstants.textSize16,
                         fontWeight: FontWeight.w600,
@@ -168,13 +195,13 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
                   child: BlocConsumer<ProfileCubit, ProfileState>(
                     listener: (context, state) {
                       if (state is EditProfileSuccess) {
-                        Nav.pop();
+                        Nav.pop(context);
                       }
                       if (state is EditProfileIMGSuccess) {
                         setState(() {
                           url = state.url;
                         });
-                        Nav.pop();
+                        Nav.pop(context);
                       }
 
                       if (state is EditProfileError) {}
@@ -202,8 +229,10 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
                                         imageUrl: url,
                                         emailAddress: "",
                                         id: id));
-                              } else
-                                Toast.show("ادخل موقعك");
+                              } else {
+                                Toast.show(LanguageHelper.tr(context)
+                                    .select_your_location);
+                              }
                             },
                             textSize: AppConstants.textSize20,
                             borderRadius: AppConstants.borderRadius4,
@@ -224,8 +253,6 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
     );
   }
 
-  var image;
-
   Widget _buildImageWidget() {
     return Container(
       height: 0.52.sh,
@@ -234,10 +261,13 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
         borderRadius: BorderRadius.circular(AppConstants.borderRadius8),
         image: DecorationImage(
             image: sn.image != null
+                //picked image as file
                 ? FileImage(
                     File(sn.image!.path),
                   )
-                : NetworkImage(BlocProvider.of<ProfileCubit>(context)
+                :
+                //user image from
+                NetworkImage(BlocProvider.of<ProfileCubit>(context)
                         .profileModel!
                         .result!
                         .imageUrl ??
@@ -256,12 +286,16 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
               child: Center(
                 child: GestureDetector(
                   onTap: () async {
-                    ImagePicker _picker = ImagePicker();
-                    image = await _picker.pickImage(source: ImageSource.camera);
-                    setState(() {
+                    XFile? image;
+                    image = await ImagePicker()
+                        .pickImage(source: ImageSource.camera);
+                    url = await sn.profileCubit.updateImage(File(image!.path));
+//todo
+//image url dont be send
+                    setState(() async {
                       sn.image = image;
-                      print("img:${image!.path}");
-                      sn.profileCubit.updateImage(File(image.path));
+                      print("here");
+                      print(url ?? "not uploaded");
                     });
                   },
                   child: ImageIcon(
@@ -281,6 +315,8 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
   Widget _buildTextFiledWidget(
       {required String title,
       bool isPhoneNumber = false,
+      TextInputType? keboardType,
+      Function(String? text)? validator,
       Function()? onTap,
       required TextEditingController textEditingController}) {
     return Column(
@@ -318,6 +354,8 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
             : TextFormField(
                 onTap: onTap,
                 controller: textEditingController,
+                validator: (text) => validator!(text),
+                keyboardType: keboardType,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                       borderSide: BorderSide(

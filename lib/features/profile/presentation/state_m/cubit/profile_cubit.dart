@@ -101,10 +101,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     response.fold((error) {
       emit(EditProfileError());
     }, (success) {
-      print(success.data);
-      emit(
-        EditProfileSuccess(),
-      );
+      emit(EditProfileSuccess());
       getProfile();
     });
   }
@@ -120,6 +117,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(EditProfileError());
       return null;
     }, (success) {
+      print(success.data);
       print("prof:${success.data["result"]["url"]}");
       emit(
         EditProfileIMGSuccess(url: success.data["result"]["url"]),
