@@ -9,8 +9,10 @@ import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/ui/error_ui/error_viewer/toast/show_error_toast.dart';
 import 'package:upgrade_traine_project/core/ui/toast.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/waiting_widget.dart';
+import 'package:upgrade_traine_project/features/profile/presentation/state_m/constants.dart';
 import 'package:upgrade_traine_project/features/profile/presentation/state_m/cubit/profile_cubit.dart';
 import 'package:upgrade_traine_project/features/profile/presentation/state_m/provider/profile_screen_notifier.dart';
+import 'package:upgrade_traine_project/features/profile/presentation/widget/edit/gender.dart';
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/style/gaps.dart';
 import '../../../../core/constants/app/app_constants.dart';
@@ -37,7 +39,7 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController birthDateController = TextEditingController();
-  int? gender;
+  TextEditingController gender = TextEditingController();
   String? countryCode;
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
@@ -61,15 +63,14 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
             .result!
             .birthDate ??
         "";
-    gender =
-        BlocProvider.of<ProfileCubit>(context).profileModel!.result!.gender ??
-            1;
+    gender.text =
+        "${BlocProvider.of<ProfileCubit>(context).profileModel!.result!.gender ?? 1}";
     heightController.text =
         BlocProvider.of<ProfileCubit>(context).profileModel!.result!.length ??
-            "";
+            "0";
     weightController.text =
         BlocProvider.of<ProfileCubit>(context).profileModel!.result!.weight ??
-            "";
+            "0";
     countryCode = BlocProvider.of<ProfileCubit>(context)
             .profileModel!
             .result!
@@ -107,41 +108,18 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
                     isPhoneNumber: true,
                     textEditingController: phoneController),
                 Gaps.vGap24,
-                Container(
-                  height: 50,
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: AppColors.white,
-                      ),
-                      borderRadius:
-                          BorderRadius.circular(AppConstants.borderRadius6)),
-                  child: Theme(
-                    data: Theme.of(context).copyWith(
-                      canvasColor: AppColors.grey,
-                    ),
-                    child: DropdownButton(
-                      value: gender,
-                      items: ["male", "female"]
-                          .map((e) => DropdownMenuItem(
-                                value: e == "male" ? 1 : 2,
-                                child: Text(e),
-                              ))
-                          .toList(),
-                      onChanged: (c) {
-                        setState(() {
-                          gender = c;
-                        });
-                      },
-                      isExpanded: true,
-                      underline: const SizedBox.shrink(),
-                    ),
-                  ),
-                ),
+                EditGenderWidget(gender),
                 Gaps.vGap24,
                 _buildTextFiledWidget(
                     onTap: () async {
                       var date = await showDatePicker(
+                          builder: (context, child) {
+                            return Theme(
+                                data: ThemeData(
+                                  colorSchemeSeed: Colors.yellow,
+                                ),
+                                child: child!);
+                          },
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime(1950),
@@ -219,7 +197,7 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
                                         birthDate: birthDateController.text,
                                         phone: phoneController.text,
                                         height: heightController.text,
-                                        gender: gender,
+                                        gender: int.parse(gender.text),
                                         countryCode: countryCode,
                                         imageUrl: url,
                                         emailAddress: "",

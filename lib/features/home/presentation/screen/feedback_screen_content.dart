@@ -71,7 +71,10 @@ class _FeedbackScreenContentState extends State<FeedbackScreenContent> {
                       width: 0.7.sw,
                       height: 44.h,
                       child: CustomElevatedButton(
-                          text: Translation.of(context).send, onTap: () {}),
+                          text: Translation.of(context).send,
+                          onTap: () {
+//todo
+                          }),
                     )
                   ],
                 ),
@@ -101,7 +104,7 @@ class _FeedbackScreenContentState extends State<FeedbackScreenContent> {
         NormalTextField(
           controller: controller,
           focusNode: focusNode,
-          inputBorder:  OutlineInputBorder(
+          inputBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: AppColors.white,
             ),
