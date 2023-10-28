@@ -21,7 +21,7 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: AppColors.black_text,
+      backgroundColor: Colors.transparent,
       shadowColor: AppColors.transparent,
       title: Padding(
         padding: EdgeInsetsDirectional.only(start: 4.w),

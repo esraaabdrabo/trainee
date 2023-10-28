@@ -2,7 +2,10 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/models/courses_model.dart';
+import 'package:upgrade_traine_project/core/navigation/nav.dart';
+import 'package:upgrade_traine_project/features/courses/presentation/courses_list_screen.dart';
 import '../../../core/common/app_colors.dart';
 import '../../../core/common/style/gaps.dart';
 import '../../../core/constants/app/app_constants.dart';
@@ -42,15 +45,8 @@ class _CoursesCarouselWidgetState extends State<CoursesCarouselWidget> {
     return SizedBox(
       child: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
-            child: TitleWidget(
-              title: widget.title,
-              subtitleColorTapped: () {},
-              titleColor: AppColors.white,
-              subtitle: widget.subTitle,
-            ),
-          ),
+          _Header(
+              widget.courses.isEmpty ? null : widget.courses.first.trainerId),
           Gaps.vGap16,
           if (widget.courses.isNotEmpty)
             Padding(
@@ -76,8 +72,8 @@ class _CoursesCarouselWidgetState extends State<CoursesCarouselWidget> {
               ),
             ),
           if (widget.courses.isEmpty)
-            const Center(
-              child: Text("لا يوجد كورسات"),
+            Center(
+              child: Text(LanguageHelper.tr(context).no_data_found),
             )
         ],
       ),
@@ -98,15 +94,15 @@ class _CoursesCarouselWidgetState extends State<CoursesCarouselWidget> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppConstants.borderRadius12),
-            image:courseModel.imageUrl==null?DecorationImage(
-              image:
-              AssetImage(AppConstants.COACH1_IMAGE),
-
-              fit: BoxFit.cover,
-            ): DecorationImage(
-              image: NetworkImage(courseModel.imageUrl!),
-              fit: BoxFit.cover,
-            ),
+            image: courseModel.imageUrl == null
+                ? DecorationImage(
+                    image: AssetImage(AppConstants.COACH1_IMAGE),
+                    fit: BoxFit.cover,
+                  )
+                : DecorationImage(
+                    image: NetworkImage(courseModel.imageUrl!),
+                    fit: BoxFit.cover,
+                  ),
             boxShadow: [
               BoxShadow(
                 color: AppColors.white.withOpacity(0.5),
@@ -280,6 +276,45 @@ class _CoursesCarouselWidgetState extends State<CoursesCarouselWidget> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  final int? id;
+  const _Header(this.id);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SizedBox(
+          width: .25.sw,
+          height: .05.sh,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            child: TitleWidget(
+              title: LanguageHelper.tr(context).courses,
+              subtitleColorTapped: () {},
+              titleColor: AppColors.white,
+              subtitle: null,
+            ),
+          ),
+        ),
+        if (id != null)
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TrainerCoursesScreen(
+                        id: id,
+                      ),
+                    ));
+              },
+              child: Text(LanguageHelper.tr(context).see_all))
+      ],
     );
   }
 }

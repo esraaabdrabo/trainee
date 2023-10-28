@@ -46,13 +46,14 @@ class _CoachesListScreenState extends State<CoachesListScreen> {
   }
 
   void _apiRequest() {
-   if(widget.categoryEntity != null){
-     sn.coachCubit.getCoaches(GetCoachesRequest(
-       categoryId: widget.categoryEntity!.id,
-     ));
-   }else{
-     sn.coachCubit.getCoaches(GetCoachesRequest());
-   }
+    if (widget.categoryEntity != null) {
+      sn.coachCubit.getCoaches(GetCoachesRequest(
+        categoryId: widget.categoryEntity!.id,
+      ));
+      print("has entity");
+    } else {
+      sn.coachCubit.getCoaches(GetCoachesRequest());
+    }
   }
 
   @override
@@ -70,9 +71,12 @@ class _CoachesListScreenState extends State<CoachesListScreen> {
           title: Translation.of(context).coaches,
           actions: [
             InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationScreen()));
-              },
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NotificationScreen()));
+                },
                 child: const Icon(Icons.notifications)),
             Gaps.hGap20,
             // GestureDetector(
@@ -87,7 +91,6 @@ class _CoachesListScreenState extends State<CoachesListScreen> {
         body: BlocBuilder<CoachCubit, CoachState>(
           bloc: sn.coachCubit,
           builder: (context, state) {
-
             return state.map(
               coachInitState: (value) => WaitingWidget(),
               coachLoadingState: (value) => WaitingWidget(),
@@ -97,10 +100,9 @@ class _CoachesListScreenState extends State<CoachesListScreen> {
                     _apiRequest();
                   }),
               getCoachesState: (value) {
-
                 if (value.coachesEntity.items != null &&
                     value.coachesEntity.items!.isNotEmpty) {
-                  for(int i=0;i< value.coachesEntity.items!.length;i++){
+                  for (int i = 0; i < value.coachesEntity.items!.length; i++) {
                     // if(value.coachesEntity.items![i].specializationId==sn.categoryEntity!.types){
                     //   sn.coaches.add(value.coachesEntity.items![i]);
                     // }

@@ -126,7 +126,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       extendBodyBehindAppBar: true,
       appBar: HomeAppbar(
-        controller: sn.searchTextController,
+        controller: sn.searchTextController
       ),
       body: Stack(
         children: [

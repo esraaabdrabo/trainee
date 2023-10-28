@@ -27,7 +27,12 @@ class TrainerCoursesScreen extends StatefulWidget {
 }
 
 class _TrainerCoursesScreenState extends State<TrainerCoursesScreen> {
- 
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<CourseCubit>(context)
+        .getCoachCurrentCourses(trainerId: widget.id!);
+  }
 
   @override
   Widget build(BuildContext context) {
