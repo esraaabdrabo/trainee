@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/errors/app_errors.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/ui/error_ui/error_viewer/error_viewer.dart';
 
 import '../../../../core/common/style/gaps.dart';
@@ -106,7 +107,8 @@ class _ChangePasswordScreenContentState
       } else {
         ErrorViewer.showError(
             context: context,
-            error: AppErrors.customError(message: Translation.of(context).new),
+            error: AppErrors.customError(
+                message: LanguageHelper.tr(context).newpass_cannotbe_as_old),
             callback: () {});
       }
     }
