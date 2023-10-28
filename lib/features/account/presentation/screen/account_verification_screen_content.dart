@@ -99,7 +99,7 @@ class _AccountVerificationScreenContentState
   }
 
   void _offLoginScreen() {
-    Nav.off(LoginScreen.routeName, cleanHistory: true,context: context);
+    Nav.off(LoginScreen.routeName, cleanHistory: true, context: context);
   }
 
   void _verifyAccount() {
@@ -108,13 +108,13 @@ class _AccountVerificationScreenContentState
       sn.accountCubit.verifyAccount(VerifyAccountRequest(
           usernameOrEmailOrPhone: sn.phoneNumber, code: "000000"));
       sn2.submitOTP(sn.otpValue);
-
-    } else
+    } else {
       ErrorViewer.showError(
           errorViewerOptions:
               const ErrVSnackBarOptions(backgroundColor: AppColors.grey),
           context: context,
           error: CustomError(message: Translation.of(context).enter_pin_code),
           callback: () {});
+    }
   }
 }

@@ -9,20 +9,21 @@ import '../bloc/account_cubit.dart';
 class RegisterScreenNotifier extends ScreenNotifier {
   /// Fields
   late BuildContext context;
-  AccountCubit _accountCubit = AccountCubit();
+  final AccountCubit _accountCubit = AccountCubit();
   bool _isLoading = false;
   bool _passwordSecure = true;
   bool _confirmPasswordSecure = true;
-  bool _boxChecked = false;
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _boxChecked = true;
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late String _countryCode = AppConstants.DEFAULT_COUNTRY_CODE;
-  late String _countryDial = AppConstants.DEFAULT_COUNTRY_DIAL ;
-  FocusNode _phoneFocusNode = FocusNode();
-  FocusNode _passwordFocusNode = FocusNode();
-  FocusNode _confirmPasswordFocusNode = FocusNode();
+  late String _countryDial = AppConstants.DEFAULT_COUNTRY_DIAL;
+  final FocusNode _phoneFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _confirmPasswordFocusNode = FocusNode();
+
   ///TODO: edit on verification message:
   late String verificationId;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -48,7 +49,6 @@ class RegisterScreenNotifier extends ScreenNotifier {
       codeAutoRetrievalTimeout: codeRetrivalTimeOut,
     );
     notifyListeners();
-
   }
 
   bool countState = false;
@@ -82,7 +82,6 @@ class RegisterScreenNotifier extends ScreenNotifier {
   }
 
   ///
-
 
   /// Getters and Setters
 
@@ -131,6 +130,7 @@ class RegisterScreenNotifier extends ScreenNotifier {
     _countryCode = value;
     notifyListeners();
   }
+
   String get countryDial => _countryDial;
 
   set countryDial(String value) {

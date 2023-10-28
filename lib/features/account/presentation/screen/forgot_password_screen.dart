@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/core/params/screen_params/account_verification_screen_params.dart';
+import 'package:upgrade_traine_project/features/account/presentation/screen/account_verification_screen.dart';
 
 import '../../../../core/navigation/nav.dart';
 import '../../../../core/params/screen_params/create_new_password_screen_params.dart';
@@ -59,14 +61,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   setState(() {
                     sn.isLoading = false;
                   });
-                  // Nav.to(AccountVerificationScreen.routeName,
-                  //     arguments: AccountVerificationScreenParams(
-                  //         onVerification: () {},
-                  //         isCreateNewPassword: true,
-                  //         phone: sn.phoneController.text),context: context);
-                  Nav.off(CreateNewPasswordScreen.routeName,
-                      arguments: CreateNewPasswordScreenParams(
-                          phone: sn.phoneController.text,),context: context);
+                  Nav.to(AccountVerificationScreen.routeName,
+                      arguments: AccountVerificationScreenParams(
+                          onVerification: () {},
+                          isCreateNewPassword: true,
+                          phone: sn.phoneController.text),
+                      context: context);
                 },
               );
             },

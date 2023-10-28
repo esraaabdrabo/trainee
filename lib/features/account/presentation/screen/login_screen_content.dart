@@ -58,7 +58,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                 height: 0.16.sh,
               ),
               PhoneNumberTextField(
-                onDialChanged:(d){} ,
+                onDialChanged: (d) {},
                 onInputChanged: (code) => sn.countryCode = code,
                 textEditingController: sn.phoneController,
                 isoCode: sn.countryCode,
@@ -130,11 +130,11 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
   }
 
   void _offToSignupScreen() {
-    Nav.off(RegisterScreen.routeName, cleanHistory: true,context: context);
+    Nav.off(RegisterScreen.routeName, cleanHistory: true, context: context);
   }
 
   void _toForgotPassword() {
-    Nav.to(ForgotPasswordScreen.routeName,context: context);
+    Nav.to(ForgotPasswordScreen.routeName, context: context);
   }
 
   @override

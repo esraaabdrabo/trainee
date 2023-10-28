@@ -13,6 +13,8 @@ import 'package:intl_phone_number_input/src/utils/test/test_helper.dart';
 import 'package:intl_phone_number_input/src/utils/util.dart';
 import 'package:intl_phone_number_input/src/utils/widget_view.dart';
 import 'package:intl_phone_number_input/src/widgets/selector_button.dart';
+import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/core/localization/flutter_localization.dart';
 
 import 'custom_selector_button.dart';
 
@@ -86,8 +88,7 @@ class PhoneNumberField extends StatefulWidget {
   final Iterable<String>? autofillHints;
 
   final List<String>? countries;
-
-  PhoneNumberField(
+  const PhoneNumberField(
       {Key? key,
       this.selectorConfig = const SelectorConfig(),
       required this.onInputChanged,
@@ -231,8 +232,7 @@ class _InputWidgetState extends State<PhoneNumberField> {
       getParsedPhoneNumber(parsedPhoneNumberString, country?.alpha2Code)
           .then((phoneNumber) {
         if (phoneNumber == null) {
-          String phoneNumber =
-              '${country?.dialCode}$parsedPhoneNumberString';
+          String phoneNumber = '${country?.dialCode}$parsedPhoneNumberString';
 
           if (widget.onInputChanged != null) {
             widget.onInputChanged!(PhoneNumber(
@@ -323,8 +323,7 @@ class _InputWidgetState extends State<PhoneNumberField> {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       if (isValid && widget.errorMessage != null) {
         setState(() {
-          selectorButtonBottomPadding =
-              widget.selectorButtonOnErrorPadding;
+          selectorButtonBottomPadding = widget.selectorButtonOnErrorPadding;
         });
       } else {
         setState(() {
@@ -349,8 +348,7 @@ class _InputWidgetState extends State<PhoneNumberField> {
       String parsedPhoneNumberString =
           controller!.text.replaceAll(RegExp(r'[^\d+]'), '');
 
-      String phoneNumber =
-          (country?.dialCode ?? '') + parsedPhoneNumberString;
+      String phoneNumber = (country?.dialCode ?? '') + parsedPhoneNumberString;
 
       widget.onSaved?.call(
         PhoneNumber(
@@ -406,7 +404,8 @@ class _InputWidgetView extends WidgetView<PhoneNumberField, _InputWidgetState> {
                   selectorConfig: widget.selectorConfig,
                   selectorTextStyle: widget.selectorTextStyle,
                   searchBoxDecoration: widget.searchBoxDecoration,
-                  locale: state.locale,
+                  locale: Provider.of<LocalizationProvider>(context)
+                      .currentLanguage,
                   isEnabled: widget.isEnabled,
                   autoFocusSearchField: widget.autoFocusSearch,
                   isScrollControlled: widget.countrySelectorScrollControlled,

@@ -24,9 +24,10 @@ class _CustomTextField extends StatelessWidget {
   final Widget? suffix;
   final Widget? prefix;
   final Function(String)? onChanged;
-
+  final String? label;
   const _CustomTextField(
       {Key? key,
+      this.label,
       required this.controller,
       this.passwordSecure = false,
       this.hidePassword,
@@ -57,6 +58,7 @@ class _CustomTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         hintText: labelText,
+        label: Text(label ?? ''),
         suffixIcon: suffix,
         prefixIcon: prefix,
         border: inputBorder,
@@ -191,7 +193,7 @@ class PasswordTextField extends StatelessWidget {
   final FocusNode? focusNode;
   final Function? onFiledSubmitted;
   final String? text;
-
+  final String? label;
   const PasswordTextField(
       {Key? key,
       required this.passwordSecure,
@@ -201,6 +203,7 @@ class PasswordTextField extends StatelessWidget {
       this.otherPasswordController,
       this.textInputAction,
       this.focusNode,
+      this.label,
       this.onFiledSubmitted,
       this.text})
       : super(key: key);
@@ -251,10 +254,9 @@ class PasswordTextField extends StatelessWidget {
             },
       textInputType: TextInputType.visiblePassword,
       controller: controller,
-      labelText: text ??
-          (!isConfirmPassword!
-              ? Translation.of(context).password
-              : Translation.of(context).confirmPassword),
+      label: !isConfirmPassword!
+          ? Translation.of(context).password
+          : Translation.of(context).confirmPassword,
       hidePassword: hidePassword,
       isPassword: true,
       onFieldSubmitted: onFiledSubmitted,

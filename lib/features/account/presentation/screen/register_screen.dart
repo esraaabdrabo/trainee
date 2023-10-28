@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/core/params/screen_params/account_verification_screen_params.dart';
+import 'package:upgrade_traine_project/features/account/presentation/screen/account_verification_screen.dart';
 import '../../../../core/navigation/nav.dart';
 import '../../../../core/ui/dialogs/custom_dialogs.dart';
 import '../../../../core/ui/error_ui/error_viewer/error_viewer.dart';
@@ -42,34 +44,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: BlocListener<AccountCubit, AccountState>(
             bloc: sn.accountCubit,
             listener: (context, state) {
-              state.whenOrNull(
-                accountLoading: () {
-                  setState(() {
-                    sn.isLoading = true;
-                  });
-                },
-                accountError: (error, callback) {
-                  setState(() {
-                    sn.isLoading = false;
-                  });
-                  ErrorViewer.showError(
-                      context: context, error: error, callback: callback);
-                },
-                registerLoaded: (registerEntity) {
-                  // setState(() {
-                  //   sn.isLoading = false;
-                  // });
-                  // _navigationToAccountVerification();
-                  // sn.submitPhoneNumber(newPhone: "${sn.countryDial}${sn.phoneController.text}");
-                },
-                verifyAccountLoaded: (registerEntity){
-                  setState(() {
-                    sn.isLoading = false;
-                  });
-                  _navigationToAccountVerification();
-                 // sn.submitPhoneNumber(newPhone: "${sn.countryDial}${sn.phoneController.text}");
-                }
-              );
+              state.whenOrNull(accountLoading: () {
+                setState(() {
+                  sn.isLoading = true;
+                });
+              }, accountError: (error, callback) {
+                setState(() {
+                  sn.isLoading = false;
+                });
+                ErrorViewer.showError(
+                    context: context, error: error, callback: callback);
+              }, registerLoaded: (registerEntity) {
+                setState(() {
+                  sn.isLoading = false;
+                });
+                _navigationToAccountVerification();
+                sn.submitPhoneNumber(
+                    newPhone: "${sn.countryDial}${sn.phoneController.text}");
+              }, verifyAccountLoaded: (registerEntity) {
+                setState(() {
+                  sn.isLoading = false;
+                });
+                _navigationToAccountVerification();
+                // sn.submitPhoneNumber(newPhone: "${sn.countryDial}${sn.phoneController.text}");
+              });
             },
             child: RegisterScreenContent()),
       ),
@@ -77,13 +75,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _navigationToAccountVerification() {
-    Nav.off(LoginScreen.routeName,
+    Nav.off(AccountVerificationScreen.routeName,
         context: context,
-        cleanHistory: true, arguments: (context2) {
-          showNewMessageDialog(
-              context: context2,
-              title: Translation.of(context2).account_verified_successfully);
-        });
+        arguments: AccountVerificationScreenParams(
+            isCreateNewPassword: false,
+            onVerification: () {
+              Nav.off(LoginScreen.routeName,
+                  cleanHistory: true, context: context);
+            },
+            phone: sn.phoneController.text));
   }
 
   void _onVerify() {
@@ -91,6 +91,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       showNewMessageDialog(
           context: context2,
           title: Translation.of(context2).account_created_successfully);
-    },context: context);
+    }, context: context);
   }
 }

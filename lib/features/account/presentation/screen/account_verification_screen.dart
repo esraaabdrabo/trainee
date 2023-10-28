@@ -82,10 +82,11 @@ class _AccountVerificationScreenState extends State<AccountVerificationScreen> {
                   setState(() {
                     sn.isLoading = false;
                   });
-                  if (!widget.isCreateNewPassword)
+                  if (!widget.isCreateNewPassword) {
                     widget.onVerify();
-                  else
+                  } else {
                     _toNewPasswordScreen();
+                  }
                 },
                 sendVCLoaded: (acknowledgeEntity) {
                   ErrorViewer.showError(
@@ -105,6 +106,8 @@ class _AccountVerificationScreenState extends State<AccountVerificationScreen> {
   void _toNewPasswordScreen() {
     Nav.off(CreateNewPasswordScreen.routeName,
         arguments: CreateNewPasswordScreenParams(
-            phone: widget.phoneNumber,),context: context);
+          phone: widget.phoneNumber,
+        ),
+        context: context);
   }
 }

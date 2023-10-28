@@ -42,7 +42,7 @@ class _ForgotPasswordScreenContentState
               height: 0.16.sh,
             ),
             PhoneNumberTextField(
-              onDialChanged:(d){} ,
+              onDialChanged: (d) {},
               onInputChanged: (code) => sn.countryCode = code,
               textEditingController: sn.phoneController,
               focusNode: sn.phoneFocusNode,
@@ -65,9 +65,10 @@ class _ForgotPasswordScreenContentState
 
   void _forgotPassword() {
     unFocus();
-    if (sn.formKey.currentState!.validate())
+    if (sn.formKey.currentState!.validate()) {
       sn.accountCubit.forgotPassword(ForgotPasswordRequest(
         usernameOrEmailOrPhone: sn.phoneController.text,
       ));
+    }
   }
 }

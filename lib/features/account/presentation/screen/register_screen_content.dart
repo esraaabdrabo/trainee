@@ -19,6 +19,8 @@ import 'general_auth_screen.dart';
 import 'login_screen.dart';
 
 class RegisterScreenContent extends StatefulWidget {
+  const RegisterScreenContent({super.key});
+
   @override
   State<RegisterScreenContent> createState() => _RegisterScreenContentState();
 }
@@ -80,21 +82,6 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
                 },
               ),
               Gaps.vGap8,
-              PasswordTextField(
-                controller: sn.confirmPasswordController,
-                passwordSecure: sn.confirmPasswordSecure,
-                textInputAction: TextInputAction.done,
-                focusNode: sn.confirmPasswordFocusNode,
-                isConfirmPassword: true,
-                otherPasswordController: sn.passwordController,
-                onFiledSubmitted: () {},
-                hidePassword: (bool) {
-                  setState(() {
-                    sn.confirmPasswordSecure = bool;
-                  });
-                },
-              ),
-              Gaps.vGap8,
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -139,23 +126,25 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
 
   _signup() {
     unFocus();
-    if (sn.formKey.currentState!.validate()) if (sn.boxChecked) {
-      sn.accountCubit.register(RegisterRequest(
-        phoneNumber: sn.phoneController.text,
-        countryCode: sn.countryCode,
-        password: sn.passwordController.text,
-      ));
-      debugPrint("${sn.countryDial}${sn.phoneController.text}");
-      // sn.submitPhoneNumber(
-      //     newPhone: "${sn.countryDial}${sn.phoneController.text}");
-    } else {
-      ErrorViewer.showError(
-          errorViewerOptions:
-              const ErrVSnackBarOptions(backgroundColor: AppColors.grey),
-          context: context,
-          error: CustomError(
-              message: Translation.of(context).accept_terms_conditions),
-          callback: () {});
+    if (sn.formKey.currentState!.validate()) {
+      if (sn.boxChecked) {
+        sn.accountCubit.register(RegisterRequest(
+          phoneNumber: sn.phoneController.text,
+          countryCode: sn.countryCode,
+          password: sn.passwordController.text,
+        ));
+        debugPrint("${sn.countryDial}${sn.phoneController.text}");
+        // sn.submitPhoneNumber(
+        //     newPhone: "${sn.countryDial}${sn.phoneController.text}");
+      } else {
+        ErrorViewer.showError(
+            errorViewerOptions:
+                const ErrVSnackBarOptions(backgroundColor: AppColors.grey),
+            context: context,
+            error: CustomError(
+                message: Translation.of(context).accept_terms_conditions),
+            callback: () {});
+      }
     }
   }
 

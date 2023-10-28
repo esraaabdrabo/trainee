@@ -27,8 +27,8 @@ class _IntroScreenContentState extends State<IntroScreenContent> {
   void initState() {
     super.initState();
     _pageController.addListener(() {
-      if (_pageController.page == 2) {
-        Nav.off(LoginScreen.routeName, context: context);
+      if (_currentPage == 2) {
+        Nav.off(LoginScreen.routeName, cleanHistory: true, context: context);
       } else {
         setState(() {
           _currentPage = _pageController.page!;
@@ -39,7 +39,7 @@ class _IntroScreenContentState extends State<IntroScreenContent> {
 
   void _onNextPressed() {
     if (_pageController.page == 2) {
-      Nav.off(LoginScreen.routeName, context: context);
+      Nav.off(LoginScreen.routeName, cleanHistory: true, context: context);
     } else {
       _pageController.nextPage(
           duration: const Duration(milliseconds: 200), curve: Curves.linear);
@@ -47,7 +47,7 @@ class _IntroScreenContentState extends State<IntroScreenContent> {
   }
 
   void _onSkipPressed() {
-    Nav.off(LoginScreen.routeName, context: context);
+    Nav.off(LoginScreen.routeName, cleanHistory: true, context: context);
   }
 
   Widget _buildIntroPageView(

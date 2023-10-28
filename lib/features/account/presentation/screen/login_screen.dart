@@ -71,11 +71,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   setState(() {
                     sn.isLoading = false;
                   });
-                 // Nav.off(NavigatorScreen.routeName, cleanHistory: true);
+                  // Nav.off(NavigatorScreen.routeName, cleanHistory: true);
                   if (error is InternalServerWithDataError) {
-                    if (error.errorCode == 4)
+                    if (error.errorCode == 4) {
                       _navigationToAccountVerification();
-                    else {
+                    } else {
                       ErrorViewer.showError(
                           context: context, error: error, callback: callback);
                     }
@@ -96,7 +96,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   prefs.putString(
                       AppConstants.KEY_PHONE, sn.phoneController.text);
                   await sn.accountCubit.updateDeviceToken();
-                  Nav.off(NavigatorScreen.routeName, cleanHistory: true,context: context);
+                  Nav.off(NavigatorScreen.routeName,
+                      cleanHistory: true, context: context);
                   debugPrint("login loaded");
                 },
               );
@@ -109,13 +110,13 @@ class _LoginScreenState extends State<LoginScreen> {
   void _navigationToAccountVerification() {
     Nav.to(AccountVerificationScreen.routeName,
         arguments: AccountVerificationScreenParams(
-            onVerification: _onVerify, phone: sn.phoneController.text),context: context);
+            onVerification: _onVerify, phone: sn.phoneController.text),
+        context: context);
   }
 
   void _onVerify() {
-    Nav.off(LoginScreen.routeName,
-        context: context,
-        cleanHistory: true, arguments: (context2) {
+    Nav.off(LoginScreen.routeName, context: context, cleanHistory: true,
+        arguments: (context2) {
       showNewMessageDialog(
           context: context2,
           title: Translation.of(context2).account_verified_successfully);

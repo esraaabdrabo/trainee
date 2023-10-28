@@ -51,12 +51,10 @@ class AccountCubit extends Cubit<AccountState> {
     emit(const AccountState.accountLoading());
 
     final result = await getIt<RegisterUseCase>()(body);
-
+    print(body.toMap());
     result.pick(
       onData: (data) {
         emit(AccountState.registerLoaded(result.data!));
-        verifyAccount(VerifyAccountRequest(
-            usernameOrEmailOrPhone: body.phoneNumber, code: "000000"));
       },
       onError: (error) {
         emit(AccountState.accountError(error, () => register(body)));
@@ -104,8 +102,7 @@ class AccountCubit extends Cubit<AccountState> {
         emit(AccountState.createNewPasswordLoaded(result.data!));
       },
       onError: (error) {
-        emit(AccountState.accountError(
-            error, () => createNewPassword(body)));
+        emit(AccountState.accountError(error, () => createNewPassword(body)));
       },
     );
   }
@@ -142,11 +139,10 @@ class AccountCubit extends Cubit<AccountState> {
 
   Future<void> updateDeviceToken() async {
     var token = await FirebaseMessaging.instance.getToken();
-      final result = await DioHelper.put(APIUrls.API_UPDATE_DEVICE_TOKEN,
-          body: {"token": token ?? ""});
-      print(
-          "hello --------------------------------------------------------------------------------------" +
-              result.data.toString());
-
+    final result = await DioHelper.put(APIUrls.API_UPDATE_DEVICE_TOKEN,
+        body: {"token": token ?? ""});
+    print(
+        "hello --------------------------------------------------------------------------------------" +
+            result.data.toString());
   }
 }

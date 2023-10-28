@@ -33,12 +33,12 @@ class Nav {
           (route) => false,
           arguments: arguments);
     } else
-      return Navigator.pushReplacementNamed(
+    {  return Navigator.pushReplacementNamed(
         context ?? getIt<NavigationService>().appContext!,
         routeName,
         result: result,
         arguments: arguments,
-      );
+      );}
   }
 
   /// Pop
