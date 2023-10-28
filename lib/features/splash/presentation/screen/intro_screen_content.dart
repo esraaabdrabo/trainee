@@ -21,27 +21,27 @@ class IntroScreenContent extends StatefulWidget {
 class _IntroScreenContentState extends State<IntroScreenContent> {
   final PageController _pageController = PageController();
   double _currentPage = 0;
-  int _currentPageInt = 0;
   int _maxPages = 3;
 
   @override
   void initState() {
     super.initState();
     _pageController.addListener(() {
-      setState(() {
-        _currentPage = _pageController.page!;
-      });
+      if (_pageController.page == 2) {
+        Nav.off(LoginScreen.routeName, context: context);
+      } else {
+        setState(() {
+          _currentPage = _pageController.page!;
+        });
+      }
     });
   }
 
   void _onNextPressed() {
-    if (_currentPageInt == 2)
+    if (_pageController.page == 2) {
       Nav.off(LoginScreen.routeName, context: context);
-    else {
-      setState(() {
-        _currentPageInt++;
-      });
-      _pageController.animateToPage(_currentPageInt,
+    } else {
+      _pageController.nextPage(
           duration: const Duration(milliseconds: 200), curve: Curves.linear);
     }
   }
@@ -129,7 +129,6 @@ class _IntroScreenContentState extends State<IntroScreenContent> {
       child: Stack(
         children: [
           PageView(
-            physics: const NeverScrollableScrollPhysics(),
             controller: _pageController,
             children: [
               _buildIntroPageView(
