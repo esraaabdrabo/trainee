@@ -182,5 +182,7 @@
   "hoursNumber": "عدد ساعات الكورس",
   "finishedHour": "الساعات المنجزه",
   "remainsHours": "الساعات المتبقيه",
-  "numberOfAbsenece": "عدد مرات الغياب"
+  "numberOfAbsenece": "عدد مرات الغياب",
+  "newpass_cannotbe_as_old":"كلمة المرور الجديدة لا يمكن ان تكون مثل القديمة"
+
 }

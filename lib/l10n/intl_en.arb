@@ -182,5 +182,6 @@
   "hoursNumber": "Course Hours",
   "finishedHour": "Finished Hours",
   "remainsHours": "remaining Hours",
-  "numberOfAbsenece": "Absence Days"
+  "numberOfAbsenece": "Absence Days",
+  "newpass_cannotbe_as_old":"The new password can not be same as the old one"
 }

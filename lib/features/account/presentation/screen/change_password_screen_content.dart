@@ -106,8 +106,7 @@ class _ChangePasswordScreenContentState
       } else {
         ErrorViewer.showError(
             context: context,
-            error: AppErrors.customError(
-                message: Translation.of(context).invalidPassword),
+            error: AppErrors.customError(message: Translation.of(context).new),
             callback: () {});
       }
     }

@@ -18,12 +18,13 @@ import 'features/orders/controller/booking_cubit/booking_request_cubit.dart';
 import 'features/orders/controller/order_cubit.dart';
 import 'features/splash/presentation/screen/splash_screen.dart';
 import 'generated/l10n.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class App extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   const App({
-    Key? key, required this.navigatorKey,
+    Key? key,
+    required this.navigatorKey,
   }) : super(key: key);
 
   @override
@@ -89,12 +90,11 @@ final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 //   await FlutterCallkitIncoming.showCallkitIncoming(params);
 // }
 
-class _AppState extends State<App> with WidgetsBindingObserver{
+class _AppState extends State<App> with WidgetsBindingObserver {
   // late final Uuid _uuid;
   // String? _currentUuid;
   //
   // late final FirebaseMessaging _firebaseMessaging;
-
 
   @override
   Widget build(BuildContext context) {
@@ -110,15 +110,18 @@ class _AppState extends State<App> with WidgetsBindingObserver{
               designSize: AppConfig.screenUtilDesignSize(),
               builder: (context, Widget? child) {
                 return MultiBlocProvider(
-                 providers: [
-                   BlocProvider(create: (context) => ProfileCubit()..getProfile()..getTrainers()),
-                   BlocProvider(create: (context) => OrderCubit()),
-                   BlocProvider(create: (context) => BookingRequestCubit()),
-                   BlocProvider(create: (context) => NotificationCubit()),
-                   BlocProvider(create: (context) => NewRestaurantCubit()),
-                   BlocProvider(create: (context) => StoryCubit()),
-                   BlocProvider(create: (context) => CourseCubit()),
-                 ],
+                  providers: [
+                    BlocProvider(
+                        create: (context) => ProfileCubit()
+                          ..getProfile()
+                          ..getTrainers()),
+                    BlocProvider(create: (context) => OrderCubit()),
+                    BlocProvider(create: (context) => BookingRequestCubit()),
+                    BlocProvider(create: (context) => NotificationCubit()),
+                    BlocProvider(create: (context) => NewRestaurantCubit()),
+                    BlocProvider(create: (context) => StoryCubit()),
+                    BlocProvider(create: (context) => CourseCubit()),
+                  ],
                   child: MaterialApp(
                     debugShowCheckedModeBanner: false,
                     title: AppConstants.TITLE_APP_NAME,
@@ -136,11 +139,12 @@ class _AppState extends State<App> with WidgetsBindingObserver{
                     locale: provider.appLocal,
 
                     localizationsDelegates: const [
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
                       Translation.delegate,
                       GlobalMaterialLocalizations.delegate,
                       GlobalWidgetsLocalizations.delegate,
                       GlobalCupertinoLocalizations.delegate,
-
                     ],
 
                     /// Run app at first time on device language
