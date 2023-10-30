@@ -25,14 +25,11 @@ class _ShopsViewState extends State<ShopsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: TransparentAppBar(
-          title: Translation.of(context).stores,
-        ),
+        appBar: TransparentAppBar(title: Translation.of(context).stores),
         body: BlocProvider(
             create: (context) => ShopCubit()..getShops(GetShopsRequest()),
             child: BlocBuilder<ShopCubit, ShopState>(
               builder: (context, state) {
-                print(state);
                 return state.when(
                   shopInitState: () {
                     return const SizedBox.shrink();

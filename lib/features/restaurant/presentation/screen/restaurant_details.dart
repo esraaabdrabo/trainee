@@ -5,7 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:upgrade_traine_project/core/common/app_colors.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/screen/plates_view.dart';
+import 'package:upgrade_traine_project/features/restaurant/presentation/widget/didhes_section.dart';
 import '../../../../core/common/style/gaps.dart';
 import '../../../../core/constants/app/app_constants.dart';
 import '../../../../core/navigation/nav.dart';
@@ -51,11 +53,10 @@ Widget _buildCommentItemWidget({
                 ClipRRect(
                   borderRadius:
                       BorderRadius.circular(AppConstants.borderRadius8),
-                  child:
-                  Image.network(
-                          image,
-                          height: 56.h,
-                          width: 46.w,
+                  child: Image.network(
+                    image,
+                    height: 56.h,
+                    width: 46.w,
                     errorBuilder: (context, error, stackTrace) {
                       return Image.asset(
                         AppConstants.APP_LOGO_IMG,
@@ -64,7 +65,7 @@ Widget _buildCommentItemWidget({
                         fit: BoxFit.contain,
                       );
                     },
-                        ),
+                  ),
                 ),
                 Gaps.hGap8,
                 Column(
@@ -121,7 +122,7 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
 
   TextEditingController commentController = TextEditingController();
   double ratingvalue = 1.0;
-  late  GoogleMapController _controller;
+  late GoogleMapController _controller;
   late final String mapStyle;
 
   void _rate() {
@@ -210,11 +211,17 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
                                     NewRestaurantState>(
                                   listener: (context, state) {
                                     if (state is ErrorCreateReviewData) {
-                                      showErrorSnackBar(context: context, message: state.msg);
+                                      showErrorSnackBar(
+                                          context: context, message: state.msg);
                                     }
                                     if (state is SuccessCreateReviewData) {
                                       Nav.pop();
-                                      BlocProvider.of<NewRestaurantCubit>(context).getReview(RefId: widget.restaurantEntity.id!,refType: 2);
+                                      BlocProvider.of<NewRestaurantCubit>(
+                                              context)
+                                          .getReview(
+                                              RefId:
+                                                  widget.restaurantEntity.id!,
+                                              refType: 2);
                                     }
                                   },
                                   builder: (context, state) {
@@ -224,18 +231,21 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
                                         child: CustomElevatedButton(
                                           text: Translation.of(context).send,
                                           onTap: () {
-                                            if(commentController.text.isNotEmpty) {
+                                            if (commentController
+                                                .text.isNotEmpty) {
                                               NewRestaurantCubit.get(context)
-                                                .createReview(
-                                                    RefId: widget
-                                                        .restaurantEntity.id!,
-                                                    comment: commentController
-                                                        .text,
-                                                    rate:
-                                                        ratingvalue.toInt(), refType: 2);
-                                            }else{
+                                                  .createReview(
+                                                      RefId: widget
+                                                          .restaurantEntity.id!,
+                                                      comment: commentController
+                                                          .text,
+                                                      rate: ratingvalue.toInt(),
+                                                      refType: 2);
+                                            } else {
                                               showErrorSnackBar(
-                                                  context: context, message: "please write comment");
+                                                  context: context,
+                                                  message:
+                                                      "please write comment");
                                             }
                                           },
                                         ));
@@ -259,8 +269,8 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
 
   Widget _buildRatingWidget({required double? rate}) {
     return BlocProvider(
-      create: (context) =>
-          NewRestaurantCubit()..getReview(RefId: widget.restaurantEntity.id!,refType: 2),
+      create: (context) => NewRestaurantCubit()
+        ..getReview(RefId: widget.restaurantEntity.id!, refType: 2),
       child: BlocConsumer<NewRestaurantCubit, NewRestaurantState>(
         listener: (context, state) {
           // TODO: implement listener
@@ -356,91 +366,7 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
     );
   }
 
-  Widget getPlate() {
-    return BlocProvider(
-      create: (context) => NewRestaurantCubit()
-        ..getPlates(RestaurantId: widget.restaurantEntity.id!),
-      child: BlocConsumer<NewRestaurantCubit, NewRestaurantState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return state is SuccessGetAllData
-              ? Container(
-                  height: state.platesModel!.result!.totalCount! > 2
-                      ? 400.h
-                      : 200.h,
-                  padding: const EdgeInsets.all(8),
-                  child: state.platesModel!.result!.items!.isNotEmpty
-                      ? GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 10,
-                                  childAspectRatio: 1.2,
-                                  crossAxisSpacing: 10),
-                          itemCount: state.platesModel!.result!.totalCount! > 4
-                              ? 4
-                              : state.platesModel!.result!.totalCount!,
-                          itemBuilder: (context, int) {
-                            return DishesView(
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        content: AlertDialogContent(
-                                          image: state.platesModel!.result!
-                                              .items![int].images!.isEmpty
-                                              ? "https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg"
-                                              : state.platesModel!.result!.items![int]
-                                              .images![0],
-                                          deliverPrice: "${state.platesModel!.result!.items![int].price}",
-                                          description: state.platesModel!.result!
-                                              .items![int].components.toString(),
-                                          mainTitle:state.platesModel!.result!
-                                              .items![int].name.toString(),
-                                          restName: state.platesModel!.result!
-                                              .items![int].restaurant!.text!,
-                                          totalPrice:state.platesModel!.result!
-                                              .items![int].price!,
-                                          weight: state.platesModel!.result!
-                                              .items![int].enComponents.toString(),
-                                          id: state.platesModel!.result!
-                                              .items![int].id!,
-                                        ),
-                                        backgroundColor: AppColors.grey,
-                                      );
-                                    },
-                                  );
-                                },
-                                restaurantName: state.platesModel!.result!
-                                    .items![int].restaurant!.text
-                                    .toString(),
-                                price: state
-                                    .platesModel!.result!.items![int].price
-                                    .toString(),
-                                imagePlate: state.platesModel!.result!
-                                        .items![int].images!.isEmpty
-                                    ? "https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg"
-                                    : state.platesModel!.result!.items![int]
-                                        .images![0],
-                                plateName: state
-                                    .platesModel!.result!.items![int].name
-                                    .toString());
-                          })
-                      : const Center(child: Text("No Plates")),
-                )
-              : const Center(
-                  child: Center(child: CircularProgressIndicator()),
-                );
-        },
-      ),
-    );
-  }
-
-
-
-  void _setMapStyle() async{
+  void _setMapStyle() async {
     mapStyle = await rootBundle.loadString(AppConstants.MAP_STYLE_JSON);
     _controller.setMapStyle(mapStyle);
   }
@@ -455,7 +381,9 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
               pinned: true,
               floating: true,
               delegate: CustomSliverDelegate(
-                aboutRestaurant: widget.restaurantEntity.description ?? "",
+                aboutRestaurant: LanguageHelper.isAr(context)
+                    ? widget.restaurantEntity.arDescription
+                    : widget.restaurantEntity.enDescription,
                 resaurantAvatar: "${widget.restaurantEntity.logo}",
                 restaurantName: "${widget.restaurantEntity.name}",
                 restaurantRate: "${widget.restaurantEntity.rate}",
@@ -468,11 +396,10 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    getPlate(),
+                    const SizedBox(height: 30),
+                    DishesSectionWidget(widget.restaurantEntity.id!),
                     Gaps.vGap24,
                     SizedBox(
                       height: 250.h,
@@ -482,19 +409,26 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
                           _setMapStyle();
                         },
                         initialCameraPosition: CameraPosition(
-                            target: LatLng(widget.restaurantEntity.latitude ?? 44.0,widget.restaurantEntity.longitude ?? 40.0), zoom: 16),
-
+                            target: LatLng(
+                                widget.restaurantEntity.latitude ?? 44.0,
+                                widget.restaurantEntity.longitude ?? 40.0),
+                            zoom: 16),
                         zoomControlsEnabled: false,
                         markers: <Marker>{
                           Marker(
-                              markerId: MarkerId("${widget.restaurantEntity.id}"),
-                              position: LatLng(widget.restaurantEntity.latitude ?? 44.0,widget.restaurantEntity.longitude ?? 40.0),
+                              markerId:
+                                  MarkerId("${widget.restaurantEntity.id}"),
+                              position: LatLng(
+                                  widget.restaurantEntity.latitude ?? 44.0,
+                                  widget.restaurantEntity.longitude ?? 40.0),
                               icon: BitmapDescriptor.defaultMarker)
                         },
                       ),
                     ),
                     Gaps.vGap24,
-                    _buildRatingWidget(rate: widget.restaurantEntity.rate,),
+                    _buildRatingWidget(
+                      rate: widget.restaurantEntity.rate,
+                    ),
                     Gaps.vGap24,
                   ],
                 ),
@@ -512,7 +446,7 @@ class CustomSliverDelegate extends SliverPersistentHeaderDelegate {
   final bool hideTitleWhenExpanded;
   final String image;
   final void Function()? searchTap;
-  final String aboutRestaurant;
+  final String? aboutRestaurant;
   final String resaurantAvatar;
   final String restaurantName;
   final String restaurantRate;
@@ -522,7 +456,7 @@ class CustomSliverDelegate extends SliverPersistentHeaderDelegate {
     this.hideTitleWhenExpanded = true,
     required this.image,
     required this.searchTap,
-    required this.aboutRestaurant,
+    this.aboutRestaurant,
     required this.resaurantAvatar,
     required this.restaurantName,
     required this.restaurantRate,
@@ -535,11 +469,12 @@ class CustomSliverDelegate extends SliverPersistentHeaderDelegate {
     required String restaurantRate,
   }) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
           color: AppColors.grey,
           borderRadius: BorderRadius.circular(AppConstants.borderRadius12)),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             flex: 2,
@@ -645,7 +580,8 @@ class CustomSliverDelegate extends SliverPersistentHeaderDelegate {
                               borderRadius: BorderRadius.circular(
                                   AppConstants.borderRadius10)),
                           child: restaurantDetails(
-                              aboutRestaurant: aboutRestaurant,
+                              aboutRestaurant: aboutRestaurant ??
+                                  LanguageHelper.tr(context).no_data_found,
                               resaurantAvatar: resaurantAvatar,
                               restaurantName: restaurantName,
                               restaurantRate: restaurantRate),

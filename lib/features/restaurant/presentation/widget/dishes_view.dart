@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 
 import '../../../../core/common/app_colors.dart';
 
@@ -33,31 +35,18 @@ class DishesView extends StatelessWidget {
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(10),
                       topLeft: Radius.circular(10))),
-              height: 50,
               child: Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 10.h),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(plateName,style: const TextStyle(
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                      maxLines: 1,
-                    ),
+                    _PlateName(plateName: plateName),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        FittedBox(
-                          child: Text(
-                            restaurantName,
-                            style: const TextStyle(color: Colors.yellow, fontSize: 11),
-                          ),
-                        ),
-                        Text(
-                          "$price ر.س ",
-                          style: const TextStyle(color: Colors.grey, fontSize: 10),
-                        ),
+                        _RestaurantName(restaurantName: restaurantName),
+                        _Price(price: price),
                       ],
                     )
                   ],
@@ -65,13 +54,14 @@ class DishesView extends StatelessWidget {
               ),
             ),
             Container(
-              height: 80,
+              height: .2.sh,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(imagePlate ??
-                      "https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg",),
-                  fit: BoxFit.cover
-                ),
+                    image: NetworkImage(
+                      imagePlate ??
+                          "https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg",
+                    ),
+                    fit: BoxFit.cover),
                 borderRadius: const BorderRadius.only(
                   bottomRight: Radius.circular(10),
                   bottomLeft: Radius.circular(10),
@@ -81,6 +71,67 @@ class DishesView extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _Price extends StatelessWidget {
+  const _Price({
+    super.key,
+    required this.price,
+  });
+
+  final String price;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "$price ${LanguageHelper.tr(context).saudi_riyal}",
+      style: const TextStyle(color: Colors.grey, fontSize: 10),
+    );
+  }
+}
+
+class _RestaurantName extends StatelessWidget {
+  const _RestaurantName({
+    super.key,
+    required this.restaurantName,
+  });
+
+  final String restaurantName;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: .18.sw,
+      child: Text(
+        restaurantName,
+        maxLines: 1,
+        style: const TextStyle(
+            color: Colors.yellow,
+            fontSize: 11,
+            overflow: TextOverflow.ellipsis),
+      ),
+    );
+  }
+}
+
+class _PlateName extends StatelessWidget {
+  const _PlateName({
+    super.key,
+    required this.plateName,
+  });
+
+  final String plateName;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      plateName,
+      style: const TextStyle(
+        overflow: TextOverflow.ellipsis,
+      ),
+      maxLines: 1,
     );
   }
 }
