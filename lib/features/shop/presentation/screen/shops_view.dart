@@ -12,9 +12,9 @@ import '../../domain/entity/shops_entity.dart';
 class ShopsView extends StatefulWidget {
   static const routeName = "/AllShopsScreen";
 
-
-
-  ShopsView({Key? key,}) : super(key: key);
+  ShopsView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ShopsView> createState() => _ShopsViewState();
@@ -22,7 +22,6 @@ class ShopsView extends StatefulWidget {
 
 class _ShopsViewState extends State<ShopsView> {
   @override
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,43 +29,44 @@ class _ShopsViewState extends State<ShopsView> {
           title: Translation.of(context).stores,
         ),
         body: BlocProvider(
-        create: (context) => ShopCubit()..getShops(GetShopsRequest()),
-        child: BlocBuilder<ShopCubit,ShopState>(
-          builder:(context, state) {
-            print(state);
-            return state.when(
-              shopInitState: () {
-                return const SizedBox.shrink();
+            create: (context) => ShopCubit()..getShops(GetShopsRequest()),
+            child: BlocBuilder<ShopCubit, ShopState>(
+              builder: (context, state) {
+                print(state);
+                return state.when(
+                  shopInitState: () {
+                    return const SizedBox.shrink();
+                  },
+                  shopLoadingState: () {
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                  shopErrorState: (error, callback) {
+                    return const SizedBox.shrink();
+                  },
+                  getShopsState: (shopsEntity) {
+                    return ListView.builder(
+                      itemCount: shopsEntity.items!.length,
+                      itemBuilder: (context, index) {
+                        var item = shopsEntity.items![index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 8),
+                          child: RestaurantAndShopsCardShow(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) {
+                                return ShopDetails(
+                                    shopsEntity: shopsEntity.items![index]);
+                              }));
+                            },
+                            item: item,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                );
               },
-              shopLoadingState: () {
-                return const Center(child: CircularProgressIndicator());
-              },
-              shopErrorState: (error, callback) {
-                return const SizedBox.shrink();
-              }, getShopsState:
-                (shopsEntity) {
-                  return ListView.builder(
-                    itemCount: shopsEntity.items!.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding:
-                        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-                        child: RestaurantAndShopsCardShow(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (_) {
-                              return ShopDetails(shopsEntity:shopsEntity.items![index]);
-                            }));
-                          },
-                          coverImage: shopsEntity.items![index].cover.toString(),
-                          title: shopsEntity.items![index].arName.toString(),
-                          body: shopsEntity.items![index].arDescription.toString(),
-                          avatarImage: shopsEntity.items![index].logo.toString(),
-                        ),
-                      );
-                    },
-                  );
-                },);
-          },
-        )));
+            )));
   }
 }

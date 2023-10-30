@@ -9,56 +9,57 @@ import 'package:upgrade_traine_project/features/restaurant/presentation/widget/r
 import '../../../../generated/l10n.dart';
 import '../../domain/entity/restaurants_entity.dart';
 
-class RestaurantView extends StatelessWidget {
+String defaultRestImg =
+    'https://th.bing.com/th/id/OIP.MlZXr9dd8Om34xx-wydaQQHaE9?pid=ImgDet&rs=1';
+String defaultShopImg =
+    'https://i.pinimg.com/originals/70/97/e7/7097e7a47ec728f0c2f62631c90cd451.jpg';
 
+class RestaurantView extends StatelessWidget {
   static const routeName = "/AllRestaurantScreen";
 
-   const RestaurantView({Key? key}) : super(key: key);
-
-
-
+  const RestaurantView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TransparentAppBar(
-        title: Translation
-            .of(context)
-            .restaurants,
-      ),
-      body: BlocProvider(
-  create: (context) => RestaurantCubit()..getRestaurants(GetRestaurantsRequest()),
-  child: BlocBuilder<RestaurantCubit,RestaurantState>(
-        builder: (context, state) {
-        if(state is GetRestaurantsState){
-          return ListView.builder(
-            itemCount:BlocProvider.of<RestaurantCubit>(context).restaurants!.items!.length ,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0, vertical: 8),
-                child: RestaurantAndShopsCardShow(
-                  onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => PlayingSliverState(
-                          restaurantEntity: BlocProvider.of<RestaurantCubit>(context).restaurants!.items![index],
-                        )));
+        appBar: TransparentAppBar(
+          title: Translation.of(context).restaurants,
+        ),
+        body: BlocProvider(
+          create: (context) =>
+              RestaurantCubit()..getRestaurants(GetRestaurantsRequest()),
+          child: BlocBuilder<RestaurantCubit, RestaurantState>(
+            builder: (context, state) {
+              if (state is GetRestaurantsState) {
+                return ListView.builder(
+                  itemCount: BlocProvider.of<RestaurantCubit>(context)
+                      .restaurants!
+                      .items!
+                      .length,
+                  itemBuilder: (context, index) {
+                    var item = BlocProvider.of<RestaurantCubit>(context)
+                        .restaurants!
+                        .items![index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8),
+                      child: RestaurantAndShopsCardShow(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => PlayingSliverState(
+                                    restaurantEntity: item,
+                                  )));
+                        },
+                        item: item,
+                      ),
+                    );
                   },
-                  coverImage:BlocProvider.of<RestaurantCubit>(context).restaurants!.items![index].cover.toString() ,
-                  title:BlocProvider.of<RestaurantCubit>(context).restaurants!.items![index].arName.toString(),
-                  body: BlocProvider.of<RestaurantCubit>(context).restaurants!.items![index].arDescription.toString(),
-                  avatarImage: BlocProvider.of<RestaurantCubit>(context).restaurants!.items![index].logo.toString(),
-
-                ),
-              );
+                );
+              } else {
+                return const SizedBox();
+              }
             },
-          );
-        }else{
-          return const SizedBox();
-        }
-      },),
-)
-
-    );
+          ),
+        ));
   }
 }

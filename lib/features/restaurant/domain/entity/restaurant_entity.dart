@@ -1,18 +1,55 @@
-
 import '../../../../core/entities/base_entity.dart';
 import '../../../../core/entities/city_entity.dart';
 import '../../../../core/entities/manager_entity.dart';
 import '../../../../core/entities/opening_day_entity.dart';
 import '../../../../core/entities/subscription_entity.dart';
 
-class RestaurantEntity extends BaseEntity {
+abstract class PartnerEntity {
+  final String? arLogo;
+  final String? enLogo;
+  final String? logo;
+  final String? arCover;
+  final String? enCover;
+  final String? cover;
+
+  final String? arName;
+  final String? enName;
+  final String? name;
+  final int? id;
+  final String? arDescription;
+  final String? enDescription;
+  final String? description;
+  PartnerEntity(
+      {this.arCover,
+      this.arDescription,
+      this.arLogo,
+      this.arName,
+      this.cover,
+      this.description,
+      this.enCover,
+      this.enDescription,
+      this.enLogo,
+      this.enName,
+      this.id,
+      this.logo,
+      this.name});
+}
+
+class RestaurantEntity extends PartnerEntity {
   RestaurantEntity({
-    this.arLogo,
-    this.enLogo,
-    this.logo,
-    this.arCover,
-    this.enCover,
-    this.cover,
+    super.arLogo,
+    super.enLogo,
+    super.logo,
+    super.arCover,
+    super.enCover,
+    super.cover,
+    super.arName,
+    super.enName,
+    super.name,
+    super.id,
+    super.description,
+    super.enDescription,
+    super.arDescription,
     this.commercialRegisterNumber,
     this.commercialRegisterDocument,
     this.cityId,
@@ -32,21 +69,8 @@ class RestaurantEntity extends BaseEntity {
     this.creationTime,
     this.subscription,
     this.isActive,
-    this.arName,
-    this.enName,
-    this.name,
-    this.id,
-    this.description,
-    this.enDescription,
-    this.arDescription,
   });
 
-  final String? arLogo;
-  final String? enLogo;
-  final String? logo;
-  final String? arCover;
-  final String? enCover;
-  final String? cover;
   final String? commercialRegisterNumber;
   final String? commercialRegisterDocument;
   final int? cityId;
@@ -66,13 +90,6 @@ class RestaurantEntity extends BaseEntity {
   final DateTime? creationTime;
   final SubscriptionEntity? subscription;
   final bool? isActive;
-  final String? arName;
-  final String? enName;
-  final String? name;
-  final int? id;
-  final String? arDescription;
-  final String? enDescription;
-  final String? description;
 
   @override
   List<Object?> get props => [

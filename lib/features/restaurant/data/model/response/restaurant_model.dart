@@ -1,12 +1,10 @@
-
-import '../../../../../core/models/base_model.dart';
 import '../../../../../core/models/city_model.dart';
 import '../../../../../core/models/manager_model.dart';
 import '../../../../../core/models/opening_day_model.dart';
 import '../../../../../core/models/subscription_model.dart';
 import '../../../domain/entity/restaurant_entity.dart';
 
-class RestaurantModel extends BaseModel<RestaurantEntity> {
+class RestaurantModel {
   RestaurantModel({
     this.arLogo,
     this.enLogo,

@@ -1,5 +1,5 @@
-
 import 'package:upgrade_traine_project/features/coach/domain/entity/coach_entity.dart';
+import 'package:upgrade_traine_project/features/restaurant/domain/entity/restaurant_entity.dart';
 
 import '../../../../core/entities/base_entity.dart';
 import '../../../../core/entities/city_entity.dart';
@@ -7,14 +7,21 @@ import '../../../../core/entities/manager_entity.dart';
 import '../../../../core/entities/opening_day_entity.dart';
 import '../../../../core/entities/subscription_entity.dart';
 
-class ShopEntity extends BaseEntity {
+class ShopEntity extends PartnerEntity {
   ShopEntity({
-    this.arLogo,
-    this.enLogo,
-    this.logo,
-    this.arCover,
-    this.enCover,
-    this.cover,
+    super.arLogo,
+    super.enLogo,
+    super.logo,
+    super.arCover,
+    super.enCover,
+    super.cover,
+    super.arName,
+    super.enName,
+    super.name,
+    super.id,
+    super.enDescription,
+    super.arDescription,
+    super.description,
     this.cityId,
     this.city,
     this.street,
@@ -32,22 +39,9 @@ class ShopEntity extends BaseEntity {
     this.creationTime,
     this.subscription,
     this.isActive,
-    this.arName,
-    this.enName,
-    this.name,
-    this.id,
-    this.enDescription,
-    this.arDescription,
-    this.description,
     this.ratingDetails,
   });
   final RatingDetails? ratingDetails;
-  final String? arLogo;
-  final String? enLogo;
-  final String? logo;
-  final String? arCover;
-  final String? enCover;
-  final String? cover;
   final int? cityId;
   final CityEntity? city;
   final String? street;
@@ -65,13 +59,6 @@ class ShopEntity extends BaseEntity {
   final DateTime? creationTime;
   final SubscriptionEntity? subscription;
   final bool? isActive;
-  final String? arName;
-  final String? enName;
-  final String? name;
-  final int? id;
-  final String? arDescription;
-  final String? enDescription;
-  final String? description;
 
   @override
   List<Object?> get props => [];
