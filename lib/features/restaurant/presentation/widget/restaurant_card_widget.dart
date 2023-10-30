@@ -45,9 +45,8 @@ class RestaurantAndShopsCardShow extends StatelessWidget {
                           LanguageHelper.tr(context).no_data_found
                       : item.enDescription ??
                           LanguageHelper.tr(context).no_data_found,
-                  title: LanguageHelper.isAr(context)
-                      ? item.arName ?? LanguageHelper.tr(context).no_data_found
-                      : item.enName ?? LanguageHelper.tr(context).no_data_found,
+                  title:
+                      LanguageHelper.isAr(context) ? item.arName : item.enName,
                   avatarImage: item.logo == null
                       ? item is RestaurantEntity
                           ? defaultRestImg
@@ -94,14 +93,14 @@ class _CoverImage extends StatelessWidget {
 }
 
 class ListTileCustomWidget extends StatelessWidget {
-  final String title;
+  final String? title;
   final String body;
   final String avatarImage;
 
   const ListTileCustomWidget({
     Key? key,
     required this.avatarImage,
-    required this.title,
+    this.title,
     required this.body,
   }) : super(key: key);
 
@@ -122,7 +121,7 @@ class ListTileCustomWidget extends StatelessWidget {
               SizedBox(
                 width: .65.sw,
                 child: Text(
-                  title,
+                  title ?? LanguageHelper.tr(context).no_data_found,
                   style: TextStyle(
                       color: AppColors.yellow,
                       fontWeight: FontWeight.w500,
