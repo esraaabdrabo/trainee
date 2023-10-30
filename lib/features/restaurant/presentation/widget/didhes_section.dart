@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:upgrade_traine_project/core/common/app_colors.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
-import 'package:upgrade_traine_project/features/restaurant/presentation/screen/plates_view.dart';
+import 'package:upgrade_traine_project/features/restaurant/presentation/widget/dish_dialog.dart';
 import '../../../../core/ui/widgets/custom_text.dart';
 import '../state_m/cubit/new_cubit/new_restaurant_cubit.dart';
 import '../widget/dishes_view.dart';
@@ -69,44 +68,10 @@ class DishesSectionWidget extends StatelessWidget {
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            content: AlertDialogContent(
-                                              image: state
-                                                      .platesModel!
-                                                      .result!
-                                                      .items![int]
-                                                      .images!
-                                                      .isEmpty
-                                                  ? "https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg"
-                                                  : state.platesModel!.result!
-                                                      .items![int].images![0],
-                                              deliverPrice:
-                                                  "${state.platesModel!.result!.items![int].price}",
-                                              description: state
-                                                  .platesModel!
-                                                  .result!
-                                                  .items![int]
-                                                  .components
-                                                  .toString(),
-                                              mainTitle: state.platesModel!
-                                                  .result!.items![int].name
-                                                  .toString(),
-                                              restName: state
-                                                  .platesModel!
-                                                  .result!
-                                                  .items![int]
-                                                  .restaurant!
-                                                  .text!,
-                                              totalPrice: state.platesModel!
-                                                  .result!.items![int].price!,
-                                              weight: state.platesModel!.result!
-                                                  .items![int].enComponents
-                                                  .toString(),
-                                              id: state.platesModel!.result!
-                                                  .items![int].id!,
-                                            ),
-                                            backgroundColor: AppColors.grey,
-                                          );
+                                          return DishAlertDialog(
+                                              items: state
+                                                  .platesModel!.result!.items!,
+                                              index: int);
                                         },
                                       );
                                     },

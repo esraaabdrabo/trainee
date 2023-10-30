@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:upgrade_traine_project/core/constants/app/app_constants.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_appbar.dart';
+import 'package:upgrade_traine_project/core/ui/widgets/custom_text.dart';
 import 'package:upgrade_traine_project/features/orders/controller/order_cubit.dart';
 import 'package:upgrade_traine_project/features/restaurant/data/model/response/plates_model.dart';
+import 'package:upgrade_traine_project/features/restaurant/presentation/screen/restaurant_view.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/screen/search_screen.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/state_m/cubit/new_cubit/new_restaurant_cubit.dart';
 import '../../../../core/common/app_colors.dart';
@@ -159,164 +161,173 @@ class AlertDialogContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => NewRestaurantCubit(),
-      child: Container(
-        height: 500.h,
-        color: AppColors.grey,
-        child: Column(
-          children: [
-            Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                  image: image == null
-                      ? DecorationImage(
-                          image: NetworkImage(
-                            image,
-                          ),
-                          fit: BoxFit.cover)
-                      : DecorationImage(
-                          image: AssetImage(
-                            AppConstants.PROFILE_ICON,
-                          ),
-                          fit: BoxFit.cover)),
-            ),
-            Text(mainTitle),
-            Text(restName),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(weight, textWidthBasis: TextWidthBasis.parent),
-                const Icon(
-                  FontAwesomeIcons.weightScale,
-                  color: Colors.yellow,
-                )
-              ],
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              width: double.infinity,
-              child: Text(
-                description,
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            BlocConsumer<NewRestaurantCubit, NewRestaurantState>(
-              listener: (context, state) {
-                // TODO: implement listener
-              },
-              builder: (context, state) {
-                return TextRow(
-                    child: null,
-                    title: "السعر الكلي",
-                    price:
-                        "${NewRestaurantCubit.get(context).numberOfRequiredQuntity * totalPrice}");
-              },
-            ),
-            TextRow(
-                child: null,
-                title: "سعر التوصيل",
-                price: "غير موجود توصيل الان"),
-            BlocConsumer<NewRestaurantCubit, NewRestaurantState>(
-              listener: (context, state) {
-                // TODO: implement listener
-              },
-              builder: (context, state) {
-                return TextRow(
-                    price: null,
-                    title: "الكميه المطلوبه",
-                    child: SizedBox(
-                        width: 80,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                NewRestaurantCubit.get(context).addQuntity();
-                              },
-                              child: Container(
-                                height: 25,
-                                width: 25,
-                                color: AppColors.accentColorLight,
-                                child: const Center(
-                                    child: Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                )),
-                              ),
-                            ),
-                            Center(
-                                child: Text(
-                                    "${NewRestaurantCubit.get(context).numberOfRequiredQuntity}")),
-                            InkWell(
-                              onTap: () {
-                                NewRestaurantCubit.get(context).munisQuntity();
-                              },
-                              child: Container(
-                                height: 25,
-                                width: 25,
-                                color: AppColors.accentColorLight,
-                                child: const Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _DishImage(image: image),
+          SizedBox(height: 10.h),
+          CustomText(
+            text: mainTitle,
+            fontSize: 14.sp,
+          ),
+          SizedBox(height: 10.h),
+          CustomText(
+            text: restName,
+            fontSize: 14.sp,
+          ),
+
+          //  Row(
+          //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //    children: [
+          //      SizedBox(height: 10.h),
+          //      CustomText(
+          //        text: weight,
+          //        fontSize: 14.sp,
+          //      ),
+          //      const Icon(
+          //        FontAwesomeIcons.weightScale,
+          //        color: Colors.yellow,
+          //      )
+          //    ],
+          //  ),
+          SizedBox(height: 10.h),
+          CustomText(
+            text: description,
+            fontSize: 14.sp,
+            maxLines: 4,
+          ),
+          SizedBox(height: 10.h),
+          BlocConsumer<NewRestaurantCubit, NewRestaurantState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              return TextRow(
+                  child: null,
+                  title: "السعر الكلي",
+                  price:
+                      "${NewRestaurantCubit.get(context).numberOfRequiredQuntity * totalPrice}");
+            },
+          ),
+          TextRow(
+              child: null, title: "سعر التوصيل", price: "غير موجود توصيل الان"),
+          BlocConsumer<NewRestaurantCubit, NewRestaurantState>(
+            listener: (context, state) {
+              // TODO: implement listener
+            },
+            builder: (context, state) {
+              return TextRow(
+                  price: null,
+                  title: "الكميه المطلوبه",
+                  child: SizedBox(
+                      width: 80,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              NewRestaurantCubit.get(context).addQuntity();
+                            },
+                            child: Container(
+                              height: 25,
+                              width: 25,
+                              color: AppColors.accentColorLight,
+                              child: const Center(
                                   child: Icon(
-                                    Icons.remove,
-                                    color: Colors.white,
-                                  ),
+                                Icons.add,
+                                color: Colors.white,
+                              )),
+                            ),
+                          ),
+                          Center(
+                              child: Text(
+                                  "${NewRestaurantCubit.get(context).numberOfRequiredQuntity}")),
+                          InkWell(
+                            onTap: () {
+                              NewRestaurantCubit.get(context).munisQuntity();
+                            },
+                            child: Container(
+                              height: 25,
+                              width: 25,
+                              color: AppColors.accentColorLight,
+                              child: const Center(
+                                child: Icon(
+                                  Icons.remove,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
-                          ],
-                        )));
-              },
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            BlocConsumer<NewRestaurantCubit, NewRestaurantState>(
-              listener: (context, state) {
-                // TODO: implement listener
-              },
-              builder: (context, state) {
-                return ElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<OrderCubit>(context).addProductToCart(
-                        OrderModel(
-                            id,
-                            NewRestaurantCubit.get(context)
-                                .numberOfRequiredQuntity,
-                            totalPrice,
-                            mainTitle,
-                            image));
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CartView(),
-                        ));
-                    // Navigator.pushReplacement(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (c) => OrdersView(
-                    //               price:
-                    //                    "${NewRestaurantCubit.get(context).numberOfRequiredQuntity * totalPrice}",
-                    //               platesImageUrl: image,
-                    //               platesName: mainTitle,
-                    //               platesNumber: NewRestaurantCubit.get(context)
-                    //                   .numberOfRequiredQuntity
-                    //                   .toString(),
-                    //             )));
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.accentColorLight,
-                      minimumSize: const Size(200, 50)),
-                  child: const Text(
-                    "أضف الي السله",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                );
-              },
-            )
-          ],
-        ),
+                          ),
+                        ],
+                      )));
+            },
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          BlocConsumer<NewRestaurantCubit, NewRestaurantState>(
+            listener: (context, state) {
+              // TODO: implement listener
+            },
+            builder: (context, state) {
+              return ElevatedButton(
+                onPressed: () {
+                  BlocProvider.of<OrderCubit>(context).addProductToCart(
+                      OrderModel(
+                          id,
+                          NewRestaurantCubit.get(context)
+                              .numberOfRequiredQuntity,
+                          totalPrice,
+                          mainTitle,
+                          image));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CartView(),
+                      ));
+                  // Navigator.pushReplacement(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (c) => OrdersView(
+                  //               price:
+                  //                    "${NewRestaurantCubit.get(context).numberOfRequiredQuntity * totalPrice}",
+                  //               platesImageUrl: image,
+                  //               platesName: mainTitle,
+                  //               platesNumber: NewRestaurantCubit.get(context)
+                  //                   .numberOfRequiredQuntity
+                  //                   .toString(),
+                  //             )));
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.accentColorLight,
+                    minimumSize: const Size(200, 50)),
+                child: const Text(
+                  "أضف الي السله",
+                  style: TextStyle(color: Colors.white),
+                ),
+              );
+            },
+          )
+        ],
       ),
+    );
+  }
+}
+
+class _DishImage extends StatelessWidget {
+  const _DishImage({
+    super.key,
+    required this.image,
+  });
+
+  final String image;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: .1.sh,
+      width: .3.sw,
+      decoration: BoxDecoration(
+          image:
+              DecorationImage(image: NetworkImage(image), fit: BoxFit.cover)),
     );
   }
 }
