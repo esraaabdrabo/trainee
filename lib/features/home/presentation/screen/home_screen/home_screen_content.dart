@@ -125,9 +125,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       extendBodyBehindAppBar: true,
-      appBar: HomeAppbar(
-        controller: sn.searchTextController
-      ),
+      appBar: HomeAppbar(controller: sn.searchTextController),
       body: Stack(
         children: [
           _buildHomeScreenBody(context),
@@ -518,6 +516,37 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
             padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: Column(
               children: [
+                BlocBuilder<CoachCubit, CoachState>(
+                  bloc: sn.coachCubit,
+                  builder: (context, state) {
+                    return state.when(
+                      coachInitState: () {
+                        return const SizedBox.shrink();
+                      },
+                      coachLoadingState: () {
+                        return _buildCoachesSectionShimmer();
+                      },
+                      coachErrorState: (error, callback) {
+                        return const SizedBox.shrink();
+                      },
+                      getCoachesState: (CoachesEntity) {
+                        return SizedBox(
+                          width: 1.sw,
+                          height: CoachesEntity.items!.length > 8
+                              ? 0.54.sh
+                              : CoachesEntity.items!.length > 5
+                                  ? 0.37.sh
+                                  : 0.23.sh,
+                          child: _buildCoachesWidget(
+                              title: Translation.of(context).most_rated_coaches,
+                              widgets: CoachesEntity.items!,
+                              onSeeAllTapped: _goToCoaches),
+                        );
+                      },
+                    );
+                  },
+                ),
+                Gaps.vGap40,
                 BlocBuilder<CategoryCubit, CategoryState>(
                   bloc: sn.categoryCubit,
                   builder: (context, state) {
@@ -611,37 +640,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                                       )));
                             },
                           ),
-                        );
-                      },
-                    );
-                  },
-                ),
-                Gaps.vGap40,
-                BlocBuilder<CoachCubit, CoachState>(
-                  bloc: sn.coachCubit,
-                  builder: (context, state) {
-                    return state.when(
-                      coachInitState: () {
-                        return const SizedBox.shrink();
-                      },
-                      coachLoadingState: () {
-                        return _buildCoachesSectionShimmer();
-                      },
-                      coachErrorState: (error, callback) {
-                        return const SizedBox.shrink();
-                      },
-                      getCoachesState: (CoachesEntity) {
-                        return SizedBox(
-                          width: 1.sw,
-                          height: CoachesEntity.items!.length > 8
-                              ? 0.54.sh
-                              : CoachesEntity.items!.length > 5
-                                  ? 0.37.sh
-                                  : 0.23.sh,
-                          child: _buildCoachesWidget(
-                              title: Translation.of(context).most_rated_coaches,
-                              widgets: CoachesEntity.items!,
-                              onSeeAllTapped: _goToCoaches),
                         );
                       },
                     );

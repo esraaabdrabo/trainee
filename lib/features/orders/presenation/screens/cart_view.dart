@@ -14,8 +14,6 @@ import '../../../../core/ui/widgets/custom_image_widget.dart';
 import '../../../../core/ui/widgets/custom_text.dart';
 
 class CartView extends StatelessWidget {
-
-
   Widget _buildListItemWidget(
       {required String platesName,
       required String platesNumber,
@@ -83,7 +81,7 @@ class CartView extends StatelessWidget {
     );
   }
 
-  onWillPop(context) {
+  /* onWillPop(context) {
     if(BlocProvider.of<OrderCubit>(context).products.isNotEmpty) {
       return showDialog(
         context: context,
@@ -155,136 +153,165 @@ class CartView extends StatelessWidget {
       return Future.value(true);
     }
   }
-
+*/
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => onWillPop(context),
-      child: Scaffold(
+    return Scaffold(
         appBar: const TransparentAppBar(
           title: "السله",
         ),
-        body: BlocBuilder
-          <OrderCubit,OrderState>(builder: (context, state) {
-
-          if(BlocProvider.of<OrderCubit>(context).products .isNotEmpty){
-            return Column(
-              children: [
-                Expanded(
-                    flex: 11,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          flex: 9,
-                          child: ListView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              itemCount: BlocProvider.of<OrderCubit>(context).products.length,
-                              itemBuilder: (context, index) {
-                                return _buildListItemWidget(
-                                    price: BlocProvider.of<OrderCubit>(context).products[index].price.toString(),
-                                    PlatesImageUrl: BlocProvider.of<OrderCubit>(context).products[index].productImage,
-                                    platesName:BlocProvider.of<OrderCubit>(context).products[index].productName,
-                                    platesNumber: BlocProvider.of<OrderCubit>(context).products[index].qty.toString());
-                              }),
-                        ),
-                        Expanded(
-                          flex: 6,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              InkWell(
-                                onTap: (){
-                                  Navigator.pop(context);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(18.0),
-                                  child: CustomText(
-                                    decoration: TextDecoration.underline,
-                                    text: "أضافة وجبات أخري ؟",
-                                    decorationColor: AppColors.yellow,
-                                    color: AppColors.accentColorLight,
-                                    // fontWeight: FontWeight.w700,
-                                    fontSize: 16.sp,
-                                    decorationThickness: 1,
-                                  ),
-                                ),
-                              )
-                            ],
+        body: BlocBuilder<OrderCubit, OrderState>(
+          builder: (context, state) {
+            if (BlocProvider.of<OrderCubit>(context).products.isNotEmpty) {
+              return Column(
+                children: [
+                  Expanded(
+                      flex: 11,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            flex: 9,
+                            child: ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: BlocProvider.of<OrderCubit>(context)
+                                    .products
+                                    .length,
+                                itemBuilder: (context, index) {
+                                  return _buildListItemWidget(
+                                      price:
+                                          BlocProvider.of<OrderCubit>(context)
+                                              .products[index]
+                                              .price
+                                              .toString(),
+                                      PlatesImageUrl:
+                                          BlocProvider.of<OrderCubit>(context)
+                                              .products[index]
+                                              .productImage,
+                                      platesName:
+                                          BlocProvider.of<OrderCubit>(context)
+                                              .products[index]
+                                              .productName,
+                                      platesNumber:
+                                          BlocProvider.of<OrderCubit>(context)
+                                              .products[index]
+                                              .qty
+                                              .toString());
+                                }),
                           ),
-                        )
-                      ],
-                    )),
-                Expanded(
-                    flex: 3,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: BlurWidget(
-                            borderRadius: 0,
+                          Expanded(
+                            flex: 6,
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.only(
-                                          start: 20, top: 0, bottom: 0, end: 0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                        children: [
-                                          CustomText(
-                                            text: "الفاتوره الكليه",
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(18.0),
+                                    child: CustomText(
+                                      decoration: TextDecoration.underline,
+                                      text: "أضافة وجبات أخري ؟",
+                                      decorationColor: AppColors.yellow,
+                                      color: AppColors.accentColorLight,
+                                      // fontWeight: FontWeight.w700,
+                                      fontSize: 16.sp,
+                                      decorationThickness: 1,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      )),
+                  Expanded(
+                      flex: 3,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: BlurWidget(
+                              borderRadius: 0,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: Padding(
+                                    padding: const EdgeInsetsDirectional.only(
+                                        start: 20, top: 0, bottom: 0, end: 0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        CustomText(
+                                          text: "الفاتوره الكليه",
+                                          color: AppColors.accentColorLight,
+                                          fontSize: AppConstants.textSize14,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                        CustomText(
+                                          text:
+                                              "${BlocProvider.of<OrderCubit>(context).getCartPrice()} ${Translation.of(context).saudi_riyal} ",
+                                          color: AppColors.accentColorLight,
+                                          fontSize: AppConstants.textSize14,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                                  Expanded(
+                                      child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => PaymentView(
+                                                amount:
+                                                    BlocProvider.of<OrderCubit>(
+                                                            context)
+                                                        .getCartPrice(),
+                                                onSuccess: () {
+                                                  BlocProvider.of<OrderCubit>(
+                                                          context)
+                                                      .createOrder(context);
+                                                },
+                                              ),
+                                            ));
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
                                             color: AppColors.accentColorLight,
-                                            fontSize: AppConstants.textSize14,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Center(
+                                          child: CustomText(
+                                            text: "أطلب",
                                             fontWeight: FontWeight.w700,
-                                          ),
-                                          CustomText(
-                                            text: "${BlocProvider.of<OrderCubit>(context).getCartPrice()} ${Translation.of(context).saudi_riyal} ",
-                                            color: AppColors.accentColorLight,
                                             fontSize: AppConstants.textSize14,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                                Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: InkWell(
-                                        onTap: (){
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentView(amount: BlocProvider.of<OrderCubit>(context).getCartPrice(), onSuccess: (){
-                                            BlocProvider.of<OrderCubit>(context).createOrder(context);
-                                          },),));
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              color: AppColors.accentColorLight,
-                                              borderRadius: BorderRadius.circular(10)),
-                                          child: Center(
-                                            child: CustomText(
-                                              text: "أطلب",
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: AppConstants.textSize14,
-                                            ),
                                           ),
                                         ),
                                       ),
-                                    ))
-                              ],
+                                    ),
+                                  ))
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        const Expanded(child: SizedBox())
-                      ],
-                    ))
-              ],
-            );
-          }else{
-            return const Center(child: Text("no products yet"),);
-          }
-        },)
-      ),
-    );
+                          const Expanded(child: SizedBox())
+                        ],
+                      ))
+                ],
+              );
+            } else {
+              return const Center(
+                child: Text("no products yet"),
+              );
+            }
+          },
+        ));
   }
 }

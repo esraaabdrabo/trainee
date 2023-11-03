@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:upgrade_traine_project/core/models/profile.dart';
 import 'package:upgrade_traine_project/features/profile/presentation/state_m/cubit/profile_cubit.dart';
@@ -18,17 +19,31 @@ class OrderCubit extends Cubit<OrderState> {
 
   final _orderRepo = OrderRepo();
 
-  void addProductToCart(OrderModel orderModel){
-    products.add(orderModel);
+  void addProductToCart(OrderModel orderModel) {
+    int productIndex = _isProductInTheCart(orderModel);
+    //if the product is found in the cart update it's information (not add a new one)
+    if (productIndex >= 0) {
+      products[productIndex].qty += orderModel.qty;
+      products[productIndex].price += (orderModel.price * orderModel.qty);
+    } else {
+      //order model has the price for one item so we are multpling the price with the ordered quantity
+      orderModel.price = orderModel.price * orderModel.qty;
+      products.add(orderModel);
+    }
     emit(AddProductToCartState());
   }
 
-  void clearCart(){
+  int _isProductInTheCart(OrderModel orderModel) {
+    return products
+        .indexWhere((product) => product.productId == orderModel.productId);
+  }
+
+  void clearCart() {
     products.clear();
     emit(ClearCartState());
   }
 
-  int getCartPrice(){
+  int getCartPrice() {
     var price = 0;
     for (var element in products) {
       price += (element.price * element.qty);
@@ -37,21 +52,21 @@ class OrderCubit extends Cubit<OrderState> {
     return price;
   }
 
-  Future createOrder(BuildContext context,) async {
+  Future createOrder(
+    BuildContext context,
+  ) async {
     emit(CreateOrderLoadingState());
-    final res = await _orderRepo.createOrder(BlocProvider.of<ProfileCubit>(context).profileModel!.result!.id!);
+    final res = await _orderRepo.createOrder(
+        BlocProvider.of<ProfileCubit>(context).profileModel!.result!.id!);
     res.fold(
-          (err) {
+      (err) {
         Toast.show(err);
         emit(CreateOrderErrorState());
       },
-          (res) async {
+      (res) async {
         Toast.show('تم الاستراك بنجاح');
         emit(CreateOrderSuccessState());
       },
     );
   }
-
-
-
 }

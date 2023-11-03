@@ -58,7 +58,10 @@ class _CustomTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         hintText: labelText,
-        label: Text(label ?? ''),
+        //   hintStyle:  TextStyle(color: Colors.white),
+        label: Text(
+          label ?? '',
+        ),
         suffixIcon: suffix,
         prefixIcon: prefix,
         border: inputBorder,

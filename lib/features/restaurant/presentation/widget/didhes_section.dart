@@ -35,12 +35,17 @@ class DishesSectionWidget extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Spacer(),
-                  TextButton(
-                      onPressed: () {},
-                      child: CustomText(
-                        text: LanguageHelper.tr(context).see_all,
-                      ))
+                  const Spacer(),
+                  if (state is SuccessGetAllData &&
+                      (state.platesModel?.result?.items != null ||
+                          state.platesModel!.result!.items!.isNotEmpty))
+                    TextButton(
+                        onPressed: () {
+                          //todo
+                        },
+                        child: CustomText(
+                          text: LanguageHelper.tr(context).see_all,
+                        ))
                 ],
               ),
               state is SuccessGetAllData

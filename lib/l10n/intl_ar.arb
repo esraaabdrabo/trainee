@@ -188,5 +188,13 @@
 "female":"أنثى",
 "select_your_location": "اختر موقعك على الخريطة",
 "invalid_email":"البريد الالكتروني غير صالح",
-"enter_num_only": "أدخل أرقام فقط"
+"enter_num_only": "أدخل أرقام فقط",
+
+  "add_to_cart": "أضف إلى السلة",
+  "quantity": "الكمية",
+  "delever_price": "سعر التوصيل",
+  "no_delever": "بدون توصيل",
+  "totalPrice": "السعر الإجمالي"
+
+
 }

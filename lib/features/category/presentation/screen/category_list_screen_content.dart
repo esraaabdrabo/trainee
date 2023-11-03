@@ -42,13 +42,13 @@ class _CategoryListScreenContentState extends State<CategoryListScreenContent>
         height: 1.sh,
         child: Column(
           children: [
-            _buildCustomTabBar(),
-            Gaps.vGap12,
             sn.showSearchField
                 ? SearchTextField(
                     hintText: Translation.of(context).search,
                     controller: sn.searchController)
                 : const SizedBox.shrink(),
+            Gaps.vGap12,
+            _buildCustomTabBar(),
             Gaps.vGap12,
             Expanded(child: _buildTabView())
           ],

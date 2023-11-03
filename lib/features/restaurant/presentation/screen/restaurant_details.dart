@@ -426,9 +426,7 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
                       ),
                     ),
                     Gaps.vGap24,
-                    _buildRatingWidget(
-                      rate: widget.restaurantEntity.rate,
-                    ),
+                    _buildRatingWidget(rate: widget.restaurantEntity.rate),
                     Gaps.vGap24,
                   ],
                 ),

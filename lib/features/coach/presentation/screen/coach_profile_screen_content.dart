@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/video_call_screen.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/voice_call_screen.dart';
 import 'package:upgrade_traine_project/features/coach/domain/entity/coach_entity.dart';
@@ -372,15 +373,15 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                   Row(
                     children: [
                       CustomText(
-                        text: "${sn.coachEntity.phoneNumber}",
+                        text: sn.coachEntity.specialization?.text ?? "",
                         color: AppColors.accentColorLight,
                         fontSize: AppConstants.textSize14,
                         fontWeight: FontWeight.bold,
                       ),
                       const Spacer(),
                       CustomText(
-                        text: '${sn.coachEntity.hoursPrice ?? 0}' +
-                            ' ريال سعودي/ساعة',
+                        text:
+                            '${sn.coachEntity.hoursPrice ?? 0} ${LanguageHelper.tr(context).saudi_riyal}',
                         fontSize: AppConstants.textSize14,
                         color: AppColors.accentColorLight,
                         fontWeight: FontWeight.bold,
@@ -638,8 +639,8 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                             Row(
                               children: [
                                 CustomText(
-                                  text: sn.courses.first.cost.toString() +
-                                      Translation.of(context).saudi_riyal,
+                                  text:
+                                      "${sn.courses.first.cost.toString()} ${Translation.of(context).saudi_riyal}",
                                   fontSize: AppConstants.textSize15,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.accentColorLight,

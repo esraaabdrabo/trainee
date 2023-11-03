@@ -188,5 +188,10 @@
 "female":"Female",
 "select_your_location":"Select your location on the map",
 "invalid_email":"Invalid Email Format",
-"enter_num_only":"Enter only numbers" 
+"enter_num_only":"Enter only numbers" ,
+"add_to_cart":"Add to cart",
+"quantity":"quantity",
+"delever_price":"delivery price",
+"no_delever":"no delivery",
+"totalPrice":"total price"
 }

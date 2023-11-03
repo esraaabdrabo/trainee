@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:upgrade_traine_project/core/constants/app/app_constants.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_appbar.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_text.dart';
 import 'package:upgrade_traine_project/features/orders/controller/order_cubit.dart';
@@ -159,6 +160,7 @@ class AlertDialogContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var tr = LanguageHelper.tr(context);
     return BlocProvider(
       create: (context) => NewRestaurantCubit(),
       child: Column(
@@ -195,6 +197,7 @@ class AlertDialogContent extends StatelessWidget {
             text: description,
             fontSize: 14.sp,
             maxLines: 4,
+            textAlign: TextAlign.start,
           ),
           SizedBox(height: 10.h),
           BlocConsumer<NewRestaurantCubit, NewRestaurantState>(
@@ -202,13 +205,12 @@ class AlertDialogContent extends StatelessWidget {
             builder: (context, state) {
               return TextRow(
                   child: null,
-                  title: "السعر الكلي",
+                  title: tr.totalPrice,
                   price:
                       "${NewRestaurantCubit.get(context).numberOfRequiredQuntity * totalPrice}");
             },
           ),
-          TextRow(
-              child: null, title: "سعر التوصيل", price: "غير موجود توصيل الان"),
+          TextRow(child: null, title: tr.delever_price, price: tr.no_delever),
           BlocConsumer<NewRestaurantCubit, NewRestaurantState>(
             listener: (context, state) {
               // TODO: implement listener
@@ -216,7 +218,7 @@ class AlertDialogContent extends StatelessWidget {
             builder: (context, state) {
               return TextRow(
                   price: null,
-                  title: "الكميه المطلوبه",
+                  title: tr.quantity,
                   child: SizedBox(
                       width: 80,
                       child: Row(
@@ -299,8 +301,8 @@ class AlertDialogContent extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.accentColorLight,
                     minimumSize: const Size(200, 50)),
-                child: const Text(
-                  "أضف الي السله",
+                child: Text(
+                  tr.add_to_cart,
                   style: TextStyle(color: Colors.white),
                 ),
               );
