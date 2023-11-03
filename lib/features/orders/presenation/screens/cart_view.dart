@@ -20,7 +20,7 @@ class CartView extends StatelessWidget {
   Widget build(BuildContext context) {
     var tr = LanguageHelper.tr(context);
     return Scaffold(
-        appBar: TransparentAppBar(title: " tr.cart"),
+        appBar: TransparentAppBar(title: tr.cart),
         body: BlocBuilder<OrderCubit, OrderState>(
           builder: (context, state) {
             if (BlocProvider.of<OrderCubit>(context).products.isNotEmpty) {
@@ -48,7 +48,7 @@ class CartView extends StatelessWidget {
                                           MainAxisAlignment.spaceAround,
                                       children: [
                                         CustomText(
-                                          text: "الفاتوره الكليه",
+                                          text: tr.totalPrice,
                                           color: AppColors.accentColorLight,
                                           fontSize: AppConstants.textSize14,
                                           fontWeight: FontWeight.w700,
@@ -91,7 +91,7 @@ class CartView extends StatelessWidget {
                                                 BorderRadius.circular(10)),
                                         child: Center(
                                           child: CustomText(
-                                            text: "أطلب",
+                                            text: tr.order,
                                             fontWeight: FontWeight.w700,
                                             fontSize: AppConstants.textSize14,
                                           ),
@@ -108,8 +108,8 @@ class CartView extends StatelessWidget {
                 ],
               );
             } else {
-              return const Center(
-                child: Text("no products yet"),
+              return Center(
+                child: Text(LanguageHelper.tr(context).no_data_found),
               );
             }
           },

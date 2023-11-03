@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:upgrade_traine_project/core/common/app_colors.dart';
 import 'package:upgrade_traine_project/core/common/style/gaps.dart';
 import 'package:upgrade_traine_project/core/constants/app/app_constants.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/blur_widget.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_image_widget.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_text.dart';
@@ -26,6 +27,7 @@ class CartOrdersListWidget extends StatelessWidget {
                       BlocProvider.of<OrderCubit>(context).products.length,
                   itemBuilder: (context, index) {
                     return _buildListItemWidget(
+                        context: context,
                         price: BlocProvider.of<OrderCubit>(context)
                             .products[index]
                             .price
@@ -53,7 +55,7 @@ class CartOrdersListWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(18.0),
                     child: CustomText(
                       decoration: TextDecoration.underline,
-                      text: "أضافة وجبات أخري ؟",
+                      text: LanguageHelper.tr(context).add_another_plate,
                       decorationColor: AppColors.yellow,
                       color: AppColors.accentColorLight,
                       // fontWeight: FontWeight.w700,
@@ -70,10 +72,12 @@ class CartOrdersListWidget extends StatelessWidget {
 }
 
 Widget _buildListItemWidget(
-    {required String platesName,
+    {required BuildContext context,
+    required String platesName,
     required String platesNumber,
     required String price,
     required String PlatesImageUrl}) {
+  var tr = LanguageHelper.tr(context);
   return GestureDetector(
     onTap: () {},
     child: Padding(
@@ -98,16 +102,16 @@ Widget _buildListItemWidget(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
-                          text: platesName ?? '',
+                          text: platesName,
                           fontSize: AppConstants.textSize16,
                           fontWeight: FontWeight.w700,
                         ),
                         CustomText(
-                          text: " عدد $platesNumber" ?? '',
+                          text: " ${tr.num} $platesNumber",
                           fontSize: AppConstants.textSize14,
                         ),
                         CustomText(
-                          text: "$price ريال سعودي " ?? '',
+                          text: "$price ${tr.saudi_riyal} ",
                           fontSize: AppConstants.textSize14,
                           color: AppColors.accentColorLight,
                           fontWeight: FontWeight.w700,
@@ -121,7 +125,7 @@ Widget _buildListItemWidget(
                     borderRadius:
                         BorderRadius.circular(AppConstants.borderRadius10),
                     child: CustomImageWidget(
-                      imgPath: PlatesImageUrl ?? '',
+                      imgPath: PlatesImageUrl,
                       width: 96.w,
                       height: 116.h,
                     ),

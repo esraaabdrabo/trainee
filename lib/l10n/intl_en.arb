@@ -193,5 +193,9 @@
 "quantity":"quantity",
 "delever_price":"delivery price",
 "no_delever":"no delivery",
-"totalPrice":"total price"
+"totalPrice":"total price",
+"cart": "Cart",
+  "add_another_plate": "Add another dish?",
+  "num": "Number",
+  "order": "Order"
 }

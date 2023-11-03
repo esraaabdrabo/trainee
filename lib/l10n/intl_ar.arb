@@ -194,7 +194,10 @@
   "quantity": "الكمية",
   "delever_price": "سعر التوصيل",
   "no_delever": "بدون توصيل",
-  "totalPrice": "السعر الإجمالي"
-
+  "totalPrice": "السعر الإجمالي",
+  "cart":"السلة",
+  "add_another_plate": "أضافة وجبات أخري ؟",
+"num":"عدد",
+"order":"اطلب"
 
 }
