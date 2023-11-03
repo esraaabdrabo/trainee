@@ -266,37 +266,18 @@ class AlertDialogContent extends StatelessWidget {
             height: 50,
           ),
           BlocConsumer<NewRestaurantCubit, NewRestaurantState>(
-            listener: (context, state) {
-              // TODO: implement listener
-            },
+            listener: (context, state) {},
             builder: (context, state) {
               return ElevatedButton(
                 onPressed: () {
-                  BlocProvider.of<OrderCubit>(context).addProductToCart(
-                      OrderModel(
-                          id,
-                          NewRestaurantCubit.get(context)
-                              .numberOfRequiredQuntity,
-                          totalPrice,
-                          mainTitle,
-                          image));
+                  BlocProvider.of<OrderCubit>(context)
+                      .addProductToCart(_makeOrderModel(context));
+                  Navigator.pop(context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => CartView(),
                       ));
-                  // Navigator.pushReplacement(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (c) => OrdersView(
-                  //               price:
-                  //                    "${NewRestaurantCubit.get(context).numberOfRequiredQuntity * totalPrice}",
-                  //               platesImageUrl: image,
-                  //               platesName: mainTitle,
-                  //               platesNumber: NewRestaurantCubit.get(context)
-                  //                   .numberOfRequiredQuntity
-                  //                   .toString(),
-                  //             )));
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.accentColorLight,
@@ -311,6 +292,15 @@ class AlertDialogContent extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  OrderModel _makeOrderModel(BuildContext context) {
+    return OrderModel(
+        id,
+        NewRestaurantCubit.get(context).numberOfRequiredQuntity,
+        totalPrice,
+        mainTitle,
+        image);
   }
 }
 

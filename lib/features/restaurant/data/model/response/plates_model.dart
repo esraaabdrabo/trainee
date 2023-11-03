@@ -1,4 +1,3 @@
-import '../../../../../core/models/base_model.dart';
 
 class PlatesModel  {
   Result? result;
@@ -18,7 +17,7 @@ class PlatesModel  {
 
   PlatesModel.fromJson(Map<String, dynamic> json) {
     result =
-    json['result'] != null ? new Result.fromJson(json['result']) : null;
+    json['result'] != null ? Result.fromJson(json['result']) : null;
     targetUrl = json['targetUrl'];
     success = json['success'];
     error = json['error'];
@@ -27,15 +26,15 @@ class PlatesModel  {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.result != null) {
-      data['result'] = this.result!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (result != null) {
+      data['result'] = result!.toJson();
     }
-    data['targetUrl'] = this.targetUrl;
-    data['success'] = this.success;
-    data['error'] = this.error;
-    data['unAuthorizedRequest'] = this.unAuthorizedRequest;
-    data['__abp'] = this.bAbp;
+    data['targetUrl'] = targetUrl;
+    data['success'] = success;
+    data['error'] = error;
+    data['unAuthorizedRequest'] = unAuthorizedRequest;
+    data['__abp'] = bAbp;
     return data;
   }
 
@@ -56,16 +55,16 @@ class Result {
     if (json['items'] != null) {
       items = <Items>[];
       json['items'].forEach((v) {
-        items!.add(new Items.fromJson(v));
+        items!.add(Items.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['totalCount'] = this.totalCount;
-    if (this.items != null) {
-      data['items'] = this.items!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['totalCount'] = totalCount;
+    if (items != null) {
+      data['items'] = items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -114,11 +113,11 @@ class Items {
     price = json['price'];
     restaurantId = json['restaurantId'];
     restaurant = json['restaurant'] != null
-        ? new Restaurant.fromJson(json['restaurant'])
+        ? Restaurant.fromJson(json['restaurant'])
         : null;
     categoryId = json['categoryId'];
     category = json['category'] != null
-        ? new Restaurant.fromJson(json['category'])
+        ? Restaurant.fromJson(json['category'])
         : null;
     creationTime = json['creationTime'];
     images = json['images'].cast<String>();
@@ -131,27 +130,27 @@ class Items {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['enComponents'] = this.enComponents;
-    data['arComponents'] = this.arComponents;
-    data['components'] = this.components;
-    data['price'] = this.price;
-    data['restaurantId'] = this.restaurantId;
-    if (this.restaurant != null) {
-      data['restaurant'] = this.restaurant!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['enComponents'] = enComponents;
+    data['arComponents'] = arComponents;
+    data['components'] = components;
+    data['price'] = price;
+    data['restaurantId'] = restaurantId;
+    if (restaurant != null) {
+      data['restaurant'] = restaurant!.toJson();
     }
-    data['categoryId'] = this.categoryId;
-    if (this.category != null) {
-      data['category'] = this.category!.toJson();
+    data['categoryId'] = categoryId;
+    if (category != null) {
+      data['category'] = category!.toJson();
     }
-    data['creationTime'] = this.creationTime;
-    data['images'] = this.images;
-    data['rate'] = this.rate;
-    data['isActive'] = this.isActive;
-    data['arName'] = this.arName;
-    data['enName'] = this.enName;
-    data['name'] = this.name;
-    data['id'] = this.id;
+    data['creationTime'] = creationTime;
+    data['images'] = images;
+    data['rate'] = rate;
+    data['isActive'] = isActive;
+    data['arName'] = arName;
+    data['enName'] = enName;
+    data['name'] = name;
+    data['id'] = id;
     return data;
   }
 }
@@ -168,9 +167,9 @@ class Restaurant {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['value'] = this.value;
-    data['text'] = this.text;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['value'] = value;
+    data['text'] = text;
     return data;
   }
 }

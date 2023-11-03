@@ -55,7 +55,7 @@ class CartOrdersListWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(18.0),
                     child: CustomText(
                       decoration: TextDecoration.underline,
-                      text: LanguageHelper.tr(context).add_another_plate,
+                      text: LanguageHelper.tr(context).add_another_product,
                       decorationColor: AppColors.yellow,
                       color: AppColors.accentColorLight,
                       // fontWeight: FontWeight.w700,

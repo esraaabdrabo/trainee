@@ -197,5 +197,6 @@
 "cart": "Cart",
   "add_another_plate": "Add another dish?",
   "num": "Number",
-  "order": "Order"
+  "order": "Order",
+  "add_another_product":"Add another product?"
 }

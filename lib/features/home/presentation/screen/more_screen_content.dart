@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
+import 'package:upgrade_traine_project/features/orders/presenation/screens/cart_view.dart';
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/style/gaps.dart';
 import '../../../../core/common/utils.dart';
@@ -96,6 +98,16 @@ class _MoreScreenContentState extends State<MoreScreenContent> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => const MyOrderView(),
+                          ));
+                    }),
+                _buildChipWidget(
+                    title: LanguageHelper.tr(context).cart,
+                    imgPath: AppConstants.VEGGIE2_IMG,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CartView(),
                           ));
                     }),
               ],

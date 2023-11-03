@@ -7,7 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:upgrade_traine_project/core/common/app_colors.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/screen/plates_view.dart';
-import 'package:upgrade_traine_project/features/restaurant/presentation/widget/didhes_section.dart';
+import 'package:upgrade_traine_project/features/restaurant/presentation/widget/dishes_section.dart';
 import '../../../../core/common/style/gaps.dart';
 import '../../../../core/constants/app/app_constants.dart';
 import '../../../../core/navigation/nav.dart';
@@ -21,8 +21,6 @@ import '../../../../core/utils/validators/error_image.dart';
 import '../../../../generated/l10n.dart';
 import '../../domain/entity/restaurant_entity.dart';
 import '../state_m/cubit/new_cubit/new_restaurant_cubit.dart';
-import '../widget/dishes_view.dart';
-
 class PlayingSliverState extends StatefulWidget {
   final RestaurantEntity restaurantEntity;
 

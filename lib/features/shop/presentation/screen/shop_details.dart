@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/waiting_widget.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/state_m/cubit/new_cubit/new_restaurant_cubit.dart';
 import 'package:upgrade_traine_project/features/shop/domain/entity/shop_entity.dart';
@@ -233,7 +234,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                             )
                           : Image.network(
                               errorBuilder: (context, error, stackTrace) {
-                                return ErrorImage();
+                                return const ErrorImage();
                               },
                               image,
                               height: 56.h,
@@ -445,80 +446,112 @@ class _ShopDetailsState extends State<ShopDetails> {
       child: BlocConsumer<ShopsCubit, ShopsState>(
         listener: (context, state) {},
         builder: (context, state) {
-          return state is GetProductsLoaded
-              ? Container(
-                  height: state.productsModel.result!.totalCount! > 2
-                      ? 400.h
-                      : 200.h,
-                  padding: const EdgeInsets.all(8),
-                  child: state.productsModel.result!.items!.isNotEmpty
-                      ? GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 10,
-                                  childAspectRatio: 1.2,
-                                  crossAxisSpacing: 10),
-                          itemCount: state.productsModel.result!.totalCount! > 4
-                              ? 4
-                              : state.productsModel.result!.totalCount!,
-                          itemBuilder: (context, int) {
-                            return DishesView(
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        content: AlertDialogContent(
-                                          image: state.productsModel.result!
-                                                  .items![int].images!.isEmpty
-                                              ? "https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg"
-                                              : state.productsModel.result!
-                                                  .items![int].images![0],
-                                          deliverPrice:
-                                              "${state.productsModel.result!.items![int].price}",
-                                          description: state.productsModel
-                                              .result!.items![int].components
-                                              .toString(),
-                                          mainTitle: state.productsModel.result!
-                                              .items![int].name
-                                              .toString(),
-                                          restName: state.productsModel.result!
-                                              .items![int].shop!.text!,
-                                          totalPrice: state.productsModel
-                                              .result!.items![int].price!,
-                                          weight: state.productsModel.result!
-                                              .items![int].enComponents
-                                              .toString(),
-                                          id: state.productsModel.result!
-                                              .items![int].id!,
-                                        ),
-                                        backgroundColor: AppColors.grey,
-                                      );
-                                    },
-                                  );
-                                },
-                                restaurantName: state.productsModel.result!
-                                    .items![int].shop!.text
-                                    .toString(),
-                                price: state
-                                    .productsModel.result!.items![int].price
-                                    .toString(),
-                                imagePlate: state.productsModel.result!
-                                        .items![int].images!.isEmpty
-                                    ? "https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg"
-                                    : state.productsModel.result!.items![int]
-                                        .images![0],
-                                plateName: state
-                                    .productsModel.result!.items![int].name
-                                    .toString());
-                          })
-                      : const Center(child: Text("No Products")),
-                )
-              : const Center(
-                  child: Center(child: CircularProgressIndicator()),
-                );
+          return Column(children: [
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  child: CustomText(
+                    text: LanguageHelper.tr(context).supplements,
+                    fontSize: 17.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const Spacer(),
+                if (state is GetProductsLoaded &&
+                    (state.productsModel.result?.items != null &&
+                        state.productsModel.result!.items!.isNotEmpty))
+                  TextButton(
+                      onPressed: () {
+                        //todo
+                      },
+                      child: CustomText(
+                        text: LanguageHelper.tr(context).see_all,
+                      ))
+              ],
+            ),
+            state is GetProductsLoaded
+                ? Container(
+                    height: state.productsModel!.result!.totalCount! > 2
+                        ? 400.h
+                        : 200.h,
+                    padding: const EdgeInsets.all(8),
+                    child: state.productsModel!.result!.items!.isNotEmpty
+                        ? GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 10,
+                                    childAspectRatio: .75,
+                                    crossAxisSpacing: 10),
+                            itemCount:
+                                state.productsModel!.result!.totalCount! > 4
+                                    ? 4
+                                    : state.productsModel!.result!.totalCount!,
+                            itemBuilder: (context, int) {
+                              return DishesView(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          content: AlertDialogContent(
+                                            image: state.productsModel.result!
+                                                    .items![int].images!.isEmpty
+                                                ? "https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg"
+                                                : state.productsModel.result!
+                                                    .items![int].images![0],
+                                            deliverPrice:
+                                                "${state.productsModel.result!.items![int].price}",
+                                            description: state.productsModel
+                                                .result!.items![int].components
+                                                .toString(),
+                                            mainTitle: state.productsModel
+                                                .result!.items![int].name
+                                                .toString(),
+                                            restName: state
+                                                .productsModel
+                                                .result!
+                                                .items![int]
+                                                .shop!
+                                                .text!,
+                                            totalPrice: state.productsModel
+                                                .result!.items![int].price!,
+                                            weight: state.productsModel.result!
+                                                .items![int].enComponents
+                                                .toString(),
+                                            id: state.productsModel.result!
+                                                .items![int].id!,
+                                          ),
+                                          backgroundColor: AppColors.grey,
+                                        );
+                                      },
+                                    );
+                                  },
+                                  restaurantName: state.productsModel!.result!
+                                      .items![int].shop!.text
+                                      .toString(),
+                                  price: state
+                                      .productsModel!.result!.items![int].price
+                                      .toString(),
+                                  imagePlate: state.productsModel!.result!
+                                          .items![int].images!.isEmpty
+                                      ? "https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg"
+                                      : state.productsModel!.result!.items![int]
+                                          .images![0],
+                                  plateName: state
+                                      .productsModel!.result!.items![int].name
+                                      .toString());
+                            })
+                        : Center(
+                            child:
+                                Text(LanguageHelper.tr(context).no_data_found)),
+                  )
+                : const Center(
+                    child: CircularProgressIndicator(),
+                  )
+          ]);
         },
       ),
     );
