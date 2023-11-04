@@ -37,7 +37,7 @@ class DishesSectionWidget extends StatelessWidget {
                   ),
                   const Spacer(),
                   if (state is SuccessGetAllData &&
-                      (state.platesModel?.result?.items != null ||
+                      (state.platesModel?.result?.items != null &&
                           state.platesModel!.result!.items!.isNotEmpty))
                     TextButton(
                         onPressed: () {

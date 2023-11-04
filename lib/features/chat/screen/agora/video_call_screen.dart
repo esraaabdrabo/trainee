@@ -7,7 +7,7 @@ import 'agoraConfig.dart';
 
 class VideoCallScreen extends StatefulWidget {
   final int? trainerId;
-  const VideoCallScreen({required this.trainerId, Key? key}) : super(key: key);
+  const VideoCallScreen(this.trainerId, {Key? key}) : super(key: key);
 
   @override
   State<VideoCallScreen> createState() => _VideoCallScreenState();

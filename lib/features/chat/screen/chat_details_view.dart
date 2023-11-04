@@ -8,7 +8,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_text.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/video_call_screen.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/voice_call_screen.dart';
+import 'package:upgrade_traine_project/features/chat/widgets/agora_actions.dart';
 import 'package:upgrade_traine_project/features/notification/presentation/controller/notification_cubit.dart';
 import '../../../../core/ui/widgets/custom_appbar.dart';
 import '../../../core/common/app_colors.dart';
@@ -114,87 +118,6 @@ class _ChatDetailsViewState extends State<ChatDetailsView> {
     });
     BlocProvider.of<NotificationCubit>(context)
         .createNotifications(context, widget.chatModel!.trainerId!, 0);
-  }
-
-  callingForm() {
-    return Container(
-      height: 120.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: AppColors.transparent.withOpacity(0.1),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-              flex: 3,
-              child: CustomText(
-                text: widget.chatModel!.trainerName ?? "",
-                fontWeight: FontWeight.w700,
-                fontSize: AppConstants.textSize18,
-              )),
-          Expanded(
-            flex: 2,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                image: widget.chatModel!.traineeImage == null
-                    ? const DecorationImage(
-                        image: AssetImage(AppConstants.COACH1_IMAGE),
-                        fit: BoxFit.cover,
-                      )
-                    : DecorationImage(
-                        fit: BoxFit.cover,
-                        image:
-                            NetworkImage(widget.chatModel!.trainerImage ?? ""),
-                      ),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                // IconButton(
-                //     onPressed: () {
-                //       Navigator.of(context)
-                //           .push(MaterialPageRoute(builder: (context) {
-                //         return AudioCallPage(trainerId: widget.chatModel!.trainerId!);
-                //
-                //       }));
-                //       BlocProvider.of<NotificationCubit>(context).createNotifications(context, widget.chatModel!.trainerId!, 2);
-                //     },
-                //     icon: const Icon(
-                //       Icons.phone,
-                //       color: AppColors.accentColorLight,
-                //     )),
-            
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Container(
-                    height: 1,
-                    color: AppColors.white,
-                  ),
-                ),
-                // IconButton(
-                //     onPressed: () {
-                //       Navigator.of(context)
-                //           .push(MaterialPageRoute(builder: (context) {
-                //         return VideoCallPage(trainerId: widget.chatModel!.trainerId!);
-                //       }));
-                //       BlocProvider.of<NotificationCubit>(context).createNotifications(context, widget.chatModel!.trainerId!, 1);
-                //     },
-                //     icon: const Icon(
-                //       Icons.videocam,
-                //       color: AppColors.accentColorLight,
-                //     ))
-              
-              ],
-            ),
-          )
-        ],
-      ),
-    );
   }
 
   chatText() {
@@ -316,12 +239,10 @@ class _ChatDetailsViewState extends State<ChatDetailsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TransparentAppBar(
-        title: "الرسائل",
-      ),
+      appBar: TransparentAppBar(title: LanguageHelper.tr(context).chat),
       body: Column(
         children: [
-          callingForm(),
+          AgoraActionsWidget(widget.chatModel!),
           chatText(),
           Container(
               decoration: BoxDecoration(
@@ -380,7 +301,6 @@ class _ChatDetailsViewState extends State<ChatDetailsView> {
                           color: AppColors.white,
                         ),
                       ),
-                     
                     ],
                   )
                 ],
