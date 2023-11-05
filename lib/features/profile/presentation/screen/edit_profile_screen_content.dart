@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/common/validators.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
@@ -70,11 +71,11 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
         "";
     //todo
     //this is not null
-    birthDateController.text = BlocProvider.of<ProfileCubit>(context)
-            .profileModel!
-            .result!
-            .birthDate ??
-        "";
+    String? date =
+        BlocProvider.of<ProfileCubit>(context).profileModel!.result!.birthDate;
+    birthDateController.text = date == null
+        ? ''
+        : DateFormat("yyyy-MM-dd").format(DateTime.parse(date)).toString();
     gender.text =
         "${BlocProvider.of<ProfileCubit>(context).profileModel!.result!.gender ?? 1}";
     heightController.text = EdirProfileFunctions.isNull(
