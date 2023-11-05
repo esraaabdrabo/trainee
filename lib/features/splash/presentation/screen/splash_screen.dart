@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -58,8 +60,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void _handleOnSplashLoaded(//SpecializationsEntity specializationsEntity
       ) async {
     var prefs = await SpUtil.getInstance();
-    double? longitude = await prefs.getDouble(AppConstants.KEY_LONGITUDE);
-    double? latitude = await prefs.getDouble(AppConstants.KEY_LATITUDE);
+    double? longitude = prefs.getDouble(AppConstants.KEY_LONGITUDE);
+    double? latitude = prefs.getDouble(AppConstants.KEY_LATITUDE);
     if (longitude != null && latitude != null) {
       LatLng latLng = LatLng(latitude, longitude);
       Provider.of<SessionDataProvider>(context, listen: false).myLocation =

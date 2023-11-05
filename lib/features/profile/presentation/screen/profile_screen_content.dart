@@ -14,6 +14,9 @@ import '../../../../core/ui/widgets/title_widget.dart';
 import '../../../../generated/l10n.dart';
 import '../screen/../state_m/provider/profile_screen_notifier.dart';
 
+var defaultTrainneImageUrl =
+    'https://www.bing.com/images/blob?bcid=RO6.8XCnsEcGqxcxoNWLuD9SqbotqVTdP3M';
+
 class ProfileScreenContent extends StatefulWidget {
   @override
   State<ProfileScreenContent> createState() => _ProfileScreenContentState();
@@ -54,7 +57,7 @@ class _ProfileScreenContentState extends State<ProfileScreenContent> {
                 children: [
                   _buildShimmerContainerItem(
                     height: 0.52.sh,
-                    width:width?? 1.sw,
+                    width: width ?? 1.sw,
                   ),
                 ],
               ),
@@ -65,7 +68,6 @@ class _ProfileScreenContentState extends State<ProfileScreenContent> {
 
   @override
   Widget build(BuildContext context) {
-
     return SizedBox(
       height: 1.sh,
       child: SingleChildScrollView(
@@ -80,9 +82,16 @@ class _ProfileScreenContentState extends State<ProfileScreenContent> {
               builder: (context, state) {
                 if (state is ProfileSuccess) {
                   return _buildCoverInfoWidget(
-                      phoneNumber: BlocProvider.of<ProfileCubit>(context).profileModel!.result!.phoneNumber.toString(),
-                    name: BlocProvider.of<ProfileCubit>(context).profileModel!.result!.name ?? "Coach Trainee"
-                  );
+                      phoneNumber: BlocProvider.of<ProfileCubit>(context)
+                          .profileModel!
+                          .result!
+                          .phoneNumber
+                          .toString(),
+                      name: BlocProvider.of<ProfileCubit>(context)
+                              .profileModel!
+                              .result!
+                              .name ??
+                          "Coach Trainee");
                 } else {
                   return _buildSectionShimmer();
                 }
@@ -191,7 +200,8 @@ class _ProfileScreenContentState extends State<ProfileScreenContent> {
     );
   }
 
-  Widget _buildCoverInfoWidget({required String phoneNumber,required String name}) {
+  Widget _buildCoverInfoWidget(
+      {required String phoneNumber, required String name}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: SizedBox(
@@ -200,10 +210,12 @@ class _ProfileScreenContentState extends State<ProfileScreenContent> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppConstants.borderRadius8),
-            image: const DecorationImage(
-                image: AssetImage(
-                  AppConstants.COACH_COVER_IMG,
-                ),
+            image: DecorationImage(
+                image: NetworkImage(BlocProvider.of<ProfileCubit>(context)
+                        .profileModel!
+                        .result!
+                        .imageUrl ??
+                    defaultTrainneImageUrl),
                 fit: BoxFit.cover),
           ),
           child: Align(
@@ -224,7 +236,7 @@ class _ProfileScreenContentState extends State<ProfileScreenContent> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        text: name ,
+                        text: name,
                         fontSize: AppConstants.textSize24,
                         fontWeight: FontWeight.bold,
                       ),

@@ -13,9 +13,8 @@ class UpdateProfileModel {
   final String? long;
   final String? countryCode;
   final String? emailAddress;
-  final String? imageUrl;
+  String? imageUrl;
   final int? id;
-
 
   UpdateProfileModel(
       {this.name,
@@ -26,11 +25,10 @@ class UpdateProfileModel {
       this.weight,
       this.lat,
       this.countryCode,
-        this.emailAddress,
-        this.imageUrl,
-        this.id,
+      this.emailAddress,
+      this.imageUrl,
+      this.id,
       this.long});
-
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -43,9 +41,9 @@ class UpdateProfileModel {
     data['latitude'] = lat;
     data['longitude'] = long;
     data['countryCode'] = countryCode;
-    data["emailAddress"]=emailAddress;
-    data["imageUrl"]=imageUrl;
-    data["id"]=id;
+    data["emailAddress"] = emailAddress;
+    data["imageUrl"] = imageUrl;
+    data["id"] = id;
 
     return data;
   }

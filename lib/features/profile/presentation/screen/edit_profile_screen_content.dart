@@ -1,22 +1,17 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/common/validators.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
-import 'package:upgrade_traine_project/core/ui/error_ui/error_viewer/toast/show_error_toast.dart';
 import 'package:upgrade_traine_project/core/ui/toast.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/waiting_widget.dart';
-import 'package:upgrade_traine_project/features/profile/presentation/state_m/constants.dart';
 import 'package:upgrade_traine_project/features/profile/presentation/state_m/cubit/profile_cubit.dart';
 import 'package:upgrade_traine_project/features/profile/presentation/state_m/functions.dart';
-import 'package:upgrade_traine_project/features/profile/presentation/state_m/provider/profile_screen_notifier.dart';
 import 'package:upgrade_traine_project/features/profile/presentation/widget/edit/gender.dart';
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/style/gaps.dart';
@@ -27,7 +22,6 @@ import '../../../../core/ui/widgets/custom_text.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import '../../../../generated/l10n.dart';
 import '../../data/model/request/update_profile_model.dart';
-import '../../data/model/response/profile_model.dart';
 import '../screen/../state_m/provider/edit_profile_screen_notifier.dart';
 import 'map.dart';
 
@@ -105,7 +99,6 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
 
   @override
   Widget build(BuildContext context) {
-    print(url ?? "nuslkjdljsd");
     sn = Provider.of<EditProfileScreenNotifier>(context);
     sn.context = context;
     return Form(
@@ -190,59 +183,50 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
                   ],
                 ),
                 Gaps.vGap24,
-                BlocProvider(
-                  create: (context) => ProfileCubit(),
-                  child: BlocConsumer<ProfileCubit, ProfileState>(
-                    listener: (context, state) {
-                      if (state is EditProfileSuccess) {
-                        Nav.pop(context);
-                      }
-                      if (state is EditProfileIMGSuccess) {
-                        setState(() {
-                          url = state.url;
-                        });
-                        Nav.pop(context);
-                      }
+                BlocConsumer<ProfileCubit, ProfileState>(
+                  listener: (context, state) {
+                    if (state is EditProfileSuccess) {
+                      Nav.pop(context);
+                    }
 
-                      if (state is EditProfileError) {}
-                    },
-                    builder: (context, state) {
-                      if (state is! EditProfileLoading) {
-                        return SizedBox(
-                          height: 44.h,
-                          width: 217.w,
-                          child: CustomElevatedButton(
-                            text: Translation.of(context).save,
-                            onTap: () {
-                              if (pos != null) {
-                                BlocProvider.of<ProfileCubit>(context)
-                                    .updateProfile(UpdateProfileModel(
-                                        weight: weightController.text,
-                                        name: nameController.text,
-                                        lat: pos!.latitude.toString(),
-                                        long: pos!.longitude.toString(),
-                                        birthDate: birthDateController.text,
-                                        phone: phoneController.text,
-                                        height: heightController.text,
-                                        gender: int.parse(gender.text),
-                                        countryCode: countryCode,
-                                        imageUrl: url,
-                                        emailAddress: "",
-                                        id: id));
-                              } else {
-                                Toast.show(LanguageHelper.tr(context)
-                                    .select_your_location);
-                              }
-                            },
-                            textSize: AppConstants.textSize20,
-                            borderRadius: AppConstants.borderRadius4,
-                          ),
-                        );
-                      } else {
-                        return WaitingWidget();
-                      }
-                    },
-                  ),
+                    if (state is EditProfileError) {}
+                  },
+                  builder: (context, state) {
+                    if (state is! EditProfileLoading) {
+                      return SizedBox(
+                        height: 44.h,
+                        width: 217.w,
+                        child: CustomElevatedButton(
+                          text: Translation.of(context).save,
+                          onTap: () {
+                            if (pos != null) {
+                              BlocProvider.of<ProfileCubit>(context)
+                                  .updateProfile(UpdateProfileModel(
+                                      weight: weightController.text,
+                                      name: nameController.text,
+                                      lat: pos!.latitude.toString(),
+                                      long: pos!.longitude.toString(),
+                                      birthDate: birthDateController.text,
+                                      phone: phoneController.text,
+                                      height: heightController.text,
+                                      gender: int.parse(gender.text),
+                                      countryCode: countryCode,
+                                      imageUrl: url,
+                                      emailAddress: "",
+                                      id: id));
+                            } else {
+                              Toast.show(LanguageHelper.tr(context)
+                                  .select_your_location);
+                            }
+                          },
+                          textSize: AppConstants.textSize20,
+                          borderRadius: AppConstants.borderRadius4,
+                        ),
+                      );
+                    } else {
+                      return WaitingWidget();
+                    }
+                  },
                 ),
                 Gaps.vGap24,
               ],
@@ -254,62 +238,40 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
   }
 
   Widget _buildImageWidget() {
-    return Container(
-      height: 0.52.sh,
-      width: 1.sw,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppConstants.borderRadius8),
-        image: DecorationImage(
-            image: sn.image != null
-                //picked image as file
-                ? FileImage(
-                    File(sn.image!.path),
-                  )
-                :
-                //user image from
-                NetworkImage(BlocProvider.of<ProfileCubit>(context)
-                        .profileModel!
-                        .result!
-                        .imageUrl ??
-                    "") as ImageProvider,
-            fit: BoxFit.cover),
-      ),
-      child: BlocProvider(
-        create: (context) => ProfileCubit(),
-        child: BlocConsumer<ProfileCubit, ProfileState>(
-          listener: (context, state) {
-            // TODO: implement listener
-          },
-          builder: (context, state) {
-            return Container(
-              color: AppColors.primaryColorLight.withOpacity(0.7),
-              child: Center(
-                child: GestureDetector(
-                  onTap: () async {
-                    XFile? image;
-                    image = await ImagePicker()
-                        .pickImage(source: ImageSource.camera);
-                    url = await sn.profileCubit.updateImage(File(image!.path));
-//todo
-//image url dont be send
-                    setState(() async {
-                      sn.image = image;
-                      print("here");
-                      print(url ?? "not uploaded");
-                    });
-                  },
-                  child: ImageIcon(
-                    const AssetImage(AppConstants.CAMERA_ICON),
-                    color: AppColors.white,
-                    size: 104.w,
-                  ),
+    return BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
+      return Container(
+          height: 0.52.sh,
+          width: 1.sw,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppConstants.borderRadius8),
+            image: DecorationImage(
+                image: state is EditProfileIMGSuccess
+                    //picked image as file
+                    ? FileImage(File(state.url))
+                    :
+                    //user image from
+                    NetworkImage(BlocProvider.of<ProfileCubit>(context)
+                            .profileModel!
+                            .result!
+                            .imageUrl ??
+                        "") as ImageProvider,
+                fit: BoxFit.cover),
+          ),
+          child: Container(
+            color: AppColors.primaryColorLight.withOpacity(0.7),
+            child: Center(
+              child: GestureDetector(
+                onTap: () async =>
+                    BlocProvider.of<ProfileCubit>(context).pickImage(),
+                child: ImageIcon(
+                  const AssetImage(AppConstants.CAMERA_ICON),
+                  color: AppColors.white,
+                  size: 104.w,
                 ),
               ),
-            );
-          },
-        ),
-      ),
-    );
+            ),
+          ));
+    });
   }
 
   Widget _buildTextFiledWidget(

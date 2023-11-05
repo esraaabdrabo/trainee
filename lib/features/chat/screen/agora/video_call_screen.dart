@@ -25,12 +25,14 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   Future<void> _initAgora() async {
     _client = AgoraClient(
       agoraConnectionData: AgoraConnectionData(
-        appId: AgoraConstants.appId,
-        channelName: const Uuid().v1(),
-        tempToken: (await DioHelper.get(
-                "https://api.yacotch.com/api/services/app/Agora/GetToken?Channel=${_generateChannelName()}"))
-            .data,
-      ),
+          appId: AgoraConstants.appId,
+          channelName: "esraaabdrabo23", //const Uuid().v1(),
+          tempToken:
+              "006a1be21131cd943aeab4fe2b0afa05a0bIAB4NGXk69ZyLlsCdlP/VX6TYf1EtUNqs5SQAN30J1NZ3wafZn0AAAAAIgAG8FocT7RHZQQAAQBPtEdlAgBPtEdlAwBPtEdlBABPtEdl"
+          // (await DioHelper.get(
+          //       "https://api.yacotch.com/api/services/app/Agora/GetToken?Channel=${_generateChannelName()}"))
+          // .data,
+          ),
     );
     await _client.initialize();
   }

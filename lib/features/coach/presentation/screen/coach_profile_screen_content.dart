@@ -419,9 +419,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                         onTap: () {
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
-                            return VoiceCallScreen(
-                                //trainerId: sn.coachEntity.id!,
-                                );
+                            return VoiceCallScreen(sn.coachEntity.id!);
                           }));
                           BlocProvider.of<NotificationCubit>(context)
                               .createNotifications(
@@ -440,7 +438,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
                             return VideoCallScreen(
-                              trainerId: sn.coachEntity.id!,
+                              sn.coachEntity.id!,
                             );
                           }));
                           BlocProvider.of<NotificationCubit>(context)

@@ -94,6 +94,9 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> updateProfile(UpdateProfileModel updateProfileModel) async {
     emit(EditProfileLoading());
+    if (imageFilePath != null) {
+      updateProfileModel.imageUrl = await updateImage(imageFilePath!);
+    }
     final response = await DioHelper().putData(
         url: APIUrls.API_USER_PROFILE_UPDATE,
         data: updateProfileModel.toJson(),
@@ -102,27 +105,32 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(EditProfileError());
     }, (success) {
       emit(EditProfileSuccess());
+      imageFilePath = null;
       getProfile();
     });
   }
 
-  String? url;
-  Future<String?> updateImage(file) async {
+  String? imageFilePath;
+  Future<void> pickImage() async {
+    await ImagePicker().pickImage(source: ImageSource.camera).then((value) {
+      if (value != null) {
+        imageFilePath = value.path;
+      }
+    });
+    emit(EditProfileIMGSuccess(url: imageFilePath!));
+  }
+
+  Future<String?> updateImage(String path) async {
     emit(EditProfileLoading());
     final response = await DioHelper().postDataImage(
         url: APIUrls.API_USER_Image_UPDATE,
-        data: {"file": await DioHelper.uploadFile(file)},
+        data: {"file": await DioHelper.uploadFile(File(path))},
         withToken: true);
-    response.fold((error) {
+    return response.fold((error) {
       emit(EditProfileError());
       return null;
     }, (success) {
-      print(success.data);
-      print("prof:${success.data["result"]["url"]}");
-      emit(
-        EditProfileIMGSuccess(url: success.data["result"]["url"]),
-      );
-      return success.data["url"];
+      return success.data["result"]["url"];
     });
   }
 }

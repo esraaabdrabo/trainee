@@ -5,23 +5,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
-import 'package:upgrade_traine_project/core/ui/widgets/custom_text.dart';
-import 'package:upgrade_traine_project/features/chat/screen/agora/video_call_screen.dart';
-import 'package:upgrade_traine_project/features/chat/screen/agora/voice_call_screen.dart';
 import 'package:upgrade_traine_project/features/chat/widgets/agora_actions.dart';
+import 'package:upgrade_traine_project/features/chat/widgets/chat_messages.dart';
 import 'package:upgrade_traine_project/features/notification/presentation/controller/notification_cubit.dart';
 import '../../../../core/ui/widgets/custom_appbar.dart';
 import '../../../core/common/app_colors.dart';
-import '../../../core/constants/app/app_constants.dart';
-import '../../../core/utils/validators/error_image.dart';
 import '../../profile/presentation/state_m/cubit/profile_cubit.dart';
 import '../data/model/chat_model.dart';
-import '../data/model/message_model.dart';
-import 'package:flutter_chat_bubble/chat_bubble.dart';
 
 class ChatDetailsView extends StatefulWidget {
   final ChatModel? chatModel;
@@ -120,122 +113,6 @@ class _ChatDetailsViewState extends State<ChatDetailsView> {
         .createNotifications(context, widget.chatModel!.trainerId!, 0);
   }
 
-  chatText() {
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection('chats')
-          .doc(BlocProvider.of<ProfileCubit>(context)
-                  .profileModel!
-                  .result!
-                  .id
-                  .toString() +
-              widget.chatModel!.trainerId.toString())
-          .collection("messages")
-          .orderBy("messageTime", descending: true)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.none) {
-          return const Text('Something went wrong');
-        } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Expanded(
-              child: Center(child: CircularProgressIndicator()));
-        } else {
-          List<MessageModel> messages = [];
-          for (var element in snapshot.data!.docs) {
-            messages.add(MessageModel.fromJson(element.data()));
-          }
-          return Expanded(
-              child: ListView.separated(
-                  reverse: true,
-                  itemBuilder: (context, index) {
-                    if (messages[index].senderId ==
-                        BlocProvider.of<ProfileCubit>(context)
-                            .profileModel!
-                            .result!
-                            .id) {
-                      if (messages[index].type == "message") {
-                        return ChatBubble(
-                          clipper:
-                              ChatBubbleClipper1(type: BubbleType.sendBubble),
-                          alignment: Alignment.topRight,
-                          margin: const EdgeInsets.only(top: 20),
-                          backGroundColor: Colors.blue,
-                          child: Container(
-                            constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width * 0.7,
-                            ),
-                            child: Text(
-                              messages[index].message ?? "",
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        );
-                      } else {
-                        return ChatBubble(
-                          clipper:
-                              ChatBubbleClipper1(type: BubbleType.sendBubble),
-                          alignment: Alignment.topRight,
-                          margin: const EdgeInsets.only(top: 20),
-                          backGroundColor: Colors.blue,
-                          child: Image.network(
-                              errorBuilder: (context, error, stackTrace) {
-                            return const ErrorImage();
-                          },
-                              height: 200,
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              fit: BoxFit.cover,
-                              messages[index].message ?? ""),
-                        );
-                      }
-                    } else {
-                      if (messages[index].type != "file") {
-                        return ChatBubble(
-                          clipper: ChatBubbleClipper1(
-                              type: BubbleType.receiverBubble),
-                          backGroundColor: const Color(0xffE7E7ED),
-                          margin: const EdgeInsets.only(top: 20),
-                          child: Container(
-                            constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width * 0.7,
-                            ),
-                            child: Text(
-                              messages[index].message ?? "",
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          ),
-                        );
-                      } else {
-                        return ChatBubble(
-                          clipper: ChatBubbleClipper1(
-                              type: BubbleType.receiverBubble),
-                          backGroundColor: const Color(0xffE7E7ED),
-                          margin: const EdgeInsets.only(top: 20),
-                          child: Container(
-                            constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width * 0.7,
-                            ),
-                            child: Image.network(
-                              errorBuilder: (context, error, stackTrace) {
-                                return const ErrorImage();
-                              },
-                              messages[index].message ?? "",
-                            ),
-                          ),
-                        );
-                      }
-                    }
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      height: 10,
-                    );
-                  },
-                  itemCount: messages.length));
-        }
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -243,7 +120,7 @@ class _ChatDetailsViewState extends State<ChatDetailsView> {
       body: Column(
         children: [
           AgoraActionsWidget(widget.chatModel!),
-          chatText(),
+          chatText(context, widget.chatModel!.trainerId!),
           Container(
               decoration: BoxDecoration(
                   color: AppColors.transparent.withOpacity(0.2),

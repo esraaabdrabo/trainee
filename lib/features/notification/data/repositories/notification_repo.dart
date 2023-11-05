@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -6,9 +8,7 @@ import '../../../../core/net/api_url.dart';
 import '../models/notification_model.dart';
 
 class NotificationRepo {
-
   Future<Either<String, List<NotificationModel>>> getNotifications() async {
-
     final response = await DioHelper.get(
       APIUrls.API_GET_NOTIFICATIONS,
     );
@@ -16,8 +16,9 @@ class NotificationRepo {
     try {
       if (response.data['success'] == true) {
         List<NotificationModel> notifications = [];
-        for(int i = 0; i < response.data['result']["items"].length; i++ ){
-          notifications.add(NotificationModel.fromJson(response.data['result']["items"][i]));
+        for (int i = 0; i < response.data['result']["items"].length; i++) {
+          notifications.add(
+              NotificationModel.fromJson(response.data['result']["items"][i]));
         }
         return Right(notifications);
       } else {
@@ -29,27 +30,35 @@ class NotificationRepo {
     }
   }
 
-  Future<Either<String,bool>> createNotification(int userId,int messageType,) async {
-
-    final response = await DioHelper.post(
-      APIUrls.API_CREATE_NOTIFICATIONS,
-      formData: {
-        "userId" : userId,
-        "NotificationType" : 1,
-        "msgType" : messageType
-      }
-    );
+  Future<Either<String, bool>> createNotification(
+    int userId,
+    int messageType,
+  ) async {
+    final response = await DioHelper.post(APIUrls.API_CREATE_NOTIFICATIONS,
+        formData: {
+          "userId": userId,
+          "NotificationType": 1,
+          "msgType": messageType
+        });
+    log(response.data.toString());
+    print("after request");
     try {
       if (response.data['success'] == true) {
-
+        print(response.data);
+        log("succ");
         return const Right(true);
       } else {
+        print(response.data);
+        log("//////////////////////////////////////////////////////////////////");
+
         return Left(response.data['error']['message']);
       }
     } catch (e) {
+      log("catch");
       print(e);
+      print(
+          "//////////////////////////////////////////////////////////////////");
       return Left(e.toString());
     }
   }
-
 }

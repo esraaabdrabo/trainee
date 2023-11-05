@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:upgrade_traine_project/core/common/app_colors.dart';
@@ -12,8 +14,8 @@ class VideoCallIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
         onPressed: () {
-          _goToVideoCallScreen(context);
           _sendNotification(context);
+          _goToVideoCallScreen(context);
         },
         icon: const Icon(
           Icons.videocam,
@@ -27,6 +29,7 @@ class VideoCallIcon extends StatelessWidget {
   }
 
   void _sendNotification(BuildContext context) {
+    log("s");
     BlocProvider.of<NotificationCubit>(context)
         .createNotifications(context, id, 1);
   }
