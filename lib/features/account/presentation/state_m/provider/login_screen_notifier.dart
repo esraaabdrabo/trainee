@@ -7,15 +7,15 @@ import '../bloc/account_cubit.dart';
 class LoginScreenNotifier extends ScreenNotifier {
   /// Fields
   late BuildContext context;
-  AccountCubit _accountCubit = AccountCubit();
+  final AccountCubit _accountCubit = AccountCubit();
   bool _isLoading = false;
   bool _passwordSecure = true;
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   late String _countryCode = AppConstants.DEFAULT_COUNTRY_CODE;
-  FocusNode _phoneFocusNode = FocusNode();
-  FocusNode _passwordFocusNode = FocusNode();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FocusNode _phoneFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   /// Getters and Setters
   AccountCubit get accountCubit => _accountCubit;

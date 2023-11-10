@@ -66,7 +66,7 @@ class _NavigatorScreenState extends RouteAwareState<NavigatorScreen> {
       AppConstants.HOME_ICON,
       AppConstants.MAIL_ICON,
       AppConstants.SEARCH_ICON,
-      AppConstants.HOME_ICON,
+      AppConstants.PROFILE_ICON,
       Icons.more_horiz
     ];
     return SizedBox(

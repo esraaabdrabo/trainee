@@ -33,62 +33,6 @@ class App extends StatefulWidget {
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   print("Handling a background message: ${message.messageId}");
-//   if(message.data["MsgType"] == 1 || message.data["MsgType"] == 2){
-//     showCallkitIncoming(const Uuid().v4(),phone: message.data["UserPhoneNumber"],name: message.data["UserName"],userId: message.data["SenderId"]);
-//   }
-//
-// }
-
-// Future<void> showCallkitIncoming(String uuid,
-//     {required String phone, required String  name, required String userId}) async {
-//   final params = CallKitParams(
-//     id: uuid,
-//     nameCaller: name,
-//     appName: 'Callkit',
-//     avatar: 'https://i.pravatar.cc/100',
-//     handle: phone,
-//     type: 0,
-//     duration: 30000,
-//     textAccept: 'Accept',
-//     textDecline: 'Decline',
-//     missedCallNotification: const NotificationParams(
-//       showNotification: true,
-//       isShowCallback: true,
-//       subtitle: 'Missed call',
-//       callbackText: 'Call back',
-//     ),
-//     extra: <String, dynamic>{'userId': userId},
-//     headers: <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
-//
-//     android: const AndroidParams(
-//       isCustomNotification: true,
-//       isShowLogo: false,
-//       ringtonePath: 'system_ringtone_default',
-//       backgroundColor: '#0955fa',
-//       backgroundUrl: 'assets/test.png',
-//       actionColor: '#4CAF50',
-//     ),
-//     ios: const IOSParams(
-//       iconName: 'CallKitLogo',
-//       handleType: '',
-//       supportsVideo: true,
-//       maximumCallGroups: 2,
-//       maximumCallsPerCallGroup: 1,
-//       audioSessionMode: 'default',
-//       audioSessionActive: true,
-//       audioSessionPreferredSampleRate: 44100.0,
-//       audioSessionPreferredIOBufferDuration: 0.005,
-//       supportsDTMF: true,
-//       supportsHolding: true,
-//       supportsGrouping: false,
-//       supportsUngrouping: false,
-//       ringtonePath: 'system_ringtone_default',
-//     ),
-//   );
-//   await FlutterCallkitIncoming.showCallkitIncoming(params);
-// }
 
 class _AppState extends State<App> with WidgetsBindingObserver {
   // late final Uuid _uuid;

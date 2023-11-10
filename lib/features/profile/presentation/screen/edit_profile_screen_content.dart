@@ -55,13 +55,11 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
 
   void initControllers() {
     pos = LatLng(
-        BlocProvider.of<ProfileCubit>(context).profileModel!.result!.latitude ??
-            0,
-        BlocProvider.of<ProfileCubit>(context)
-                .profileModel!
-                .result!
-                .longitude ??
-            0);
+      BlocProvider.of<ProfileCubit>(context).profileModel!.result!.latitude ??
+          0,
+      BlocProvider.of<ProfileCubit>(context).profileModel!.result!.longitude ??
+          0,
+    );
     nameController.text =
         BlocProvider.of<ProfileCubit>(context).profileModel!.result!.name ?? "";
     phoneController.text = BlocProvider.of<ProfileCubit>(context)
@@ -73,9 +71,7 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
     //this is not null
     String? date =
         BlocProvider.of<ProfileCubit>(context).profileModel!.result!.birthDate;
-    birthDateController.text = date == null
-        ? ''
-        : DateFormat("yyyy-MM-dd").format(DateTime.parse(date)).toString();
+    birthDateController.text = date ?? '';
     gender.text =
         "${BlocProvider.of<ProfileCubit>(context).profileModel!.result!.gender ?? 1}";
     heightController.text = EdirProfileFunctions.isNull(
@@ -126,28 +122,7 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
                 Gaps.vGap24,
                 EditGenderWidget(gender),
                 Gaps.vGap24,
-                _buildTextFiledWidget(
-                    keboardType: TextInputType.datetime,
-                    onTap: () async {
-                      var date = await showDatePicker(
-                          builder: (context, child) {
-                            return Theme(
-                                data: ThemeData(
-                                  colorSchemeSeed: Colors.yellow,
-                                ),
-                                child: child!);
-                          },
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1950),
-                          lastDate: DateTime(3000));
-                      if (date != null) {
-                        setState(() {
-                          birthDateController.text =
-                              date.toString().substring(0, 10);
-                        });
-                      }
-                    },
+                _buildDateTextField(
                     title: Translation.of(context).date_of_birth,
                     textEditingController: birthDateController),
                 Gaps.vGap24,
@@ -302,15 +277,18 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: PhoneNumberTextField(
+                    isoCode: countryCode!,
+                    dialCode: countryCode!,
                     onDialChanged: (d) {
-                      setState(() {
-                        countryCode = d;
-                      });
+                      //    setState(() => countryCode = d);
+                      //  print(d);
                     },
                     border: InputBorder.none,
                     hint: false,
                     textEditingController: textEditingController,
-                    onInputChanged: (p0) {},
+                    onInputChanged: (country) {
+                      setState(() => countryCode = country);
+                    },
                   ),
                 ),
               )
@@ -344,5 +322,59 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
               ),
       ],
     );
+  }
+
+  Widget _buildDateTextField(
+      {required String title,
+      required TextEditingController textEditingController}) {
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomText(
+            text: title,
+            fontSize: AppConstants.textSize16,
+          ),
+          Gaps.vGap4,
+          InkWell(
+            onTap: () async {
+              var date = await showDatePicker(
+                  builder: (context, child) {
+                    return Theme(
+                        data: ThemeData(
+                          colorSchemeSeed: Colors.yellow,
+                        ),
+                        child: child!);
+                  },
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1950),
+                  lastDate: DateTime.now());
+              if (date != null) {
+                setState(() {
+                  birthDateController.text = date.toString().substring(0, 10);
+                });
+              }
+            },
+            child: Container(
+              width: 1.sw,
+              padding: EdgeInsets.symmetric(vertical: 18.h),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: AppColors.white,
+                  ),
+                  borderRadius:
+                      BorderRadius.circular(AppConstants.borderRadius6)),
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Text(
+                    DateFormat("yyyy-MM-dd")
+                        .format(DateTime.parse(birthDateController.text))
+                        .toString(),
+                    style: TextStyle(fontSize: 18.sp),
+                  )),
+            ),
+          )
+        ]);
   }
 }

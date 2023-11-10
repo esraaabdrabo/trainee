@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -138,11 +140,12 @@ class AccountCubit extends Cubit<AccountState> {
   }
 
   Future<void> updateDeviceToken() async {
+    log("message");
     var token = await FirebaseMessaging.instance.getToken();
+    print("fcm token : $token");
     final result = await DioHelper.put(APIUrls.API_UPDATE_DEVICE_TOKEN,
         body: {"token": token ?? ""});
-    print(
-        "hello --------------------------------------------------------------------------------------" +
-            result.data.toString());
+
+    print(result.data);
   }
 }

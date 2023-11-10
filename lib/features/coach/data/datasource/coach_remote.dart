@@ -19,7 +19,9 @@ class CoachRemoteSource extends ICoachRemoteSource {
         converter: (json) => CoachesModel.fromJson(json),
         method: HttpMethod.GET,
         url: APIUrls.API_GET_ALL_COACHES,
-        queryParameters:params.categoryId != null ? {"category":params.categoryId} : null,
+        queryParameters: params.categoryId != null
+            ? {"categoryId": params.categoryId}
+            : null,
         //params.toMap(),
         cancelToken: params.cancelToken);
   }

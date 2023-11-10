@@ -115,12 +115,9 @@ class PhoneNumberTextField extends StatelessWidget {
       keyboardAction: textInputAction ?? TextInputAction.next,
       initialValue: PhoneNumber(isoCode: isoCode, dialCode: dialCode),
       onInputChanged: (text) {
+        print("text.isoCode  ${text.isoCode}");
         onInputChanged(text.isoCode ?? isoCode);
-        debugPrint("bug:${text.dialCode}");
-        debugPrint("bug2:$dialCode");
         onDialChanged(text.dialCode ?? dialCode);
-        debugPrint("bug:${text.dialCode}");
-        debugPrint("bug2:$dialCode");
       },
       selectorConfig: const SelectorConfig(
         selectorType: PhoneInputSelectorType.DIALOG,

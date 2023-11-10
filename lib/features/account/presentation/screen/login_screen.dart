@@ -93,8 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       AppConstants.KEY_TOKEN, loginEntity.accessToken ?? '');
                   prefs.putString(AppConstants.KEY_ENCRYPTED_TOKEN,
                       loginEntity.encryptedAccessToken ?? '');
-                  prefs.putString(
-                      AppConstants.KEY_PHONE, sn.phoneController.text);
+                  //  prefs.putString(
+                  //      AppConstants.KEY_PHONE, sn.phoneController.text);
                   await sn.accountCubit.updateDeviceToken();
                   Nav.off(NavigatorScreen.routeName,
                       cleanHistory: true, context: context);

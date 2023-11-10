@@ -7,13 +7,13 @@ import '../bloc/account_cubit.dart';
 class AccountVerificationScreenNotifier extends ScreenNotifier {
   /// Fields
   late BuildContext context;
-  AccountCubit _accountCubit = AccountCubit();
-  AccountCubit _verificationCodeCubit = AccountCubit();
+  final AccountCubit _accountCubit = AccountCubit();
+  final AccountCubit _verificationCodeCubit = AccountCubit();
   bool _isLoading = false;
-  TextEditingController _pinCodeController = TextEditingController();
+  final TextEditingController _pinCodeController = TextEditingController();
   late String _phoneNumber;
   late String _otpValue;
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   /// Getters and Setters
   bool get isLoading => _isLoading;

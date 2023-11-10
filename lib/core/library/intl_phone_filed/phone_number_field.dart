@@ -239,6 +239,11 @@ class _InputWidgetState extends State<PhoneNumberField> {
                 phoneNumber: phoneNumber,
                 isoCode: country?.alpha2Code,
                 dialCode: country?.dialCode));
+            print(PhoneNumber(
+                    phoneNumber: phoneNumber,
+                    isoCode: country?.alpha2Code,
+                    dialCode: country?.dialCode)
+                .isoCode);
           }
 
           if (widget.onInputValidated != null) {

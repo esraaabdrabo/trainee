@@ -201,5 +201,7 @@
 "order":"اطلب",
 "add_another_product":"اضافة منتج اخر؟",
 
-"chat":"الرسائل"
+"chat":"الرسائل",
+"current_location":"موقعك الحالي"
+
 }

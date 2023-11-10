@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:upgrade_traine_project/core/notifications/notification_service.dart';
 import 'package:upgrade_traine_project/firebase_options.dart';
 import 'app.dart';
 import 'core/common/app_config.dart';
@@ -33,6 +34,8 @@ _initAppConfigs() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  setupNotifications();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: SystemUiOverlay.values);
 

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_appbar.dart';
 
 import '../../../../core/constants/app/app_constants.dart';
@@ -64,15 +65,14 @@ class _MapScreenState extends State<MapScreen> {
     return WillPopScope(
       onWillPop: () => willScope(),
       child: Scaffold(
-        appBar: const TransparentAppBar(title: "Current Location"),
+        appBar: TransparentAppBar(
+            title: LanguageHelper.tr(context).current_location),
         body: _userLocation == null
             ? const Center(child: CircularProgressIndicator())
             : Stack(
                 children: [
                   GoogleMap(
                     mapType: MapType.normal,
-                    zoomControlsEnabled: false,
-                    zoomGesturesEnabled: false,
                     markers: {
                       Marker(
                           markerId: MarkerId(markerPosition.toString()),

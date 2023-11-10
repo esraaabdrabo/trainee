@@ -199,5 +199,6 @@
   "num": "Number",
   "order": "Order",
   "add_another_product":"Add another product?",
-  "chat":"Chat"
+  "chat":"Chat",
+  "current_location":"Current Location"
 }

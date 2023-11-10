@@ -98,7 +98,7 @@ class _MapWidgetState extends State<MapWidget> {
                   BlocProvider.of<MapsCubit>(context).controller = controller;
                   // _setMapStyle();
                   if (widget.onMapCreated != null) {
-                  //  widget.onMapCreated!();
+                    //  widget.onMapCreated!();
                   }
                 },
                 initialCameraPosition: CameraPosition(
