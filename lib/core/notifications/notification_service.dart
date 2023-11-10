@@ -42,36 +42,50 @@ void requestPermissions() {
   flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
-      ?.requestPermission();
+      ?.requestNotificationsPermission();
 }
 
-void showNotification(RemoteMessage event, String payload) async {
-  var iOSPlatformChannelSpecifics = const IOSNotificationDetails(
+void showNotification(
+    bool hasActions, RemoteMessage event, String payload) async {
+  var iOSPlatformChannelSpecifics = const DarwinNotificationDetails(
       presentAlert: true, presentBadge: true, presentSound: true);
-  var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
-      "com.yacotch.partner", "yacotch",
-      channelDescription: "notificationBase",
-      enableVibration: true,
-      playSound: true,
-      icon: '@mipmap/ic_launcher',
-      importance: Importance.high,
-      priority: Priority.high);
-  var notificationDetails = NotificationDetails(
-    android: androidPlatformChannelSpecifics,
-    iOS: iOSPlatformChannelSpecifics,
+  AndroidNotificationDetails androidPlatformChannelSpecifics =
+      AndroidNotificationDetails(
+    "com.yacotch.partner",
+    "yacotch",
+    channelDescription: "notificationBase",
+    enableVibration: true,
+    playSound: true,
+    icon: '@mipmap/ic_launcher',
+    importance: Importance.high,
+    priority: Priority.high,
+    actions: hasActions
+        ? <AndroidNotificationAction>[
+            AndroidNotificationAction(
+              'Accept',
+              'Action 1',
+            ),
+            AndroidNotificationAction('Cancel', 'Action 2'),
+          ]
+        : [],
   );
+  notificationDetails(bool hasActions) => NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics,
+      );
   String title = "${event.notification!.title}";
   String body = "${event.notification!.body}";
-  await flutterLocalNotificationsPlugin
-      .show(200, title, body, notificationDetails, payload: payload);
+  await flutterLocalNotificationsPlugin.show(
+      200, title, body, notificationDetails(hasActions),
+      payload: payload);
 }
 
 void initLocalNotification() async {
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
 
-  const IOSInitializationSettings initializationSettingsIOS =
-      IOSInitializationSettings(
+  const DarwinInitializationSettings initializationSettingsIOS =
+      DarwinInitializationSettings(
     requestAlertPermission: false,
     requestBadgePermission: false,
     requestSoundPermission: false,
@@ -81,9 +95,9 @@ void initLocalNotification() async {
     android: initializationSettingsAndroid,
     iOS: initializationSettingsIOS,
   );
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String? payload) =>
-          handleNotificationsTap(payload));
+  // await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+  //     onDidReceiveNotificationResponse: (payload) =>
+  //         handleNotificationsTap(payload));
 }
 
 Future<void> registerNotification() async {
@@ -146,10 +160,11 @@ void setupNotifications() {
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   FirebaseMessaging.onMessage.listen((RemoteMessage event) async {
     // if (AppStorage.isNotificationsEnabled) {
-    if (event.data != {}) {
-      showNotification(event, "${event.data}");
+
+    if (event.data['HiddenData'] != '') {
+      showNotification(true, event, "${event.data}");
     } else {
-      showNotification(event, "${event.notification}");
+      showNotification(false, event, "${event.notification}");
     }
     // Navigator.of(navigatorKey.currentState!.context).push(
     //     MaterialPageRoute(builder: (context) => const NotificationScreen()));
