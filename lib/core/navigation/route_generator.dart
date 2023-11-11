@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/video_call_screen.dart';
+import 'package:upgrade_traine_project/features/chat/screen/chat_details_view.dart';
 import 'package:upgrade_traine_project/features/coach/domain/entity/coach_entity.dart';
 import 'package:upgrade_traine_project/features/restaurant/data/model/response/plates_model.dart';
 
@@ -37,6 +39,13 @@ class NavigationRoute {
     // final args = settings.arguments;
 
     switch (settings.name) {
+      case VideoCallScreen.routeName:
+        int? trainerId;
+        if (settings.arguments != null) {
+          trainerId = (settings.arguments as int);
+        }
+        return AnimatedRoute(
+            page: VideoCallScreen(trainerId), settings: settings);
       case LoginScreen.routeName:
         return AnimatedRoute(
             page: LoginScreen(
@@ -72,7 +81,7 @@ class NavigationRoute {
         return AnimatedRoute(
             page: CreateNewPasswordScreen(
               // code: params.code,
-               phone: params.phone,
+              phone: params.phone,
             ),
             settings: settings);
       case CategoryListScreen.routeName:
@@ -105,9 +114,7 @@ class NavigationRoute {
       case FeedbackScreen.routeName:
         return AnimatedRoute(page: const FeedbackScreen(), settings: settings);
       case RestaurantView.routeName:
-        return AnimatedRoute(
-            page: RestaurantView(),
-            settings: settings);
+        return AnimatedRoute(page: RestaurantView(), settings: settings);
       case PlatesView.routeName:
         return AnimatedRoute(
             page: PlatesView(
@@ -115,9 +122,7 @@ class NavigationRoute {
             ),
             settings: settings);
       case ShopsView.routeName:
-        return AnimatedRoute(
-            page: ShopsView(),
-            settings: settings);
+        return AnimatedRoute(page: ShopsView(), settings: settings);
       case ChangePasswordScreen.routeName:
         return AnimatedRoute(
             page: const ChangePasswordScreen(), settings: settings);

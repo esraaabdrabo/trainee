@@ -285,7 +285,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
           child: SizedBox(
             height: 0.53.sh,
             child: MapWidget(
-              
               myLocation: sn.latLng,
               markers: sn.markers.map((e) => e.marker).toSet(),
               onMapCreated: _getMyLocation,

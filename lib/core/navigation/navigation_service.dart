@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:upgrade_traine_project/main.dart';
 
 @lazySingleton
 class NavigationService {
-  var _navigationKey = GlobalKey<NavigatorState>();
-
-  GlobalKey<NavigatorState> get getNavigationKey => _navigationKey;
-
-  GlobalKey<NavigatorState> get getNewNavigationKey {
-    _navigationKey = GlobalKey<NavigatorState>();
-    return _navigationKey;
-  }
+  GlobalKey<NavigatorState> get getNavigationKey => navigatorKey;
 
   BuildContext? get appContext {
-    return this._navigationKey.currentContext;
+    return navigatorKey.currentContext;
   }
 
   pop() {
-    return _navigationKey.currentState?.pop();
+    return navigatorKey.currentState?.pop();
   }
 
   Future<dynamic>? navigateTo(String routeName, {dynamic arguments}) {
-    return _navigationKey.currentState
+    return navigatorKey.currentState
         ?.pushNamed(routeName, arguments: arguments);
   }
 
   void popAllAppNavigator() {
-    if (_navigationKey.currentState?.canPop() ?? false) {
-      _navigationKey.currentState?.popUntil((route) => route.isFirst);
+    if (navigatorKey.currentState?.canPop() ?? false) {
+      navigatorKey.currentState?.popUntil((route) => route.isFirst);
     }
   }
 }

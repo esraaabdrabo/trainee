@@ -21,6 +21,7 @@ class Toast {
       fontSize: fontSize,
       backgroundColor: backgroundColor,
       textColor: textColor,
+      
     );
   }
 

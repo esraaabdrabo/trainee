@@ -6,6 +6,8 @@ import 'package:uuid/uuid.dart';
 import 'agoraConfig.dart';
 
 class VideoCallScreen extends StatefulWidget {
+  static const String routeName = "/VideoScreen";
+
   final int? trainerId;
   const VideoCallScreen(this.trainerId, {Key? key}) : super(key: key);
 

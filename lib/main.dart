@@ -19,11 +19,12 @@ import 'core/ui/error_ui/errors_screens/build_error_screen.dart';
 import 'di/service_locator.dart';
 import 'generated/l10n.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   await _initAppConfigs();
 
   /// 1.1.1 define a navigator key
-  final navigatorKey = GlobalKey<NavigatorState>();
 
   runApp(App(navigatorKey: navigatorKey));
 }
