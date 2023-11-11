@@ -1,4 +1,3 @@
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:upgrade_traine_project/core/navigation/navigation_service.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/video_call_screen.dart';
@@ -10,7 +9,10 @@ handleNotificationsTap(NotificationResponse? payload) async {
     print("user clicked on accept button");
     try {
       await NavigationService().navigateTo(VideoCallScreen.routeName,
-          arguments: (_getTrainerId(payload)));
+          arguments: ({
+            "id": _getTrainerId(payload),
+            "channel_name": _getChannelName(payload)
+          }));
       _hideNotification(payload);
     } catch (e) {
       print(e);
@@ -57,4 +59,12 @@ int _getTrainerId(NotificationResponse? payload) {
       .firstWhere((element) => element.contains('SenderId'))
       .replaceAll("SenderId:", '')
       .trim());
+}
+
+String _getChannelName(NotificationResponse? payload) {
+  return payload!.payload!
+      .split(',')
+      .firstWhere((element) => element.contains('HiddenData'))
+      .replaceAll("{HiddenData:", '')
+      .trim();
 }

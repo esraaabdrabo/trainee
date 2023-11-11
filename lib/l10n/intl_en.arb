@@ -200,5 +200,6 @@
   "order": "Order",
   "add_another_product":"Add another product?",
   "chat":"Chat",
-  "current_location":"Current Location"
+  "current_location":"Current Location",
+  "already_reviewed":"You already reviewed this item"
 }

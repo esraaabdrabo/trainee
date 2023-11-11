@@ -28,9 +28,9 @@ class AgoraActionsWidget extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                VoiceCallIcon(chatModel.trainerId!),
-                _CustomDivder(),
-                VideoCallIcon(chatModel.trainerId!)
+                VoiceCallIcon(chatModel.trainerId!, _getChannelName()),
+                const _CustomDivder(),
+                VideoCallIcon(chatModel.trainerId!, _getChannelName())
               ],
             ),
           )
@@ -38,6 +38,8 @@ class AgoraActionsWidget extends StatelessWidget {
       ),
     );
   }
+
+  String _getChannelName() => "{${chatModel.trainerId!}${chatModel.traineeId!}";
 }
 
 class _CustomDivder extends StatelessWidget {

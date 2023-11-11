@@ -43,7 +43,6 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void getSpecializations() async {
-    debugPrint("looo");
     emit(const HomeState.homeLoadingState());
     final result = await getIt<GetIndexUseCase>().call(NoParams());
 

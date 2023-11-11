@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'agoraConfig.dart';
 
 class VoiceCallScreen extends StatefulWidget {
-  final int trainerId;
-  const VoiceCallScreen(this.trainerId, {Key? key}) : super(key: key);
+  final int id;
+  final String channelName;
+  const VoiceCallScreen(this.id, this.channelName, {Key? key}) : super(key: key);
 
   @override
   State<VoiceCallScreen> createState() => _VoiceCallScreenState();

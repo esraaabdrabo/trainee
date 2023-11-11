@@ -8,7 +8,8 @@ import 'package:upgrade_traine_project/features/notification/presentation/contro
 
 class VideoCallIcon extends StatelessWidget {
   final int id;
-  const VideoCallIcon(this.id, {super.key});
+  final String channelName;
+  const VideoCallIcon(this.id, this.channelName, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +25,8 @@ class VideoCallIcon extends StatelessWidget {
   }
 
   void _goToVideoCallScreen(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => VideoCallScreen(id)));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => VideoCallScreen(id, channelName)));
   }
 
   void _sendNotification(BuildContext context) {

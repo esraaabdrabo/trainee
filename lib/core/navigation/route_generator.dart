@@ -41,11 +41,13 @@ class NavigationRoute {
     switch (settings.name) {
       case VideoCallScreen.routeName:
         int? trainerId;
+        String? channelName;
         if (settings.arguments != null) {
-          trainerId = (settings.arguments as int);
+          trainerId = ((settings.arguments as Map)['id'] as int);
+          channelName = ((settings.arguments as Map)['channel_name'] as String);
         }
         return AnimatedRoute(
-            page: VideoCallScreen(trainerId), settings: settings);
+            page: VideoCallScreen(trainerId, channelName!), settings: settings);
       case LoginScreen.routeName:
         return AnimatedRoute(
             page: LoginScreen(

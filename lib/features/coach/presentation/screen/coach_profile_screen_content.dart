@@ -8,6 +8,7 @@ import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/video_call_screen.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/voice_call_screen.dart';
 import 'package:upgrade_traine_project/features/coach/domain/entity/coach_entity.dart';
+import 'package:upgrade_traine_project/features/profile/presentation/state_m/cubit/profile_cubit.dart';
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/style/gaps.dart';
 import '../../../../core/constants/app/app_constants.dart';
@@ -416,15 +417,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                         ),
                       ),
                       InkWell(
-                        onTap: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return VoiceCallScreen(sn.coachEntity.id!);
-                          }));
-                          BlocProvider.of<NotificationCubit>(context)
-                              .createNotifications(
-                                  context, sn.coachEntity.id!, 2);
-                        },
+                        onTap: () => _goToVoiceCallScreen(),
                         child: ImageIcon(
                           const AssetImage(
                             AppConstants.PHONE_CALL_ICON,
@@ -434,17 +427,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                         ),
                       ),
                       InkWell(
-                        onTap: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return VideoCallScreen(
-                              sn.coachEntity.id!,
-                            );
-                          }));
-                          BlocProvider.of<NotificationCubit>(context)
-                              .createNotifications(
-                                  context, sn.coachEntity.id!, 1);
-                        },
+                        onTap: () => _goToVideoCallScreen(),
                         child: ImageIcon(
                           const AssetImage(
                             AppConstants.VIDEO_CALL_ICON,
@@ -484,6 +467,25 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
       ],
     );
   }
+
+  void _goToVideoCallScreen() {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            VideoCallScreen(sn.coachEntity.id!, _getChannelName(context))));
+    BlocProvider.of<NotificationCubit>(context)
+        .createNotifications(context, sn.coachEntity.id!, 1);
+  }
+
+  void _goToVoiceCallScreen() {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            VoiceCallScreen(sn.coachEntity.id!, _getChannelName(context))));
+    BlocProvider.of<NotificationCubit>(context)
+        .createNotifications(context, sn.coachEntity.id!, 2);
+  }
+
+  String _getChannelName(BuildContext context) =>
+      "${BlocProvider.of<ProfileCubit>(context).profileModel?.result?.id!}${sn.coachEntity.id}";
 
   void _subscribe() {
     showDialog(
@@ -714,9 +716,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
         return Scaffold(
           backgroundColor: AppColors.transparent,
           body: GestureDetector(
-            onTap: () {
-              Nav.pop();
-            },
+            onTap: () => Nav.pop(),
             child: BlurWidget(
               blurColor: AppColors.transparent,
               blurDegree: AppConstants.blurDegree10,
@@ -747,9 +747,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                                 rate: sn.rate.toDouble(),
                                 itemSize: 30.w,
                                 onRatingUpdate: (value) {
-                                  setState(() {
-                                    sn.rate = value.toInt();
-                                  });
+                                  setState(() => sn.rate = value.toInt());
                                 },
                               ),
                             ),
@@ -785,7 +783,8 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                                     Navigator.pop(context);
                                     showErrorSnackBar(
                                       context: context,
-                                      message: "You already reviewed this item",
+                                      message: LanguageHelper.tr(context)
+                                          .already_reviewed,
                                     );
                                   }
                                   state is SuccessCreateReviewData
