@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SwitchCameraButton extends StatelessWidget {
-  const SwitchCameraButton();
+  const SwitchCameraButton({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -2,9 +2,10 @@ import 'dart:async';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
 import 'package:upgrade_traine_project/core/ui/toast.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/disable_video.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/end_call.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/mute.dart';
-import 'package:upgrade_traine_project/features/chat/screen/agora/custom_video_buttons.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/switch_camera.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
 import 'package:upgrade_traine_project/features/chat/widgets/agora_loading.dart';
 import 'agoraConfig.dart';
@@ -67,6 +68,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                         BuiltInButtons.callEnd,
                         BuiltInButtons.toggleMic,
                       ],
+                      disableVideoButtonChild: DisableVideoButton(_client!),
+                      switchCameraButtonChild: const SwitchCameraButton(),
                       muteButtonChild: MuteVoiceButton(client: _client),
                       disconnectButtonChild: const EndCallButton(),
                     )
