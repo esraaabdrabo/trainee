@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
-import 'package:upgrade_traine_project/core/dioHelper/dio_helper.dart';
+import 'package:upgrade_traine_project/core/ui/toast.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/custom_video_buttons.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
+import 'package:upgrade_traine_project/features/chat/widgets/agora_loading.dart';
 import 'agoraConfig.dart';
 
 class VideoCallScreen extends StatefulWidget {
@@ -17,58 +20,54 @@ class VideoCallScreen extends StatefulWidget {
 }
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
-  late final AgoraClient _client;
+  AgoraClient? _client;
 
   @override
   void initState() {
     super.initState();
-    _initAgora();
   }
 
   Future<void> _initAgora() async {
-    String token = await _getToken();
-    print(token);
-    print(widget.channelName);
     _client = AgoraClient(
       agoraConnectionData: AgoraConnectionData(
         appId: AgoraConstants.appId,
         channelName: widget.channelName,
-        tempToken: token,
+        tempToken: await AgoraFunctions.getToken(widget.channelName),
       ),
     );
-    await _client.initialize();
+    await _client?.initialize();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-          // appBar: const TransparentAppBar(
-          //   title: "chat",
-          // ),
-          body: SafeArea(
-        child: Stack(
-          children: [
-            AgoraVideoViewer(
-              client: _client,
-              layoutType: Layout.floating,
-              showNumberOfUsers: true,
-            ),
-            AgoraVideoButtons(
-              client: _client,
-              enabledButtons: const [
-                BuiltInButtons.toggleCamera,
-                BuiltInButtons.switchCamera,
-                BuiltInButtons.callEnd,
-                BuiltInButtons.toggleMic,
-              ],
-            )
-          ],
-        ),
-      )),
-    );
+    return FutureBuilder(
+        future: _initAgora(),
+        builder: (context, snapShot) => AgoraFunctions.isInitLoading(snapShot)
+            ? const AgoraLoadingBody()
+            : WillPopScope(
+                onWillPop: () async {
+                  _client!.release();
+                  return true;
+                },
+                child: Scaffold(
+                    body: Stack(
+                  children: [
+                    AgoraVideoViewer(
+                      client: _client!,
+                      layoutType: Layout.floating,
+                      showNumberOfUsers: true,
+                    ),
+                    CustomAgoraVideoButtons(
+                      client: _client!,
+                      enabledButtons: const [
+                        BuiltInButtons.toggleCamera,
+                        BuiltInButtons.switchCamera,
+                        BuiltInButtons.callEnd,
+                        BuiltInButtons.toggleMic,
+                      ],
+                    )
+                  ],
+                )),
+              ));
   }
 }

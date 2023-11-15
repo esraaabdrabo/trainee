@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
 import 'package:upgrade_traine_project/features/coach/domain/entity/coach_entity.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../../core/common/app_colors.dart';
@@ -58,6 +59,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   Widget build(BuildContext context) {
     sn = Provider.of<HomeScreenNotifier>(context);
     sn.context = context;
+
     return _buildHomeScreen(context);
   }
 
