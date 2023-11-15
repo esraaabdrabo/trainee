@@ -1,6 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:upgrade_traine_project/core/notifications/show.dart';
-
 void handleOnMessageListener(RemoteMessage event) {
   // if (AppStorage.isNotificationsEnabled) {
   if (_hasChannelName(event)) {

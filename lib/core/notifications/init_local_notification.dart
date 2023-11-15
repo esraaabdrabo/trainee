@@ -23,9 +23,6 @@ void initLocalNotification() async {
       print("object s");
       handleNotificationsTap(payload);
     },
-    onDidReceiveBackgroundNotificationResponse: (details) {
-      print(details);
-      print("background response");
-    },
+    onDidReceiveBackgroundNotificationResponse: HandleBackGround
   );
 }
