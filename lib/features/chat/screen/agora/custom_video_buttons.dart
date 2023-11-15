@@ -241,58 +241,6 @@ class _MuteMicButton extends StatelessWidget {
   }
 }
 
-class _DisableVideoButton extends StatelessWidget {
-  final AgoraClient client;
-  const _DisableVideoButton(this.client);
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      constraints: BoxConstraints(maxWidth: .25.sw),
-      onPressed: () =>
-          toggleCamera(sessionController: client.sessionController),
-      shape: const CircleBorder(),
-      elevation: 2.0,
-      fillColor: client.sessionController.value.isLocalVideoDisabled
-          ? Colors.blueAccent
-          : Colors.white,
-      padding: const EdgeInsets.all(5.0),
-      child: Icon(
-        client.sessionController.value.isLocalVideoDisabled
-            ? Icons.videocam_off
-            : Icons.videocam,
-        color: client.sessionController.value.isLocalVideoDisabled
-            ? Colors.white
-            : Colors.blueAccent,
-        size: 20.0,
-      ),
-    );
-  }
-}
-
-class _SwitchCameraButton extends StatelessWidget {
-  final AgoraClient client;
-  const _SwitchCameraButton(this.client);
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      constraints: BoxConstraints(maxWidth: .25.sw),
-      onPressed: () => switchCamera(
-        sessionController: client.sessionController,
-      ),
-      shape: const CircleBorder(),
-      elevation: 2.0,
-      fillColor: Colors.white,
-      padding: const EdgeInsets.all(5.0),
-      child: const Icon(
-        Icons.switch_camera,
-        color: Colors.blueAccent,
-        size: 20.0,
-      ),
-    );
-  }
-}
 
 class _DisconnectCallButton extends StatelessWidget {
   final AgoraClient client;

@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/end_call.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/mute.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
 import 'package:upgrade_traine_project/features/chat/widgets/agora_loading.dart';
 import 'agoraConfig.dart';
@@ -61,9 +64,14 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
                         BuiltInButtons.callEnd,
                         BuiltInButtons.toggleMic,
                       ],
+                      
+                      muteButtonChild: MuteVoiceButton(client: _client),
+                      disconnectButtonChild:const EndCallButton(),
                     )
                   ],
                 )),
               ));
   }
 }
+
+

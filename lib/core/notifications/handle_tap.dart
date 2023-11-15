@@ -21,22 +21,18 @@ Future<void> handleNotificationsTap(NotificationResponse? payload) async {
   }
 }
 
-Future<void> _goToVideoCallScreen(NotificationResponse? payload) async {
-  await NavigationService().navigateTo(VideoCallScreen.routeName,
-      arguments: (_getChannelNameAndId(payload)));
-}
+Future<void> _goToVideoCallScreen(NotificationResponse? payload) async =>
+    await NavigationService().navigateTo(VideoCallScreen.routeName,
+        arguments: (_getChannelNameAndId(payload)));
 
-Future<void> _goToVoiceCallScreen(NotificationResponse? payload) async {
-  await NavigationService().navigateTo(VoiceCallScreen.routeName,
-      arguments: (_getChannelNameAndId(payload)));
-}
+Future<void> _goToVoiceCallScreen(NotificationResponse? payload) async =>
+    await NavigationService().navigateTo(VoiceCallScreen.routeName,
+        arguments: (_getChannelNameAndId(payload)));
 
-Map<String, Object> _getChannelNameAndId(NotificationResponse? payload) {
-  return {
+Map<String, Object> _getChannelNameAndId(NotificationResponse? payload) => {
     "id": _getTrainerId(payload),
     "channel_name": _getChannelName(payload)
   };
-}
 
 void _hideNotification(NotificationResponse? payload) {
   FlutterLocalNotificationsPlugin().cancel(payload!.id!);
