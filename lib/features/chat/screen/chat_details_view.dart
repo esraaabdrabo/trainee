@@ -77,7 +77,7 @@ class _ChatDetailsViewState extends State<ChatDetailsView> {
       "type": "message"
     });
     BlocProvider.of<NotificationCubit>(context)
-        .createNotifications(context, widget.chatModel!.trainerId!, 0);
+        .createNotifications(widget.chatModel!.trainerId!, 0, '');
   }
 
   Future<void> _uploadImage(File image) async {
@@ -110,7 +110,7 @@ class _ChatDetailsViewState extends State<ChatDetailsView> {
       "type": "file"
     });
     BlocProvider.of<NotificationCubit>(context)
-        .createNotifications(context, widget.chatModel!.trainerId!, 0);
+        .createNotifications(widget.chatModel!.trainerId!, 0, '');
   }
 
   @override

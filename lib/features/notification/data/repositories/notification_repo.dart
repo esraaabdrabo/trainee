@@ -31,15 +31,14 @@ class NotificationRepo {
   }
 
   Future<Either<String, bool>> createNotification(
-    int userId,
-    int messageType,
-  ) async {
-    final response = await DioHelper.post(APIUrls.API_CREATE_NOTIFICATIONS,
-        formData: {
-          "userId": userId,
-          "NotificationType": 1,
-          "msgType": messageType
-        });
+      int userId, int messageType, String data) async {
+    final response =
+        await DioHelper.post(APIUrls.API_CREATE_NOTIFICATIONS, formData: {
+      "userId": userId,
+      "NotificationType": 1,
+      "msgType": messageType,
+      "hiddenData": data
+    });
     log(response.data.toString());
     print("after request");
     try {

@@ -32,6 +32,6 @@ class VideoCallIcon extends StatelessWidget {
   void _sendNotification(BuildContext context) {
     log("s");
     BlocProvider.of<NotificationCubit>(context)
-        .createNotifications(context, id, 1);
+        .createNotifications(id, 1, channelName);
   }
 }

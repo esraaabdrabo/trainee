@@ -29,6 +29,6 @@ class VoiceCallIcon extends StatelessWidget {
 
   void _sendNotification(BuildContext context) {
     BlocProvider.of<NotificationCubit>(context)
-        .createNotifications(context, id, 2);
+        .createNotifications(id, 2, channelName);
   }
 }

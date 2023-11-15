@@ -402,6 +402,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                               MaterialPageRoute(
                                 builder: (context) => ChatDetailsView(
                                     chatModel: ChatModel(
+                                  traineeId: _getMyId(context),
                                   trainerId: sn.coachEntity.id,
                                   trainerName: sn.coachEntity.name ?? "",
                                   trainerImage: sn.coachEntity.imageUrl ?? "",
@@ -468,12 +469,16 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
     );
   }
 
+  int? _getMyId(BuildContext context) {
+    return BlocProvider.of<ProfileCubit>(context).profileModel!.result!.id;
+  }
+
   void _goToVideoCallScreen() {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) =>
             VideoCallScreen(sn.coachEntity.id!, _getChannelName(context))));
     BlocProvider.of<NotificationCubit>(context)
-        .createNotifications(context, sn.coachEntity.id!, 1);
+        .createNotifications(sn.coachEntity.id!, 1, _getChannelName(context));
   }
 
   void _goToVoiceCallScreen() {
@@ -481,7 +486,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
         builder: (context) =>
             VoiceCallScreen(sn.coachEntity.id!, _getChannelName(context))));
     BlocProvider.of<NotificationCubit>(context)
-        .createNotifications(context, sn.coachEntity.id!, 2);
+        .createNotifications(sn.coachEntity.id!, 2, _getChannelName(context));
   }
 
   String _getChannelName(BuildContext context) =>

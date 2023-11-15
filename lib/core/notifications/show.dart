@@ -11,16 +11,15 @@ void showNotification(
       AndroidNotificationDetails(
     "com.yacotch.partner",
     "yacotch",
-    styleInformation: BigTextStyleInformation(''),
-    
+    styleInformation: const BigTextStyleInformation(''),
     channelDescription: "notificationBase",
     enableVibration: true,
     playSound: true,
     icon: '@mipmap/ic_launcher',
     importance: Importance.high,
     priority: Priority.high,
-    audioAttributesUsage: AudioAttributesUsage.alarm,
-    
+    // audioAttributesUsage: AudioAttributesUsage.,
+    sound: const RawResourceAndroidNotificationSound("call_ring"),
     actions: hasActions ? _buildAgoraActions : [],
   );
   notificationDetails(bool hasActions) => NotificationDetails(

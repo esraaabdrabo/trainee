@@ -219,6 +219,7 @@ flutter:
     - assets/anim/lottie/
     - assets/anim/lottie/error/
     - assets/map_styles/
+    - android/app/src/main/res/raw/call_ring.wav
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

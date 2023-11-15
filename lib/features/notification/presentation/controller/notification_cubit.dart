@@ -30,11 +30,11 @@ class NotificationCubit extends Cubit<NotificationState> {
     );
   }
 
-  Future createNotifications(
-      BuildContext context, int userId, int messageType) async {
+  Future createNotifications(int userId, int messageType, String data) async {
     emit(CreateNotificationsLoading());
 
-    final res = await _notificationRepo.createNotification(userId, messageType);
+    final res =
+        await _notificationRepo.createNotification(userId, messageType, data);
     res.fold(
       (err) {
         print(err);
