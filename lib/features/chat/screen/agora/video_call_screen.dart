@@ -27,6 +27,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
   Future<void> _initAgora() async {
     String token = await _getToken();
+    print(token);
+    print(widget.channelName);
     _client = AgoraClient(
       agoraConnectionData: AgoraConnectionData(
         appId: AgoraConstants.appId,
@@ -37,13 +39,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     await _client.initialize();
   }
 
-  Future<dynamic> _getToken() async {
-    return (await DioHelper.get(
-            "https://api.yacotch.com/api/services/app/Agora/GetToken?Channel=${widget.channelName}")
-        .then((value) {
-      return value.data['result']['token'];
-    }));
-  }
+  
 
   @override
   Widget build(BuildContext context) {
