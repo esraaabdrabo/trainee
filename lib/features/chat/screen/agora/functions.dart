@@ -1,3 +1,4 @@
+import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
 import 'package:upgrade_traine_project/core/dioHelper/dio_helper.dart';
 
@@ -11,4 +12,10 @@ abstract class AgoraFunctions {
     return (await DioHelper.get(url)
         .then((value) => value.data['result']['token']));
   }
+
+  static bool isLocalDisabledVideo(AgoraClient client) =>
+      client.sessionController.value.isLocalVideoDisabled;
+
+  static bool isLocalMuteVoice(AgoraClient client) =>
+      client.sessionController.value.isLocalUserMuted;
 }

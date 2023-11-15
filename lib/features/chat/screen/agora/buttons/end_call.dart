@@ -1,8 +1,11 @@
+import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EndCallButton extends StatelessWidget {
-  const EndCallButton({
+  final AgoraClient client;
+  const EndCallButton(
+    this.client, {
     super.key,
   });
 
@@ -10,7 +13,10 @@ class EndCallButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RawMaterialButton(
       constraints: BoxConstraints(maxWidth: .25.sw),
-      onPressed: null,
+      onPressed: () async {
+        Navigator.pop(context);
+        await client.release();
+      },
       shape: const CircleBorder(),
       elevation: 2.0,
       fillColor: Colors.redAccent,

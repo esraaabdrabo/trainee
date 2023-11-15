@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:agora_uikit/agora_uikit.dart';
+import 'package:agora_uikit/controllers/rtc_buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/end_call.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/mute.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/disabled_video_widget.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
 import 'package:upgrade_traine_project/features/chat/widgets/agora_loading.dart';
 import 'agoraConfig.dart';
@@ -37,7 +38,9 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
       ),
     );
     await _client?.initialize();
-    _client?.engine.disableVideo();
+    await _client?.engine.disableVideo();
+    //must call toggle camera to show the 'disabledVideoWidget'
+    await toggleCamera(sessionController: _client!.sessionController);
   }
 
   @override
@@ -53,25 +56,22 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
                 },
                 child: Scaffold(
                     body: Stack(
+                  alignment: AlignmentDirectional.bottomCenter,
                   children: [
                     AgoraVideoViewer(
-                      client: _client!,
-                      layoutType: Layout.floating,
-                    ),
-                    AgoraVideoButtons(
-                      client: _client!,
-                      enabledButtons: const [
-                        BuiltInButtons.callEnd,
-                        BuiltInButtons.toggleMic,
+                        client: _client!,
+                        showNumberOfUsers: true,
+                        layoutType: Layout.grid,
+                        disabledVideoWidget: DisabledVideoWidget(_client!)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        EndCallButton(_client!),
+                        MuteVoiceButton(client: _client),
                       ],
-                      
-                      muteButtonChild: MuteVoiceButton(client: _client),
-                      disconnectButtonChild:const EndCallButton(),
-                    )
+                    ),
                   ],
                 )),
               ));
   }
 }
-
-

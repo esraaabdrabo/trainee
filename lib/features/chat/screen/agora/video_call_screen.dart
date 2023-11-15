@@ -6,6 +6,7 @@ import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/disabl
 import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/end_call.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/mute.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/switch_camera.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/disabled_video_widget.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
 import 'package:upgrade_traine_project/features/chat/widgets/agora_loading.dart';
 import 'agoraConfig.dart';
@@ -54,25 +55,20 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                 },
                 child: Scaffold(
                     body: Stack(
+                  alignment: AlignmentDirectional.bottomCenter,
                   children: [
                     AgoraVideoViewer(
                       client: _client!,
+                      disabledVideoWidget: DisabledVideoWidget(_client!),
                       layoutType: Layout.floating,
                       showNumberOfUsers: true,
                     ),
-                    AgoraVideoButtons(
-                      client: _client!,
-                      enabledButtons: const [
-                        BuiltInButtons.toggleCamera,
-                        BuiltInButtons.switchCamera,
-                        BuiltInButtons.callEnd,
-                        BuiltInButtons.toggleMic,
-                      ],
-                      disableVideoButtonChild: DisableVideoButton(_client!),
-                      switchCameraButtonChild: const SwitchCameraButton(),
-                      muteButtonChild: MuteVoiceButton(client: _client),
-                      disconnectButtonChild: const EndCallButton(),
-                    )
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      EndCallButton(_client!),
+                      DisableVideoButton(_client!),
+                      SwitchCameraButton(_client!),
+                      MuteVoiceButton(client: _client),
+                    ]),
                   ],
                 )),
               ));
