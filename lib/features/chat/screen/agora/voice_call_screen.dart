@@ -1,66 +1,69 @@
 import 'dart:async';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
+import 'package:upgrade_traine_project/features/chat/widgets/agora_loading.dart';
 import 'agoraConfig.dart';
 
 class VoiceCallScreen extends StatefulWidget {
-  final int id;
+  static const String routeName = "/VoiceScreen";
+
+  final int? trainerId;
   final String channelName;
-  const VoiceCallScreen(this.id, this.channelName, {Key? key}) : super(key: key);
+  const VoiceCallScreen(this.trainerId, this.channelName, {Key? key})
+      : super(key: key);
 
   @override
   State<VoiceCallScreen> createState() => _VoiceCallScreenState();
 }
 
 class _VoiceCallScreenState extends State<VoiceCallScreen> {
-  late AgoraClient _client;
+  AgoraClient? _client;
 
   @override
   void initState() {
     super.initState();
-    _initAgora();
   }
 
   Future<void> _initAgora() async {
     _client = AgoraClient(
-        agoraChannelData: AgoraChannelData(),
-        agoraConnectionData: AgoraConnectionData(
-          appId: AgoraConstants.appId,
-          channelName: "esraaabdrabo23",
-          tempToken:
-              "007eJxTYPjN8z7cPelE3DVnj3lVe+xdTHsfsOafzj/HWTfvpJb0ubMKDCmGKalJZkmJiZYGxiaWiYaWqWamZsZmxiZGlokGialGnpEqqQ2BjAwX9k9gZGSAQBCfjyG1uCgxMTEppSgxKd/ImIEBAKqvIvY=",
-        ));
-    await _client.initialize();
-    _client.engine.disableVideo();
+      agoraConnectionData: AgoraConnectionData(
+        appId: AgoraConstants.appId,
+        channelName: widget.channelName,
+        tempToken: await AgoraFunctions.getToken(widget.channelName),
+      ),
+    );
+    await _client?.initialize();
+    _client?.engine.disableVideo();
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-          //  appBar: const TransparentAppBar(
-          //    title: "chat",
-          //  ),
-          body: SafeArea(
-        child: Stack(
-          children: [
-            AgoraVideoViewer(
-              client: _client,
-              layoutType: Layout.floating,
-            ),
-            AgoraVideoButtons(
-              client: _client,
-              enabledButtons: const [
-                // BuiltInButtons.toggleCamera,
-                // BuiltInButtons.switchCamera,
-                BuiltInButtons.callEnd,
-                BuiltInButtons.toggleMic,
-              ],
-            )
-          ],
-        ),
-      )),
-    );
+    return FutureBuilder(
+        future: _initAgora(),
+        builder: (context, snapShot) => AgoraFunctions.isInitLoading(snapShot)
+            ? const AgoraLoadingBody()
+            : WillPopScope(
+                onWillPop: () async {
+                  _client!.release();
+                  return true;
+                },
+                child: Scaffold(
+                    body: Stack(
+                  children: [
+                    AgoraVideoViewer(
+                      client: _client!,
+                      layoutType: Layout.floating,
+                    ),
+                    AgoraVideoButtons(
+                      client: _client!,
+                      enabledButtons: const [
+                        BuiltInButtons.callEnd,
+                        BuiltInButtons.toggleMic,
+                      ],
+                    )
+                  ],
+                )),
+              ));
   }
 }

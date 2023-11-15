@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/video_call_screen.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/voice_call_screen.dart';
 import 'package:upgrade_traine_project/features/chat/screen/chat_details_view.dart';
 import 'package:upgrade_traine_project/features/coach/domain/entity/coach_entity.dart';
 import 'package:upgrade_traine_project/features/restaurant/data/model/response/plates_model.dart';
@@ -39,6 +40,17 @@ class NavigationRoute {
     // final args = settings.arguments;
 
     switch (settings.name) {
+      //agora voice call screen
+      case VoiceCallScreen.routeName:
+        int? trainerId;
+        String? channelName;
+        if (settings.arguments != null) {
+          trainerId = ((settings.arguments as Map)['id'] as int);
+          channelName = ((settings.arguments as Map)['channel_name'] as String);
+        }
+        return AnimatedRoute(
+            page: VoiceCallScreen(trainerId, channelName!), settings: settings);
+      //agora video call screen
       case VideoCallScreen.routeName:
         int? trainerId;
         String? channelName;
