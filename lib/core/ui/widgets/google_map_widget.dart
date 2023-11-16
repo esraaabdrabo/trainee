@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:upgrade_traine_project/core/ui/toast.dart';
 import '../../../core/constants/app/app_constants.dart';
 import '../../../core/ui/widgets/waiting_widget.dart';
 import '../../../features/home/presentation/state_m/bloc/maps_cubit.dart';
@@ -40,16 +41,20 @@ class _MapWidgetState extends State<MapWidget> {
   Future<void> _init() async {
     if (isInitialized) {
       mapStyle = await rootBundle.loadString(AppConstants.MAP_STYLE_JSON);
-      await BitmapDescriptor.fromAssetImage(
-              ImageConfiguration(size: Size(30.w, 45.h)),
-              AppConstants.MARKER_ICON)
-          .then((d) {
-        customIcon = d;
-      });
+      try {
+        await BitmapDescriptor.fromAssetImage(
+                ImageConfiguration(size: Size(30.w, 45.h)),
+                AppConstants.MARKER_ICON)
+            .then((d) {
+          customIcon = d;
+        });
+        Toast.show("marker loaded");
+      } catch (e) {
+        Toast.show("Error $e");
+        print(e);
+      }
     }
-    setState(() {
-      isInitialized = false;
-    });
+    setState(() => isInitialized = false);
     _setMyLocation();
   }
 
@@ -96,9 +101,9 @@ class _MapWidgetState extends State<MapWidget> {
               return GoogleMap(
                 onMapCreated: (controller) {
                   BlocProvider.of<MapsCubit>(context).controller = controller;
-                  // _setMapStyle();
+                  _setMapStyle();
                   if (widget.onMapCreated != null) {
-                    //  widget.onMapCreated!();
+                    widget.onMapCreated!();
                   }
                 },
                 initialCameraPosition: CameraPosition(

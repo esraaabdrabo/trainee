@@ -138,12 +138,6 @@
 @import libphonenumber_plugin;
 #endif
 
-#if __has_include(<location/LocationPlugin.h>)
-#import <location/LocationPlugin.h>
-#else
-@import location;
-#endif
-
 #if __has_include(<modal_progress_hud_nsn/ModalProgressHudNsnPlugin.h>)
 #import <modal_progress_hud_nsn/ModalProgressHudNsnPlugin.h>
 #else
@@ -241,7 +235,6 @@
   [FLTImagePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImagePickerPlugin"]];
   [IrisMethodChannelPlugin registerWithRegistrar:[registry registrarForPlugin:@"IrisMethodChannelPlugin"]];
   [FLTLibphonenumberPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTLibphonenumberPlugin"]];
-  [LocationPlugin registerWithRegistrar:[registry registrarForPlugin:@"LocationPlugin"]];
   [ModalProgressHudNsnPlugin registerWithRegistrar:[registry registrarForPlugin:@"ModalProgressHudNsnPlugin"]];
   [FLTPackageInfoPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPackageInfoPlugin"]];
   [FLTPackageInfoPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPackageInfoPlusPlugin"]];

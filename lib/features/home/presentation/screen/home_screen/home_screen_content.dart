@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
 import 'package:upgrade_traine_project/features/coach/domain/entity/coach_entity.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../../core/common/app_colors.dart';
@@ -320,12 +320,12 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                             iconPath: AppConstants.RESTAURANT_ICON,
                             text: Translation.of(context).healthy_restaurants,
                             selected: sn.restaurantsSelected),
-                        // _buildMapPinSearchWidget(
-                        //     onPressed: sn.getGymsLocations,
-                        //     color: AppColors.red,
-                        //     iconPath: AppConstants.BOXER_ICON,
-                        //     text: Translation.of(context).gyms,
-                        //     selected: sn.gymsSelected),
+                        _buildMapPinSearchWidget(
+                            onPressed: sn.getGymsLocations,
+                            color: AppColors.red,
+                            iconPath: AppConstants.BOXER_ICON,
+                            text: Translation.of(context).gyms,
+                            selected: sn.gymsSelected),
                         _buildMapPinSearchWidget(
                             onPressed: sn.getCoachesLocations,
                             color: AppColors.accentColorLight,
@@ -771,19 +771,18 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   LatLng? latLang;
 
   void _getMyLocation() async {
-    var locationData = await getMyLocation();
+    Position? locationData = await getMyLocation();
+    print(locationData ?? "not getting it");
     if (locationData != null) {
       setState(() {
-        sn.latLng = LatLng(locationData.latitude!, locationData.longitude!);
+        sn.latLng = LatLng(locationData.latitude, locationData.longitude);
       });
       var prefs = await SpUtil.getInstance();
-      if (locationData.latitude != null && locationData.longitude != null) {
-        prefs.putDouble(AppConstants.KEY_LATITUDE, locationData.latitude!);
-      }
-      prefs.putDouble(AppConstants.KEY_LONGITUDE, locationData.longitude!);
+      prefs.putDouble(AppConstants.KEY_LATITUDE, locationData.latitude);
+      prefs.putDouble(AppConstants.KEY_LONGITUDE, locationData.longitude);
 
       Provider.of<SessionDataProvider>(context, listen: false).myLocation =
-          LatLng(locationData.latitude!, locationData.longitude!);
+          LatLng(locationData.latitude, locationData.longitude);
     }
   }
 

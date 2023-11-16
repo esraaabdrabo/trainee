@@ -12,7 +12,9 @@ part 'maps_state.dart';
 
 class MapsCubit extends Cubit<MapsState> {
   final PlaceSuggestationRepo placeSuggestationRepo;
+
   MapsCubit(this.placeSuggestationRepo) : super(MapsInitial());
+  
   void emitPlaceSuggestion(String place) {
     placeSuggestationRepo
         .fetchPlaceSuggestationRepo(place, const Uuid().v4())

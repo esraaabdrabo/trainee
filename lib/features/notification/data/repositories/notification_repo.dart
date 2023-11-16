@@ -1,8 +1,5 @@
 import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
-
 import '../../../../core/dioHelper/dio_helper.dart';
 import '../../../../core/net/api_url.dart';
 import '../models/notification_model.dart';
