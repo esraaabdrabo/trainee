@@ -1,4 +1,4 @@
-part of 'shops_cubit.dart';
+part of 'shop_products_cubit.dart';
 
 
 

@@ -14,6 +14,7 @@ class GetShopsRequest extends BaseParams {
       this.keyword,
       this.skipCount,
       this.maxResultCount,
+      this.q,
       CancelToken? cancelToken})
       : super(cancelToken: cancelToken);
 
@@ -27,31 +28,32 @@ class GetShopsRequest extends BaseParams {
   final String? keyword;
   final int? skipCount;
   final int? maxResultCount;
+  final Map<String, dynamic>? q;
 
   factory GetShopsRequest.fromMap(Map<String, dynamic> json) => GetShopsRequest(
-        minRate: json["minRate"] == null ? null : json["minRate"],
-        maxRate: json["maxRate"] == null ? null : json["maxRate"],
-        cityId: json["cityId"] == null ? null : json["cityId"],
-        isActive: json["isActive"] == null ? null : json["isActive"],
-        sorting: json["sorting"] == null ? null : json["sorting"],
-        latitude: json["latitude"] == null ? null : json["latitude"],
-        longitude: json["longitude"] == null ? null : json["longitude"],
-        keyword: json["keyword"] == null ? null : json["keyword"],
-        skipCount: json["skipCount"] == null ? null : json["skipCount"],
-        maxResultCount:
-            json["maxResultCount"] == null ? null : json["maxResultCount"],
+        minRate: json["minRate"],
+        maxRate: json["maxRate"],
+        cityId: json["cityId"],
+        isActive: json["isActive"],
+        sorting: json["sorting"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
+        keyword: json["keyword"],
+        skipCount: json["skipCount"],
+        maxResultCount: json["maxResultCount"],
       );
 
+  @override
   Map<String, dynamic> toMap() => {
-        "minRate": minRate == null ? null : minRate,
-        "maxRate": maxRate == null ? null : maxRate,
-        "cityId": cityId == null ? null : cityId,
-        "isActive": isActive == null ? null : isActive,
-        "sorting": sorting == null ? null : sorting,
-        "latitude": latitude == null ? null : latitude,
-        "longitude": longitude == null ? null : longitude,
-        "keyword": keyword == null ? null : keyword,
-        "skipCount": skipCount == null ? null : skipCount,
-        "maxResultCount": maxResultCount == null ? null : maxResultCount,
+        "minRate": minRate,
+        "maxRate": maxRate,
+        "cityId": cityId,
+        "isActive": isActive,
+        "sorting": sorting,
+        "latitude": latitude,
+        "longitude": longitude,
+        "keyword": keyword,
+        "skipCount": skipCount,
+        "maxResultCount": maxResultCount,
       };
 }

@@ -17,10 +17,25 @@ class ShopCubit extends Cubit<ShopState> {
   void getShops(GetShopsRequest params) async {
     emit(const ShopState.shopLoadingState());
     final result = await getIt<GetShopsUseCase>()(params);
-    result.pick(onData: (data) {
-      emit(ShopState.getShopsState(data));
-    }, onError: (error) {
-      emit(ShopState.shopErrorState(error, () => this.getShops(params)));
-    });
+    result.pick(
+      onData: (data) => emit(ShopState.getShopsState(data)),
+      onError: (error) =>
+          emit(ShopState.shopErrorState(error, () => getShops(params))),
+    );
+  }
+
+  //search
+  bool showSearch = false;
+  void showSearchForm() {
+    showSearch = !showSearch;
+    emit(showSearch
+        ? const ShopState.showSearch()
+        : const ShopState.hideSearch());
+  }
+
+  var searchController = TextEditingController();
+  void clearSearch() {
+    searchController.clear();
+    getShops(GetShopsRequest());
   }
 }

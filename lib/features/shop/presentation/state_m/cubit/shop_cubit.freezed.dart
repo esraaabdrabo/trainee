@@ -20,6 +20,8 @@ mixin _$ShopState {
   TResult when<TResult extends Object?>({
     required TResult Function() shopInitState,
     required TResult Function() shopLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
     required TResult Function(AppErrors error, VoidCallback callback)
         shopErrorState,
     required TResult Function(ShopsEntity shopsEntity) getShopsState,
@@ -29,6 +31,8 @@ mixin _$ShopState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? shopInitState,
     TResult? Function()? shopLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
     TResult? Function(AppErrors error, VoidCallback callback)? shopErrorState,
     TResult? Function(ShopsEntity shopsEntity)? getShopsState,
   }) =>
@@ -37,6 +41,8 @@ mixin _$ShopState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? shopInitState,
     TResult Function()? shopLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
     TResult Function(AppErrors error, VoidCallback callback)? shopErrorState,
     TResult Function(ShopsEntity shopsEntity)? getShopsState,
     required TResult orElse(),
@@ -46,6 +52,8 @@ mixin _$ShopState {
   TResult map<TResult extends Object?>({
     required TResult Function(ShopInitState value) shopInitState,
     required TResult Function(ShopLoadingState value) shopLoadingState,
+    required TResult Function(ShopshowSearchState value) showSearch,
+    required TResult Function(ShopHideSearchState value) hideSearch,
     required TResult Function(ShopErrorState value) shopErrorState,
     required TResult Function(GetShopsState value) getShopsState,
   }) =>
@@ -54,6 +62,8 @@ mixin _$ShopState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ShopInitState value)? shopInitState,
     TResult? Function(ShopLoadingState value)? shopLoadingState,
+    TResult? Function(ShopshowSearchState value)? showSearch,
+    TResult? Function(ShopHideSearchState value)? hideSearch,
     TResult? Function(ShopErrorState value)? shopErrorState,
     TResult? Function(GetShopsState value)? getShopsState,
   }) =>
@@ -62,6 +72,8 @@ mixin _$ShopState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ShopInitState value)? shopInitState,
     TResult Function(ShopLoadingState value)? shopLoadingState,
+    TResult Function(ShopshowSearchState value)? showSearch,
+    TResult Function(ShopHideSearchState value)? hideSearch,
     TResult Function(ShopErrorState value)? shopErrorState,
     TResult Function(GetShopsState value)? getShopsState,
     required TResult orElse(),
@@ -126,6 +138,8 @@ class _$ShopInitState implements ShopInitState {
   TResult when<TResult extends Object?>({
     required TResult Function() shopInitState,
     required TResult Function() shopLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
     required TResult Function(AppErrors error, VoidCallback callback)
         shopErrorState,
     required TResult Function(ShopsEntity shopsEntity) getShopsState,
@@ -138,6 +152,8 @@ class _$ShopInitState implements ShopInitState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? shopInitState,
     TResult? Function()? shopLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
     TResult? Function(AppErrors error, VoidCallback callback)? shopErrorState,
     TResult? Function(ShopsEntity shopsEntity)? getShopsState,
   }) {
@@ -149,6 +165,8 @@ class _$ShopInitState implements ShopInitState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? shopInitState,
     TResult Function()? shopLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
     TResult Function(AppErrors error, VoidCallback callback)? shopErrorState,
     TResult Function(ShopsEntity shopsEntity)? getShopsState,
     required TResult orElse(),
@@ -164,6 +182,8 @@ class _$ShopInitState implements ShopInitState {
   TResult map<TResult extends Object?>({
     required TResult Function(ShopInitState value) shopInitState,
     required TResult Function(ShopLoadingState value) shopLoadingState,
+    required TResult Function(ShopshowSearchState value) showSearch,
+    required TResult Function(ShopHideSearchState value) hideSearch,
     required TResult Function(ShopErrorState value) shopErrorState,
     required TResult Function(GetShopsState value) getShopsState,
   }) {
@@ -175,6 +195,8 @@ class _$ShopInitState implements ShopInitState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ShopInitState value)? shopInitState,
     TResult? Function(ShopLoadingState value)? shopLoadingState,
+    TResult? Function(ShopshowSearchState value)? showSearch,
+    TResult? Function(ShopHideSearchState value)? hideSearch,
     TResult? Function(ShopErrorState value)? shopErrorState,
     TResult? Function(GetShopsState value)? getShopsState,
   }) {
@@ -186,6 +208,8 @@ class _$ShopInitState implements ShopInitState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ShopInitState value)? shopInitState,
     TResult Function(ShopLoadingState value)? shopLoadingState,
+    TResult Function(ShopshowSearchState value)? showSearch,
+    TResult Function(ShopHideSearchState value)? hideSearch,
     TResult Function(ShopErrorState value)? shopErrorState,
     TResult Function(GetShopsState value)? getShopsState,
     required TResult orElse(),
@@ -241,6 +265,8 @@ class _$ShopLoadingState implements ShopLoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() shopInitState,
     required TResult Function() shopLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
     required TResult Function(AppErrors error, VoidCallback callback)
         shopErrorState,
     required TResult Function(ShopsEntity shopsEntity) getShopsState,
@@ -253,6 +279,8 @@ class _$ShopLoadingState implements ShopLoadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? shopInitState,
     TResult? Function()? shopLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
     TResult? Function(AppErrors error, VoidCallback callback)? shopErrorState,
     TResult? Function(ShopsEntity shopsEntity)? getShopsState,
   }) {
@@ -264,6 +292,8 @@ class _$ShopLoadingState implements ShopLoadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? shopInitState,
     TResult Function()? shopLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
     TResult Function(AppErrors error, VoidCallback callback)? shopErrorState,
     TResult Function(ShopsEntity shopsEntity)? getShopsState,
     required TResult orElse(),
@@ -279,6 +309,8 @@ class _$ShopLoadingState implements ShopLoadingState {
   TResult map<TResult extends Object?>({
     required TResult Function(ShopInitState value) shopInitState,
     required TResult Function(ShopLoadingState value) shopLoadingState,
+    required TResult Function(ShopshowSearchState value) showSearch,
+    required TResult Function(ShopHideSearchState value) hideSearch,
     required TResult Function(ShopErrorState value) shopErrorState,
     required TResult Function(GetShopsState value) getShopsState,
   }) {
@@ -290,6 +322,8 @@ class _$ShopLoadingState implements ShopLoadingState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ShopInitState value)? shopInitState,
     TResult? Function(ShopLoadingState value)? shopLoadingState,
+    TResult? Function(ShopshowSearchState value)? showSearch,
+    TResult? Function(ShopHideSearchState value)? hideSearch,
     TResult? Function(ShopErrorState value)? shopErrorState,
     TResult? Function(GetShopsState value)? getShopsState,
   }) {
@@ -301,6 +335,8 @@ class _$ShopLoadingState implements ShopLoadingState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ShopInitState value)? shopInitState,
     TResult Function(ShopLoadingState value)? shopLoadingState,
+    TResult Function(ShopshowSearchState value)? showSearch,
+    TResult Function(ShopHideSearchState value)? hideSearch,
     TResult Function(ShopErrorState value)? shopErrorState,
     TResult Function(GetShopsState value)? getShopsState,
     required TResult orElse(),
@@ -314,6 +350,260 @@ class _$ShopLoadingState implements ShopLoadingState {
 
 abstract class ShopLoadingState implements ShopState {
   const factory ShopLoadingState() = _$ShopLoadingState;
+}
+
+/// @nodoc
+abstract class _$$ShopshowSearchStateCopyWith<$Res> {
+  factory _$$ShopshowSearchStateCopyWith(_$ShopshowSearchState value,
+          $Res Function(_$ShopshowSearchState) then) =
+      __$$ShopshowSearchStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ShopshowSearchStateCopyWithImpl<$Res>
+    extends _$ShopStateCopyWithImpl<$Res, _$ShopshowSearchState>
+    implements _$$ShopshowSearchStateCopyWith<$Res> {
+  __$$ShopshowSearchStateCopyWithImpl(
+      _$ShopshowSearchState _value, $Res Function(_$ShopshowSearchState) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$ShopshowSearchState implements ShopshowSearchState {
+  const _$ShopshowSearchState();
+
+  @override
+  String toString() {
+    return 'ShopState.showSearch()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ShopshowSearchState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() shopInitState,
+    required TResult Function() shopLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
+    required TResult Function(AppErrors error, VoidCallback callback)
+        shopErrorState,
+    required TResult Function(ShopsEntity shopsEntity) getShopsState,
+  }) {
+    return showSearch();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? shopInitState,
+    TResult? Function()? shopLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
+    TResult? Function(AppErrors error, VoidCallback callback)? shopErrorState,
+    TResult? Function(ShopsEntity shopsEntity)? getShopsState,
+  }) {
+    return showSearch?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? shopInitState,
+    TResult Function()? shopLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
+    TResult Function(AppErrors error, VoidCallback callback)? shopErrorState,
+    TResult Function(ShopsEntity shopsEntity)? getShopsState,
+    required TResult orElse(),
+  }) {
+    if (showSearch != null) {
+      return showSearch();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ShopInitState value) shopInitState,
+    required TResult Function(ShopLoadingState value) shopLoadingState,
+    required TResult Function(ShopshowSearchState value) showSearch,
+    required TResult Function(ShopHideSearchState value) hideSearch,
+    required TResult Function(ShopErrorState value) shopErrorState,
+    required TResult Function(GetShopsState value) getShopsState,
+  }) {
+    return showSearch(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ShopInitState value)? shopInitState,
+    TResult? Function(ShopLoadingState value)? shopLoadingState,
+    TResult? Function(ShopshowSearchState value)? showSearch,
+    TResult? Function(ShopHideSearchState value)? hideSearch,
+    TResult? Function(ShopErrorState value)? shopErrorState,
+    TResult? Function(GetShopsState value)? getShopsState,
+  }) {
+    return showSearch?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ShopInitState value)? shopInitState,
+    TResult Function(ShopLoadingState value)? shopLoadingState,
+    TResult Function(ShopshowSearchState value)? showSearch,
+    TResult Function(ShopHideSearchState value)? hideSearch,
+    TResult Function(ShopErrorState value)? shopErrorState,
+    TResult Function(GetShopsState value)? getShopsState,
+    required TResult orElse(),
+  }) {
+    if (showSearch != null) {
+      return showSearch(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ShopshowSearchState implements ShopState {
+  const factory ShopshowSearchState() = _$ShopshowSearchState;
+}
+
+/// @nodoc
+abstract class _$$ShopHideSearchStateCopyWith<$Res> {
+  factory _$$ShopHideSearchStateCopyWith(_$ShopHideSearchState value,
+          $Res Function(_$ShopHideSearchState) then) =
+      __$$ShopHideSearchStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ShopHideSearchStateCopyWithImpl<$Res>
+    extends _$ShopStateCopyWithImpl<$Res, _$ShopHideSearchState>
+    implements _$$ShopHideSearchStateCopyWith<$Res> {
+  __$$ShopHideSearchStateCopyWithImpl(
+      _$ShopHideSearchState _value, $Res Function(_$ShopHideSearchState) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$ShopHideSearchState implements ShopHideSearchState {
+  const _$ShopHideSearchState();
+
+  @override
+  String toString() {
+    return 'ShopState.hideSearch()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ShopHideSearchState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() shopInitState,
+    required TResult Function() shopLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
+    required TResult Function(AppErrors error, VoidCallback callback)
+        shopErrorState,
+    required TResult Function(ShopsEntity shopsEntity) getShopsState,
+  }) {
+    return hideSearch();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? shopInitState,
+    TResult? Function()? shopLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
+    TResult? Function(AppErrors error, VoidCallback callback)? shopErrorState,
+    TResult? Function(ShopsEntity shopsEntity)? getShopsState,
+  }) {
+    return hideSearch?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? shopInitState,
+    TResult Function()? shopLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
+    TResult Function(AppErrors error, VoidCallback callback)? shopErrorState,
+    TResult Function(ShopsEntity shopsEntity)? getShopsState,
+    required TResult orElse(),
+  }) {
+    if (hideSearch != null) {
+      return hideSearch();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ShopInitState value) shopInitState,
+    required TResult Function(ShopLoadingState value) shopLoadingState,
+    required TResult Function(ShopshowSearchState value) showSearch,
+    required TResult Function(ShopHideSearchState value) hideSearch,
+    required TResult Function(ShopErrorState value) shopErrorState,
+    required TResult Function(GetShopsState value) getShopsState,
+  }) {
+    return hideSearch(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ShopInitState value)? shopInitState,
+    TResult? Function(ShopLoadingState value)? shopLoadingState,
+    TResult? Function(ShopshowSearchState value)? showSearch,
+    TResult? Function(ShopHideSearchState value)? hideSearch,
+    TResult? Function(ShopErrorState value)? shopErrorState,
+    TResult? Function(GetShopsState value)? getShopsState,
+  }) {
+    return hideSearch?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ShopInitState value)? shopInitState,
+    TResult Function(ShopLoadingState value)? shopLoadingState,
+    TResult Function(ShopshowSearchState value)? showSearch,
+    TResult Function(ShopHideSearchState value)? hideSearch,
+    TResult Function(ShopErrorState value)? shopErrorState,
+    TResult Function(GetShopsState value)? getShopsState,
+    required TResult orElse(),
+  }) {
+    if (hideSearch != null) {
+      return hideSearch(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ShopHideSearchState implements ShopState {
+  const factory ShopHideSearchState() = _$ShopHideSearchState;
 }
 
 /// @nodoc
@@ -401,6 +691,8 @@ class _$ShopErrorState implements ShopErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() shopInitState,
     required TResult Function() shopLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
     required TResult Function(AppErrors error, VoidCallback callback)
         shopErrorState,
     required TResult Function(ShopsEntity shopsEntity) getShopsState,
@@ -413,6 +705,8 @@ class _$ShopErrorState implements ShopErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? shopInitState,
     TResult? Function()? shopLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
     TResult? Function(AppErrors error, VoidCallback callback)? shopErrorState,
     TResult? Function(ShopsEntity shopsEntity)? getShopsState,
   }) {
@@ -424,6 +718,8 @@ class _$ShopErrorState implements ShopErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? shopInitState,
     TResult Function()? shopLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
     TResult Function(AppErrors error, VoidCallback callback)? shopErrorState,
     TResult Function(ShopsEntity shopsEntity)? getShopsState,
     required TResult orElse(),
@@ -439,6 +735,8 @@ class _$ShopErrorState implements ShopErrorState {
   TResult map<TResult extends Object?>({
     required TResult Function(ShopInitState value) shopInitState,
     required TResult Function(ShopLoadingState value) shopLoadingState,
+    required TResult Function(ShopshowSearchState value) showSearch,
+    required TResult Function(ShopHideSearchState value) hideSearch,
     required TResult Function(ShopErrorState value) shopErrorState,
     required TResult Function(GetShopsState value) getShopsState,
   }) {
@@ -450,6 +748,8 @@ class _$ShopErrorState implements ShopErrorState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ShopInitState value)? shopInitState,
     TResult? Function(ShopLoadingState value)? shopLoadingState,
+    TResult? Function(ShopshowSearchState value)? showSearch,
+    TResult? Function(ShopHideSearchState value)? hideSearch,
     TResult? Function(ShopErrorState value)? shopErrorState,
     TResult? Function(GetShopsState value)? getShopsState,
   }) {
@@ -461,6 +761,8 @@ class _$ShopErrorState implements ShopErrorState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ShopInitState value)? shopInitState,
     TResult Function(ShopLoadingState value)? shopLoadingState,
+    TResult Function(ShopshowSearchState value)? showSearch,
+    TResult Function(ShopHideSearchState value)? hideSearch,
     TResult Function(ShopErrorState value)? shopErrorState,
     TResult Function(GetShopsState value)? getShopsState,
     required TResult orElse(),
@@ -550,6 +852,8 @@ class _$GetShopsState implements GetShopsState {
   TResult when<TResult extends Object?>({
     required TResult Function() shopInitState,
     required TResult Function() shopLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
     required TResult Function(AppErrors error, VoidCallback callback)
         shopErrorState,
     required TResult Function(ShopsEntity shopsEntity) getShopsState,
@@ -562,6 +866,8 @@ class _$GetShopsState implements GetShopsState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? shopInitState,
     TResult? Function()? shopLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
     TResult? Function(AppErrors error, VoidCallback callback)? shopErrorState,
     TResult? Function(ShopsEntity shopsEntity)? getShopsState,
   }) {
@@ -573,6 +879,8 @@ class _$GetShopsState implements GetShopsState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? shopInitState,
     TResult Function()? shopLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
     TResult Function(AppErrors error, VoidCallback callback)? shopErrorState,
     TResult Function(ShopsEntity shopsEntity)? getShopsState,
     required TResult orElse(),
@@ -588,6 +896,8 @@ class _$GetShopsState implements GetShopsState {
   TResult map<TResult extends Object?>({
     required TResult Function(ShopInitState value) shopInitState,
     required TResult Function(ShopLoadingState value) shopLoadingState,
+    required TResult Function(ShopshowSearchState value) showSearch,
+    required TResult Function(ShopHideSearchState value) hideSearch,
     required TResult Function(ShopErrorState value) shopErrorState,
     required TResult Function(GetShopsState value) getShopsState,
   }) {
@@ -599,6 +909,8 @@ class _$GetShopsState implements GetShopsState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ShopInitState value)? shopInitState,
     TResult? Function(ShopLoadingState value)? shopLoadingState,
+    TResult? Function(ShopshowSearchState value)? showSearch,
+    TResult? Function(ShopHideSearchState value)? hideSearch,
     TResult? Function(ShopErrorState value)? shopErrorState,
     TResult? Function(GetShopsState value)? getShopsState,
   }) {
@@ -610,6 +922,8 @@ class _$GetShopsState implements GetShopsState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ShopInitState value)? shopInitState,
     TResult Function(ShopLoadingState value)? shopLoadingState,
+    TResult Function(ShopshowSearchState value)? showSearch,
+    TResult Function(ShopHideSearchState value)? hideSearch,
     TResult Function(ShopErrorState value)? shopErrorState,
     TResult Function(GetShopsState value)? getShopsState,
     required TResult orElse(),

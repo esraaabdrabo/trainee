@@ -6,6 +6,9 @@ class ShopState with _$ShopState {
 
   const factory ShopState.shopLoadingState() = ShopLoadingState;
 
+  const factory ShopState.showSearch() = ShopshowSearchState;
+  const factory ShopState.hideSearch() = ShopHideSearchState;
+
   const factory ShopState.shopErrorState(
     AppErrors error,
     VoidCallback callback,
@@ -13,11 +16,4 @@ class ShopState with _$ShopState {
 
   const factory ShopState.getShopsState(ShopsEntity shopsEntity) =
       GetShopsState;
-
-
-
-
-
 }
-
-

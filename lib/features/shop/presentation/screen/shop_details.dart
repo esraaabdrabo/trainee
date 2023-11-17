@@ -22,7 +22,7 @@ import '../../../../generated/l10n.dart';
 import '../../../restaurant/presentation/screen/plates_view.dart';
 import '../../../restaurant/presentation/screen/restaurant_details.dart';
 import '../../../restaurant/presentation/widget/dishes_view.dart';
-import '../state_m/shops_cubit/shops_cubit.dart';
+import '../state_m/shops_cubit/shop_products_cubit.dart';
 
 class ShopDetails extends StatefulWidget {
   final ShopEntity shopsEntity;
@@ -37,9 +37,7 @@ class _ShopDetailsState extends State<ShopDetails> {
   Widget _buildRateIndicatorWidget(String title, double percent) {
     return Row(
       children: [
-        CustomText(
-          text: title,
-        ),
+        CustomText(text: title),
         Gaps.hGap4,
         SizedBox(
           width: 150.w,
