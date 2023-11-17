@@ -82,7 +82,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   }
 
   void getSelectedPlaceLocation() {
-    final sessionToken = Uuid().v4();
+    final sessionToken = const Uuid().v4();
     BlocProvider.of<MapsCubit>(context)
         .emitPlaceLocation(placeSuggestion.placeId, sessionToken);
   }
@@ -597,8 +597,8 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                   bloc: sn.restaurantCubit,
                   builder: (context, state) {
                     return state.when(
-                      hideSearch: () => SizedBox(),
-                      showSearch: () => SizedBox(),
+                      hideSearch: () => const SizedBox(),
+                      showSearch: () => const SizedBox(),
                       restaurantInitState: () {
                         return const SizedBox.shrink();
                       },
@@ -655,6 +655,8 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                   bloc: sn.shopCubit,
                   builder: (context, state) {
                     return state.when(
+                      hideSearch: () => const SizedBox(),
+                      showSearch: () => const SizedBox(),
                       shopInitState: () {
                         return const SizedBox.shrink();
                       },

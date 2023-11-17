@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:upgrade_traine_project/core/constants/app/app_constants.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_appbar.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_text.dart';
 import 'package:upgrade_traine_project/features/orders/controller/order_cubit.dart';
 import 'package:upgrade_traine_project/features/restaurant/data/model/response/plates_model.dart';
-import 'package:upgrade_traine_project/features/restaurant/presentation/screen/all_restaurants.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/screen/search_screen.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/state_m/cubit/new_cubit/new_restaurant_cubit.dart';
 import '../../../../core/common/app_colors.dart';
@@ -15,7 +13,6 @@ import '../../../../generated/l10n.dart';
 import '../../../orders/models/order_model.dart';
 import '../../../orders/presenation/screens/cart_view.dart';
 import '../widget/dishes_view.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PlatesView extends StatefulWidget {
   PlatesModel platesModel;
