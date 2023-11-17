@@ -7,6 +7,11 @@ class RestaurantState with _$RestaurantState {
   const factory RestaurantState.restaurantLoadingState() =
       RestaurantLoadingState;
 
+
+  const factory RestaurantState.showSearch() =
+      showSearchState;
+  const factory RestaurantState.hideSearch() =
+      HideSearchState;
   const factory RestaurantState.restaurantErrorState(
     AppErrors error,
     VoidCallback callback,

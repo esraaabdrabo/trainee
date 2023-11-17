@@ -19,7 +19,7 @@ import '../../../account/presentation/screen/change_password_screen.dart';
 import '../../../category/presentation/screen/category_list_screen.dart';
 import '../../../coach/presentation/screen/coaches_list_screen.dart';
 import '../../../orders/presenation/screens/order_screen.dart';
-import '../../../restaurant/presentation/screen/restaurant_view.dart';
+import '../../../restaurant/presentation/screen/all_restaurants.dart';
 import '../../../shop/presentation/screen/shops_view.dart';
 import '../screen/../state_m/provider/more_screen_notifier.dart';
 import 'about_app_screen.dart';

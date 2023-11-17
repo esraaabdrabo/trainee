@@ -24,6 +24,8 @@ class _CustomTextField extends StatelessWidget {
   final Widget? suffix;
   final Widget? prefix;
   final Function(String)? onChanged;
+  final Function(String? value)? onSave;
+
   final String? label;
   const _CustomTextField(
       {Key? key,
@@ -42,7 +44,8 @@ class _CustomTextField extends StatelessWidget {
       this.maxLines,
       this.suffix,
       this.prefix,
-      this.onChanged})
+      this.onChanged,
+      this.onSave})
       : super(key: key);
 
   @override
@@ -73,6 +76,7 @@ class _CustomTextField extends StatelessWidget {
       maxLines: passwordSecure! ? 1 : maxLines,
       obscureText: passwordSecure!,
       onChanged: onChanged,
+      onSaved: onSave == null ? null : (newValue) => onSave!(newValue),
     );
   }
 }
@@ -268,45 +272,14 @@ class PasswordTextField extends StatelessWidget {
   }
 }
 
-/*class EmailTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final TextInputAction? textInputAction;
-  final FocusNode? focusNode;
-  final Function? onFiledSubmitted;
-  const EmailTextField(
-      {Key? key,
-      required this.controller,
-      this.textInputAction,
-      this.focusNode,
-      this.onFiledSubmitted})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return _CustomTextField(
-      validator:(text) {
-        if (!Validators.isNotEmptyString(text ?? ''))
-          return Translation.of(context).enter_password;
-        if (Validators.isValidEmail(
-          text ?? '',
-        )) return Translation.of(context).enter_valid_password;
-      },
-      textInputType: TextInputType.emailAddress,
-      controller: controller,
-      isPassword: true,
-      textInputAction: textInputAction,
-      focusNode: focusNode,
-    );
-  }
-}*/
-
 class SearchTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
-  final Function? onFieldSubmitted;
+  final Function(String? input)? onFieldSubmitted;
   final TextInputAction? textInputAction;
   final Widget? suffix;
   final Function(String)? onChanged;
+  final Function(String? value)? onSave;
 
   const SearchTextField(
       {Key? key,
@@ -315,6 +288,7 @@ class SearchTextField extends StatelessWidget {
       required this.controller,
       this.onFieldSubmitted,
       this.onChanged,
+      this.onSave,
       this.textInputAction})
       : super(key: key);
 
@@ -328,10 +302,12 @@ class SearchTextField extends StatelessWidget {
         Icons.search,
         color: AppColors.white,
       ),
-      onFieldSubmitted: onFieldSubmitted,
+      onFieldSubmitted:
+          onFieldSubmitted != null ? (input) => onFieldSubmitted!(input) : null,
       textInputAction: textInputAction,
       onChanged: onChanged,
       suffix: suffix,
+      onSave: onSave == null ? null : (value) => onSave!(value),
     );
   }
 }

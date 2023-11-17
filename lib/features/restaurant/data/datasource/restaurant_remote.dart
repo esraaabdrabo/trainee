@@ -15,6 +15,7 @@ class RestaurantRemoteSource extends IRestaurantRemoteSource {
   Future<Either<AppErrors, RestaurantsModel>> getRestaurants(
       GetRestaurantsRequest params) async {
     return request<RestaurantsModel>(
+      queryParameters: params.q,
         converter: (json) => RestaurantsModel.fromJson(json),
         method: HttpMethod.GET,
         url: APIUrls.API_GET_ALL_RESTAURANTS,

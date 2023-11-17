@@ -5,7 +5,7 @@ import 'service_locator.config.dart';
 
 final getIt = GetIt.instance;
 @injectableInit
-Future<void> configureInjection() => $initGetIt(getIt);
+Future<void> configureInjection() => getIt.init(); // $initGetIt(getIt);
 
 abstract class Env {
   static const dev = 'dev';

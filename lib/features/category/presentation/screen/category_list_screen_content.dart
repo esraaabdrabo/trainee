@@ -45,7 +45,8 @@ class _CategoryListScreenContentState extends State<CategoryListScreenContent>
             sn.showSearchField
                 ? SearchTextField(
                     hintText: Translation.of(context).search,
-                    controller: sn.searchController)
+                    controller: sn.searchController,
+                  )
                 : const SizedBox.shrink(),
             Gaps.vGap12,
             _buildCustomTabBar(),
@@ -85,7 +86,7 @@ class _CategoryListScreenContentState extends State<CategoryListScreenContent>
                           children: [
                             Expanded(
                               flex: 4,
-                              child: categoriesEntity.items!.length > 0
+                              child: categoriesEntity.items!.isNotEmpty
                                   ? GestureDetector(
                                       onTap: () {
                                         _gotoCoachesScreen(categoriesEntity

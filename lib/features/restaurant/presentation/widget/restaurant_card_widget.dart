@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/features/restaurant/domain/entity/restaurant_entity.dart';
-import 'package:upgrade_traine_project/features/restaurant/presentation/screen/restaurant_view.dart';
+import 'package:upgrade_traine_project/features/restaurant/presentation/screen/all_restaurants.dart';
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/constants/app/app_constants.dart';
 

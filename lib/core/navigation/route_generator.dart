@@ -24,7 +24,7 @@ import '../../features/home/presentation/screen/navigator_screen.dart';
 import '../../features/home/presentation/screen/privacy_policy_screen.dart';
 import '../../features/profile/presentation/screen/edit_profile_screen.dart';
 import '../../features/restaurant/presentation/screen/plates_view.dart';
-import '../../features/restaurant/presentation/screen/restaurant_view.dart';
+import '../../features/restaurant/presentation/screen/all_restaurants.dart';
 import '../../features/shop/presentation/screen/shops_view.dart';
 import '../../features/splash/presentation/screen/intro_screen.dart';
 import '../params/screen_params/account_verification_screen_params.dart';

@@ -20,6 +20,8 @@ mixin _$RestaurantState {
   TResult when<TResult extends Object?>({
     required TResult Function() restaurantInitState,
     required TResult Function() restaurantLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
     required TResult Function(AppErrors error, VoidCallback callback)
         restaurantErrorState,
     required TResult Function(RestaurantsEntity restaurantsEntity)
@@ -30,6 +32,8 @@ mixin _$RestaurantState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? restaurantInitState,
     TResult? Function()? restaurantLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
     TResult? Function(AppErrors error, VoidCallback callback)?
         restaurantErrorState,
     TResult? Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
@@ -39,6 +43,8 @@ mixin _$RestaurantState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? restaurantInitState,
     TResult Function()? restaurantLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
     TResult Function(AppErrors error, VoidCallback callback)?
         restaurantErrorState,
     TResult Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
@@ -50,6 +56,8 @@ mixin _$RestaurantState {
     required TResult Function(RestaurantInitState value) restaurantInitState,
     required TResult Function(RestaurantLoadingState value)
         restaurantLoadingState,
+    required TResult Function(showSearchState value) showSearch,
+    required TResult Function(HideSearchState value) hideSearch,
     required TResult Function(RestaurantErrorState value) restaurantErrorState,
     required TResult Function(GetRestaurantsState value) getRestaurantsState,
   }) =>
@@ -58,6 +66,8 @@ mixin _$RestaurantState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RestaurantInitState value)? restaurantInitState,
     TResult? Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult? Function(showSearchState value)? showSearch,
+    TResult? Function(HideSearchState value)? hideSearch,
     TResult? Function(RestaurantErrorState value)? restaurantErrorState,
     TResult? Function(GetRestaurantsState value)? getRestaurantsState,
   }) =>
@@ -66,6 +76,8 @@ mixin _$RestaurantState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RestaurantInitState value)? restaurantInitState,
     TResult Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult Function(showSearchState value)? showSearch,
+    TResult Function(HideSearchState value)? hideSearch,
     TResult Function(RestaurantErrorState value)? restaurantErrorState,
     TResult Function(GetRestaurantsState value)? getRestaurantsState,
     required TResult orElse(),
@@ -131,6 +143,8 @@ class _$RestaurantInitState implements RestaurantInitState {
   TResult when<TResult extends Object?>({
     required TResult Function() restaurantInitState,
     required TResult Function() restaurantLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
     required TResult Function(AppErrors error, VoidCallback callback)
         restaurantErrorState,
     required TResult Function(RestaurantsEntity restaurantsEntity)
@@ -144,6 +158,8 @@ class _$RestaurantInitState implements RestaurantInitState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? restaurantInitState,
     TResult? Function()? restaurantLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
     TResult? Function(AppErrors error, VoidCallback callback)?
         restaurantErrorState,
     TResult? Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
@@ -156,6 +172,8 @@ class _$RestaurantInitState implements RestaurantInitState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? restaurantInitState,
     TResult Function()? restaurantLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
     TResult Function(AppErrors error, VoidCallback callback)?
         restaurantErrorState,
     TResult Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
@@ -173,6 +191,8 @@ class _$RestaurantInitState implements RestaurantInitState {
     required TResult Function(RestaurantInitState value) restaurantInitState,
     required TResult Function(RestaurantLoadingState value)
         restaurantLoadingState,
+    required TResult Function(showSearchState value) showSearch,
+    required TResult Function(HideSearchState value) hideSearch,
     required TResult Function(RestaurantErrorState value) restaurantErrorState,
     required TResult Function(GetRestaurantsState value) getRestaurantsState,
   }) {
@@ -184,6 +204,8 @@ class _$RestaurantInitState implements RestaurantInitState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RestaurantInitState value)? restaurantInitState,
     TResult? Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult? Function(showSearchState value)? showSearch,
+    TResult? Function(HideSearchState value)? hideSearch,
     TResult? Function(RestaurantErrorState value)? restaurantErrorState,
     TResult? Function(GetRestaurantsState value)? getRestaurantsState,
   }) {
@@ -195,6 +217,8 @@ class _$RestaurantInitState implements RestaurantInitState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RestaurantInitState value)? restaurantInitState,
     TResult Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult Function(showSearchState value)? showSearch,
+    TResult Function(HideSearchState value)? hideSearch,
     TResult Function(RestaurantErrorState value)? restaurantErrorState,
     TResult Function(GetRestaurantsState value)? getRestaurantsState,
     required TResult orElse(),
@@ -250,6 +274,8 @@ class _$RestaurantLoadingState implements RestaurantLoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() restaurantInitState,
     required TResult Function() restaurantLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
     required TResult Function(AppErrors error, VoidCallback callback)
         restaurantErrorState,
     required TResult Function(RestaurantsEntity restaurantsEntity)
@@ -263,6 +289,8 @@ class _$RestaurantLoadingState implements RestaurantLoadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? restaurantInitState,
     TResult? Function()? restaurantLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
     TResult? Function(AppErrors error, VoidCallback callback)?
         restaurantErrorState,
     TResult? Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
@@ -275,6 +303,8 @@ class _$RestaurantLoadingState implements RestaurantLoadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? restaurantInitState,
     TResult Function()? restaurantLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
     TResult Function(AppErrors error, VoidCallback callback)?
         restaurantErrorState,
     TResult Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
@@ -292,6 +322,8 @@ class _$RestaurantLoadingState implements RestaurantLoadingState {
     required TResult Function(RestaurantInitState value) restaurantInitState,
     required TResult Function(RestaurantLoadingState value)
         restaurantLoadingState,
+    required TResult Function(showSearchState value) showSearch,
+    required TResult Function(HideSearchState value) hideSearch,
     required TResult Function(RestaurantErrorState value) restaurantErrorState,
     required TResult Function(GetRestaurantsState value) getRestaurantsState,
   }) {
@@ -303,6 +335,8 @@ class _$RestaurantLoadingState implements RestaurantLoadingState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RestaurantInitState value)? restaurantInitState,
     TResult? Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult? Function(showSearchState value)? showSearch,
+    TResult? Function(HideSearchState value)? hideSearch,
     TResult? Function(RestaurantErrorState value)? restaurantErrorState,
     TResult? Function(GetRestaurantsState value)? getRestaurantsState,
   }) {
@@ -314,6 +348,8 @@ class _$RestaurantLoadingState implements RestaurantLoadingState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RestaurantInitState value)? restaurantInitState,
     TResult Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult Function(showSearchState value)? showSearch,
+    TResult Function(HideSearchState value)? hideSearch,
     TResult Function(RestaurantErrorState value)? restaurantErrorState,
     TResult Function(GetRestaurantsState value)? getRestaurantsState,
     required TResult orElse(),
@@ -327,6 +363,268 @@ class _$RestaurantLoadingState implements RestaurantLoadingState {
 
 abstract class RestaurantLoadingState implements RestaurantState {
   const factory RestaurantLoadingState() = _$RestaurantLoadingState;
+}
+
+/// @nodoc
+abstract class _$$showSearchStateCopyWith<$Res> {
+  factory _$$showSearchStateCopyWith(
+          _$showSearchState value, $Res Function(_$showSearchState) then) =
+      __$$showSearchStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$showSearchStateCopyWithImpl<$Res>
+    extends _$RestaurantStateCopyWithImpl<$Res, _$showSearchState>
+    implements _$$showSearchStateCopyWith<$Res> {
+  __$$showSearchStateCopyWithImpl(
+      _$showSearchState _value, $Res Function(_$showSearchState) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$showSearchState implements showSearchState {
+  const _$showSearchState();
+
+  @override
+  String toString() {
+    return 'RestaurantState.showSearch()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$showSearchState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() restaurantInitState,
+    required TResult Function() restaurantLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
+    required TResult Function(AppErrors error, VoidCallback callback)
+        restaurantErrorState,
+    required TResult Function(RestaurantsEntity restaurantsEntity)
+        getRestaurantsState,
+  }) {
+    return showSearch();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? restaurantInitState,
+    TResult? Function()? restaurantLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
+    TResult? Function(AppErrors error, VoidCallback callback)?
+        restaurantErrorState,
+    TResult? Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
+  }) {
+    return showSearch?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? restaurantInitState,
+    TResult Function()? restaurantLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
+    TResult Function(AppErrors error, VoidCallback callback)?
+        restaurantErrorState,
+    TResult Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
+    required TResult orElse(),
+  }) {
+    if (showSearch != null) {
+      return showSearch();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RestaurantInitState value) restaurantInitState,
+    required TResult Function(RestaurantLoadingState value)
+        restaurantLoadingState,
+    required TResult Function(showSearchState value) showSearch,
+    required TResult Function(HideSearchState value) hideSearch,
+    required TResult Function(RestaurantErrorState value) restaurantErrorState,
+    required TResult Function(GetRestaurantsState value) getRestaurantsState,
+  }) {
+    return showSearch(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RestaurantInitState value)? restaurantInitState,
+    TResult? Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult? Function(showSearchState value)? showSearch,
+    TResult? Function(HideSearchState value)? hideSearch,
+    TResult? Function(RestaurantErrorState value)? restaurantErrorState,
+    TResult? Function(GetRestaurantsState value)? getRestaurantsState,
+  }) {
+    return showSearch?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RestaurantInitState value)? restaurantInitState,
+    TResult Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult Function(showSearchState value)? showSearch,
+    TResult Function(HideSearchState value)? hideSearch,
+    TResult Function(RestaurantErrorState value)? restaurantErrorState,
+    TResult Function(GetRestaurantsState value)? getRestaurantsState,
+    required TResult orElse(),
+  }) {
+    if (showSearch != null) {
+      return showSearch(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class showSearchState implements RestaurantState {
+  const factory showSearchState() = _$showSearchState;
+}
+
+/// @nodoc
+abstract class _$$HideSearchStateCopyWith<$Res> {
+  factory _$$HideSearchStateCopyWith(
+          _$HideSearchState value, $Res Function(_$HideSearchState) then) =
+      __$$HideSearchStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$HideSearchStateCopyWithImpl<$Res>
+    extends _$RestaurantStateCopyWithImpl<$Res, _$HideSearchState>
+    implements _$$HideSearchStateCopyWith<$Res> {
+  __$$HideSearchStateCopyWithImpl(
+      _$HideSearchState _value, $Res Function(_$HideSearchState) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$HideSearchState implements HideSearchState {
+  const _$HideSearchState();
+
+  @override
+  String toString() {
+    return 'RestaurantState.hideSearch()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$HideSearchState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() restaurantInitState,
+    required TResult Function() restaurantLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
+    required TResult Function(AppErrors error, VoidCallback callback)
+        restaurantErrorState,
+    required TResult Function(RestaurantsEntity restaurantsEntity)
+        getRestaurantsState,
+  }) {
+    return hideSearch();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? restaurantInitState,
+    TResult? Function()? restaurantLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
+    TResult? Function(AppErrors error, VoidCallback callback)?
+        restaurantErrorState,
+    TResult? Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
+  }) {
+    return hideSearch?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? restaurantInitState,
+    TResult Function()? restaurantLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
+    TResult Function(AppErrors error, VoidCallback callback)?
+        restaurantErrorState,
+    TResult Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
+    required TResult orElse(),
+  }) {
+    if (hideSearch != null) {
+      return hideSearch();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RestaurantInitState value) restaurantInitState,
+    required TResult Function(RestaurantLoadingState value)
+        restaurantLoadingState,
+    required TResult Function(showSearchState value) showSearch,
+    required TResult Function(HideSearchState value) hideSearch,
+    required TResult Function(RestaurantErrorState value) restaurantErrorState,
+    required TResult Function(GetRestaurantsState value) getRestaurantsState,
+  }) {
+    return hideSearch(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RestaurantInitState value)? restaurantInitState,
+    TResult? Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult? Function(showSearchState value)? showSearch,
+    TResult? Function(HideSearchState value)? hideSearch,
+    TResult? Function(RestaurantErrorState value)? restaurantErrorState,
+    TResult? Function(GetRestaurantsState value)? getRestaurantsState,
+  }) {
+    return hideSearch?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RestaurantInitState value)? restaurantInitState,
+    TResult Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult Function(showSearchState value)? showSearch,
+    TResult Function(HideSearchState value)? hideSearch,
+    TResult Function(RestaurantErrorState value)? restaurantErrorState,
+    TResult Function(GetRestaurantsState value)? getRestaurantsState,
+    required TResult orElse(),
+  }) {
+    if (hideSearch != null) {
+      return hideSearch(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class HideSearchState implements RestaurantState {
+  const factory HideSearchState() = _$HideSearchState;
 }
 
 /// @nodoc
@@ -415,6 +713,8 @@ class _$RestaurantErrorState implements RestaurantErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() restaurantInitState,
     required TResult Function() restaurantLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
     required TResult Function(AppErrors error, VoidCallback callback)
         restaurantErrorState,
     required TResult Function(RestaurantsEntity restaurantsEntity)
@@ -428,6 +728,8 @@ class _$RestaurantErrorState implements RestaurantErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? restaurantInitState,
     TResult? Function()? restaurantLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
     TResult? Function(AppErrors error, VoidCallback callback)?
         restaurantErrorState,
     TResult? Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
@@ -440,6 +742,8 @@ class _$RestaurantErrorState implements RestaurantErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? restaurantInitState,
     TResult Function()? restaurantLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
     TResult Function(AppErrors error, VoidCallback callback)?
         restaurantErrorState,
     TResult Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
@@ -457,6 +761,8 @@ class _$RestaurantErrorState implements RestaurantErrorState {
     required TResult Function(RestaurantInitState value) restaurantInitState,
     required TResult Function(RestaurantLoadingState value)
         restaurantLoadingState,
+    required TResult Function(showSearchState value) showSearch,
+    required TResult Function(HideSearchState value) hideSearch,
     required TResult Function(RestaurantErrorState value) restaurantErrorState,
     required TResult Function(GetRestaurantsState value) getRestaurantsState,
   }) {
@@ -468,6 +774,8 @@ class _$RestaurantErrorState implements RestaurantErrorState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RestaurantInitState value)? restaurantInitState,
     TResult? Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult? Function(showSearchState value)? showSearch,
+    TResult? Function(HideSearchState value)? hideSearch,
     TResult? Function(RestaurantErrorState value)? restaurantErrorState,
     TResult? Function(GetRestaurantsState value)? getRestaurantsState,
   }) {
@@ -479,6 +787,8 @@ class _$RestaurantErrorState implements RestaurantErrorState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RestaurantInitState value)? restaurantInitState,
     TResult Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult Function(showSearchState value)? showSearch,
+    TResult Function(HideSearchState value)? hideSearch,
     TResult Function(RestaurantErrorState value)? restaurantErrorState,
     TResult Function(GetRestaurantsState value)? getRestaurantsState,
     required TResult orElse(),
@@ -570,6 +880,8 @@ class _$GetRestaurantsState implements GetRestaurantsState {
   TResult when<TResult extends Object?>({
     required TResult Function() restaurantInitState,
     required TResult Function() restaurantLoadingState,
+    required TResult Function() showSearch,
+    required TResult Function() hideSearch,
     required TResult Function(AppErrors error, VoidCallback callback)
         restaurantErrorState,
     required TResult Function(RestaurantsEntity restaurantsEntity)
@@ -583,6 +895,8 @@ class _$GetRestaurantsState implements GetRestaurantsState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? restaurantInitState,
     TResult? Function()? restaurantLoadingState,
+    TResult? Function()? showSearch,
+    TResult? Function()? hideSearch,
     TResult? Function(AppErrors error, VoidCallback callback)?
         restaurantErrorState,
     TResult? Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
@@ -595,6 +909,8 @@ class _$GetRestaurantsState implements GetRestaurantsState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? restaurantInitState,
     TResult Function()? restaurantLoadingState,
+    TResult Function()? showSearch,
+    TResult Function()? hideSearch,
     TResult Function(AppErrors error, VoidCallback callback)?
         restaurantErrorState,
     TResult Function(RestaurantsEntity restaurantsEntity)? getRestaurantsState,
@@ -612,6 +928,8 @@ class _$GetRestaurantsState implements GetRestaurantsState {
     required TResult Function(RestaurantInitState value) restaurantInitState,
     required TResult Function(RestaurantLoadingState value)
         restaurantLoadingState,
+    required TResult Function(showSearchState value) showSearch,
+    required TResult Function(HideSearchState value) hideSearch,
     required TResult Function(RestaurantErrorState value) restaurantErrorState,
     required TResult Function(GetRestaurantsState value) getRestaurantsState,
   }) {
@@ -623,6 +941,8 @@ class _$GetRestaurantsState implements GetRestaurantsState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RestaurantInitState value)? restaurantInitState,
     TResult? Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult? Function(showSearchState value)? showSearch,
+    TResult? Function(HideSearchState value)? hideSearch,
     TResult? Function(RestaurantErrorState value)? restaurantErrorState,
     TResult? Function(GetRestaurantsState value)? getRestaurantsState,
   }) {
@@ -634,6 +954,8 @@ class _$GetRestaurantsState implements GetRestaurantsState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RestaurantInitState value)? restaurantInitState,
     TResult Function(RestaurantLoadingState value)? restaurantLoadingState,
+    TResult Function(showSearchState value)? showSearch,
+    TResult Function(HideSearchState value)? hideSearch,
     TResult Function(RestaurantErrorState value)? restaurantErrorState,
     TResult Function(GetRestaurantsState value)? getRestaurantsState,
     required TResult orElse(),

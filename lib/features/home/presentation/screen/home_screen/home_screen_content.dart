@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
 import 'package:upgrade_traine_project/features/coach/domain/entity/coach_entity.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../../core/common/app_colors.dart';
@@ -28,7 +29,7 @@ import '../../../../coach/presentation/screen/coach_profile_screen.dart';
 import '../../../../coach/presentation/screen/coaches_list_screen.dart';
 import '../../../../coach/presentation/state_m/cubit/coach_cubit.dart';
 import '../../../../restaurant/presentation/screen/restaurant_details.dart';
-import '../../../../restaurant/presentation/screen/restaurant_view.dart';
+import '../../../../restaurant/presentation/screen/all_restaurants.dart';
 import '../../../../restaurant/presentation/state_m/cubit/restaurant_cubit.dart';
 import '../../../../shop/presentation/screen/shop_details.dart';
 import '../../../../shop/presentation/screen/shops_view.dart';
@@ -596,6 +597,8 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                   bloc: sn.restaurantCubit,
                   builder: (context, state) {
                     return state.when(
+                      hideSearch: () => SizedBox(),
+                      showSearch: () => SizedBox(),
                       restaurantInitState: () {
                         return const SizedBox.shrink();
                       },

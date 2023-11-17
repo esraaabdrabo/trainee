@@ -61,9 +61,9 @@ class CategoryListScreenNotifier extends ScreenNotifier {
   }
 
   void selectType(int id) {
-    if (id == 0)
+    if (id == 0) {
       selectedType = menCategories;
-    else if (id == 1)
+    } else if (id == 1)
       selectedType = womenCategories;
     else
       selectedType = under16Categories;
@@ -103,8 +103,8 @@ class CategoryListScreenNotifier extends ScreenNotifier {
 
   void search() {
     List<CategoryEntity> _localCategories = [];
-    if (searchController.text != '')
-      selectedType.forEach((element) {
+    if (searchController.text != '') {
+      for (var element in selectedType) {
         if (element.name != null &&
                 element.name!
                     .toLowerCase()
@@ -116,11 +116,13 @@ class CategoryListScreenNotifier extends ScreenNotifier {
             element.enName != null &&
                 element.enName!
                     .toLowerCase()
-                    .contains(searchController.text.toLowerCase()))
+                    .contains(searchController.text.toLowerCase())) {
           _localCategories.add(element);
-      });
-    else
+        }
+      }
+    } else {
       _localCategories = selectedType;
+    }
 
     setDisplayList(_localCategories);
   }
@@ -131,15 +133,11 @@ class CategoryListScreenNotifier extends ScreenNotifier {
     int fraction = categories.length % 5;
     if (fraction != 0) collections++;
     for (var count = 1; count <= collections; count++) {
-      print('length: ' + categories.length.toString());
-      print('collection: $collections');
-      print('fraction: $fraction');
-      print('count: $count');
-      if (count < collections)
+      if (count < collections) {
         displayLists.add(CategoriesEntity(
             items: categories.getRange(5 * (count - 1), (5 * count)).toList()));
-      else
-        print("llllllist");
+      } else {
+      }
         displayLists.add(CategoriesEntity(
             items: categories
                 .getRange(5 * (count - 1), categories.length)

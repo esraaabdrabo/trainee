@@ -12,8 +12,14 @@ part 'restaurant_cubit.freezed.dart';
 part 'restaurant_state.dart';
 
 class RestaurantCubit extends Cubit<RestaurantState> {
-  RestaurantCubit() : super(const RestaurantState.restaurantInitState());
-
+  RestaurantCubit() : super(const RestaurantState.restaurantInitState()) {
+    searchController.addListener(() {
+      if (state is GetRestaurantsState &&
+          searchController.text.trim().isEmpty) {
+        getRestaurants(GetRestaurantsRequest());
+      }
+    });
+  }
   RestaurantsEntity? restaurants;
 
   void getRestaurants(GetRestaurantsRequest params) async {
@@ -23,10 +29,22 @@ class RestaurantCubit extends Cubit<RestaurantState> {
       restaurants = data;
       print(restaurants);
       emit(RestaurantState.getRestaurantsState(data));
-
     }, onError: (error) {
       emit(RestaurantState.restaurantErrorState(
           error, () => getRestaurants(params)));
     });
+  }
+
+//search
+  bool showSearch = false;
+  void showSearchForm() {
+    showSearch = !showSearch;
+    emit(showSearch ? const showSearchState() : const HideSearchState());
+  }
+
+  var searchController = TextEditingController();
+  void clearSearch() {
+    searchController.clear();
+    getRestaurants(GetRestaurantsRequest());
   }
 }

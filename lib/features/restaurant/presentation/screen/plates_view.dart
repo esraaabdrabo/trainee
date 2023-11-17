@@ -7,7 +7,7 @@ import 'package:upgrade_traine_project/core/ui/widgets/custom_appbar.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_text.dart';
 import 'package:upgrade_traine_project/features/orders/controller/order_cubit.dart';
 import 'package:upgrade_traine_project/features/restaurant/data/model/response/plates_model.dart';
-import 'package:upgrade_traine_project/features/restaurant/presentation/screen/restaurant_view.dart';
+import 'package:upgrade_traine_project/features/restaurant/presentation/screen/all_restaurants.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/screen/search_screen.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/state_m/cubit/new_cubit/new_restaurant_cubit.dart';
 import '../../../../core/common/app_colors.dart';

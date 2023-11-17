@@ -41,18 +41,12 @@ class _MapWidgetState extends State<MapWidget> {
   Future<void> _init() async {
     if (isInitialized) {
       mapStyle = await rootBundle.loadString(AppConstants.MAP_STYLE_JSON);
-      try {
-        await BitmapDescriptor.fromAssetImage(
-                ImageConfiguration(size: Size(30.w, 45.h)),
-                AppConstants.MARKER_ICON)
-            .then((d) {
-          customIcon = d;
-        });
-        Toast.show("marker loaded");
-      } catch (e) {
-        Toast.show("Error $e");
-        print(e);
-      }
+      await BitmapDescriptor.fromAssetImage(
+              ImageConfiguration(size: Size(30.w, 45.h)),
+              AppConstants.MARKER_ICON)
+          .then((d) {
+        customIcon = d;
+      });
     }
     setState(() => isInitialized = false);
     _setMyLocation();
@@ -84,6 +78,8 @@ class _MapWidgetState extends State<MapWidget> {
         markers.add(element);
       }
     }
+    Toast.show(
+        "${widget.myLocation} ${!isInitialized && !myLocationSet && widget.myLocation != null}");
 
     if (!isInitialized && !myLocationSet && widget.myLocation != null) {
       BlocProvider.of<MapsCubit>(context)
