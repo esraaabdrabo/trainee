@@ -4,6 +4,7 @@ part of 'course_cubit.dart';
 abstract class CourseState {}
 
 class CourseInitial extends CourseState {}
+
 class CurrentCoursesLoading extends CourseState {}
 
 class CurrentCoursesError extends CourseState {}
@@ -38,3 +39,8 @@ class ErrorCreateReviewData extends CourseState {
 }
 
 class SuccessCreateReviewData extends CourseState {}
+
+//search
+class CoursesShowSearchState extends CourseState {}
+
+class CoursesHideSearchState extends CourseState {}

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:upgrade_traine_project/features/coach/presentation/state_m/course_cubit/course_cubit.dart';
+import 'package:upgrade_traine_project/features/courses/widgets/search_form_field.dart';
+import 'package:upgrade_traine_project/features/courses/widgets/search_icon.dart';
 
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/style/gaps.dart';
@@ -41,30 +43,40 @@ class _TrainerCoursesScreenState extends State<TrainerCoursesScreen> {
         title: Translation.of(context).courses,
         actions: [
           InkWell(
-              onTap: () {
-                Navigator.push(
+              onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const NotificationScreen()));
-              },
+                      builder: (context) => const NotificationScreen(),
+                    ),
+                  ),
               child: const Icon(Icons.notifications)),
-          Gaps.hGap20,
+          const AllCoursessSearchIcon()
         ],
       ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: BlocBuilder<CourseCubit, CourseState>(
-        builder: (context, state) {
-          if (state is CurrentCoursesSuccess) {
-            return ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) => _buildListItemWidget(
-                    state.currentCoursesModel.result!.items![index]),
-                separatorBuilder: (context, index) => Gaps.vGap16,
-                itemCount: state.currentCoursesModel.result!.items!.length);
-          } else {
-            return const SizedBox();
-          }
-        },
+      body: Column(
+        children: [
+          AllCoursesSearchField(widget.id!),
+          BlocBuilder<CourseCubit, CourseState>(
+            buildWhen: (previous, current) =>
+                current is CurrentCoursesLoading ||
+                current is CurrentCoursesSuccess,
+            builder: (context, state) {
+              return Expanded(
+                child: state is CurrentCoursesSuccess
+                    ? ListView.separated(
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) => _buildListItemWidget(
+                            state.currentCoursesModel.result!.items![index]),
+                        separatorBuilder: (context, index) => Gaps.vGap16,
+                        itemCount:
+                            state.currentCoursesModel.result!.items!.length)
+                    : const Center(child: CircularProgressIndicator()),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

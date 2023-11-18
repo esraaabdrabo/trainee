@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -21,7 +22,7 @@ class CourseCubit extends Cubit<CourseState> {
 
     final response = await DioHelper().getData(
         url: APIUrls.API_GET_COURSES,
-        query: {"TrainerId": trainerId,});
+        query: {"TrainerId": trainerId, "keyword": searchController.text});
     response.fold((error) {
       emit(CurrentCoursesError());
     }, (success) {
@@ -49,9 +50,9 @@ class CourseCubit extends Cubit<CourseState> {
   Future<void> bookCourse({required int courseId}) async {
     emit(BookCourseLoadingState());
     final response = await DioHelper().postData(
-        url: APIUrls.API_BOOK_COURSE,data: {
-          "courseId" : courseId
-    }, withToken: true );
+        url: APIUrls.API_BOOK_COURSE,
+        data: {"courseId": courseId},
+        withToken: true);
     response.fold((error) {
       emit(BookCourseErrorState());
     }, (success) {
@@ -74,5 +75,18 @@ class CourseCubit extends Cubit<CourseState> {
     }, (success) {
       emit(SuccessCreateReviewData());
     });
+  }
+
+//search
+  bool showSearch = false;
+  void showSearchForm() {
+    showSearch = !showSearch;
+    emit(showSearch ? CoursesShowSearchState() : CoursesHideSearchState());
+  }
+
+  var searchController = TextEditingController();
+  void clearSearch({required int trainerId}) {
+    searchController.clear();
+    getCoachCurrentCourses(trainerId: trainerId);
   }
 }
