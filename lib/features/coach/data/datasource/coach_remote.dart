@@ -13,15 +13,16 @@ class CoachRemoteSource extends ICoachRemoteSource {
   @override
   Future<Either<AppErrors, CoachesModel>> getCoaches(
       GetCoachesRequest params) async {
-    print(params.toMap().toString());
-    print("remote${params}");
+    print(params.q ??
+        (params.categoryId != null ? {"categoryId": params.categoryId} : null));
     return request<CoachesModel>(
         converter: (json) => CoachesModel.fromJson(json),
         method: HttpMethod.GET,
         url: APIUrls.API_GET_ALL_COACHES,
-        queryParameters: params.categoryId != null
-            ? {"categoryId": params.categoryId}
-            : null,
+        queryParameters: params.q ??
+            (params.categoryId != null
+                ? {"categoryId": params.categoryId}
+                : null),
         //params.toMap(),
         cancelToken: params.cancelToken);
   }

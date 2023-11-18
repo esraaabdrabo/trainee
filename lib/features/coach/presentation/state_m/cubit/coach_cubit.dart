@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:upgrade_traine_project/core/ui/toast.dart';
 
 import '../../../../../core/errors/app_errors.dart';
 import '../../../../../core/results/result.dart';
@@ -20,13 +21,11 @@ class CoachCubit extends Cubit<CoachState> {
     emit(const CoachState.coachLoadingState());
     final result = await getIt<GetCoachesUseCase>()(params);
 
-
-
     result.pick(onData: (data) {
       emit(CoachState.getCoachesState(data));
     }, onError: (error) {
       print(error.toString());
-      emit(CoachState.coachErrorState(error, () => this.getCoaches(params)));
+      emit(CoachState.coachErrorState(error, () => getCoaches(params)));
     });
   }
 
@@ -34,5 +33,11 @@ class CoachCubit extends Cubit<CoachState> {
       GetCoachesRequest params) async {
     final result = await getIt<GetCoachesUseCase>()(params);
     return Result(error: result.error, data: result.data?.items ?? []);
+  }
+
+  var searchController = TextEditingController();
+  void clearSearch() {
+    searchController.clear();
+    getCoaches(GetCoachesRequest());
   }
 }

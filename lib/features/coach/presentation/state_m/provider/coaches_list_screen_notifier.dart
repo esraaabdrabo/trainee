@@ -117,11 +117,13 @@ class CoachesListScreenNotifier extends ScreenNotifier {
           ?.longitude;
     }
 
-    if (isHighRate || isLowRate){ if (_sorting == '') {
-      _sorting = _sorting + RATE;
-    } else {
-      _sorting = '$_sorting, $RATE';
-    }}
+    if (isHighRate || isLowRate) {
+      if (_sorting == '') {
+        _sorting = _sorting + RATE;
+      } else {
+        _sorting = '$_sorting, $RATE';
+      }
+    }
 
     return GetCoachesRequest(
       categoryId: categoryEntity?.id,
@@ -136,7 +138,6 @@ class CoachesListScreenNotifier extends ScreenNotifier {
   }
 
   void onDataFetched(List<CoachEntity> items, int nextUnit) {
-
     _coaches = items;
     notifyListeners();
   }

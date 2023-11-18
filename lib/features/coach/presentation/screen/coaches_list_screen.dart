@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/core/ui/toast.dart';
 
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/session_data.dart';
@@ -95,11 +96,9 @@ class _CoachesListScreenState extends State<CoachesListScreen> {
               coachInitState: (value) => WaitingWidget(),
               coachLoadingState: (value) => WaitingWidget(),
               coachErrorState: (value) => ErrorScreenWidget(
-                  error: value.error,
-                  callback: () {
-                    _apiRequest();
-                  }),
+                  error: value.error, callback: () => _apiRequest()),
               getCoachesState: (value) {
+                Toast.show("msg");
                 if (value.coachesEntity.items != null &&
                     value.coachesEntity.items!.isNotEmpty) {
                   for (int i = 0; i < value.coachesEntity.items!.length; i++) {

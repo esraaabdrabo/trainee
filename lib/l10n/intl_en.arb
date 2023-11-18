@@ -201,5 +201,6 @@
   "add_another_product":"Add another product?",
   "chat":"Chat",
   "current_location":"Current Location",
-  "already_reviewed":"You already reviewed this item"
+  "already_reviewed":"You already reviewed this item",
+  "need_specific_trainer":"Need specific trainer?"
 }

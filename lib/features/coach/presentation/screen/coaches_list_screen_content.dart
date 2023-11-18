@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/features/coach/presentation/widget/search_form_field.dart';
 
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/style/gaps.dart';
@@ -36,24 +37,11 @@ class _CoachesListScreenContentState extends State<CoachesListScreenContent> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            // Stack(
-            //   children: [
-            //     BlurWidget(
-            //       borderRadius: AppConstants.borderRadius4,
-            //       child: Center(
-            //         child: SearchTextField(
-            //           controller: sn.searchController,
-            //           hintText: Translation.of(context).search_coach,
-            //           textInputAction: TextInputAction.search,
-            //           onFieldSubmitted: () {
-            //             sn.fetchData(0, text: sn.searchController.text);
-            //           },
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // Gaps.vGap8,
+            SizedBox(
+              height: .08.sh,
+              child: AllCoachesSearchField(),
+            ),
+            Gaps.vGap8,
             sn.categoryEntity != null
                 ? Row(
                     children: [
@@ -80,8 +68,8 @@ class _CoachesListScreenContentState extends State<CoachesListScreenContent> {
                   )
                 : const SizedBox.shrink(),
             Gaps.vGap24,
-            Expanded(
-              child: _buildCoachesList(),
+            const Expanded(
+              child: _CoachesList(),
 
               // child: PaginationWidget<CoachEntity>(
               //   child: _buildCoachesList(),
@@ -98,11 +86,39 @@ class _CoachesListScreenContentState extends State<CoachesListScreenContent> {
       ),
     );
   }
+}
 
-  Widget _buildListItemWidget(CoachEntity coachModel) {
+class _CoachesList extends StatelessWidget {
+  const _CoachesList();
+
+  @override
+  Widget build(BuildContext context) {
+    CoachesListScreenNotifier sn =
+        Provider.of<CoachesListScreenNotifier>(context);
+
+    return ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, index) =>
+            _ListItemWidget(sn.coaches.elementAt(index)),
+        separatorBuilder: (context, index) => Gaps.vGap16,
+        itemCount: sn.coaches.length);
+  }
+}
+
+class _ListItemWidget extends StatelessWidget {
+  final CoachEntity coachModel;
+  const _ListItemWidget(this.coachModel);
+
+  @override
+  Widget build(BuildContext context) {
+    void toCoachProfile(CoachEntity coachModel) {
+      Nav.to(CoachProfileScreen.routeName,
+          arguments: coachModel, context: context);
+    }
+
     return GestureDetector(
       onTap: () {
-        _toCoachProfile(coachModel);
+        toCoachProfile(coachModel);
       },
       child: SizedBox(
         width: 1.sw,
@@ -182,18 +198,5 @@ class _CoachesListScreenContentState extends State<CoachesListScreenContent> {
         ),
       ),
     );
-  }
-
-  void _toCoachProfile(CoachEntity coachModel) {
-    Nav.to(CoachProfileScreen.routeName, arguments: coachModel,context: context);
-  }
-
-  Widget _buildCoachesList() {
-    return ListView.separated(
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) =>
-            _buildListItemWidget(sn.coaches.elementAt(index)),
-        separatorBuilder: (context, index) => Gaps.vGap16,
-        itemCount: sn.coaches.length);
   }
 }

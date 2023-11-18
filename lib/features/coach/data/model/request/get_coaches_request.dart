@@ -16,6 +16,7 @@ class GetCoachesRequest extends BaseParams {
       this.keyword,
       this.skipCount,
       this.maxResultCount,
+      this.q,
       CancelToken? cancelToken})
       : super(cancelToken: cancelToken);
 
@@ -29,7 +30,7 @@ class GetCoachesRequest extends BaseParams {
   final String? keyword;
   final int? skipCount;
   final int? maxResultCount;
-
+  final Map<String, dynamic>? q;
   factory GetCoachesRequest.fromMap(Map<String, dynamic> json) =>
       GetCoachesRequest(
         sorting: json["sorting"],
@@ -45,6 +46,7 @@ class GetCoachesRequest extends BaseParams {
         maxResultCount: json["maxResultCount"],
       );
 
+  @override
   Map<String, dynamic> toMap() {
     Map<String, dynamic> _temp = {};
 
