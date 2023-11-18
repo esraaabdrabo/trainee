@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/ui/toast.dart';
+import 'package:upgrade_traine_project/core/ui/widgets/no_data_found.dart';
+import 'package:upgrade_traine_project/features/coach/presentation/widget/search_form_field.dart';
 
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/session_data.dart';
@@ -89,36 +91,47 @@ class _CoachesListScreenState extends State<CoachesListScreen> {
           ],
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: BlocBuilder<CoachCubit, CoachState>(
-          bloc: sn.coachCubit,
-          builder: (context, state) {
-            return state.map(
-              coachInitState: (value) => WaitingWidget(),
-              coachLoadingState: (value) => WaitingWidget(),
-              coachErrorState: (value) => ErrorScreenWidget(
-                  error: value.error, callback: () => _apiRequest()),
-              getCoachesState: (value) {
-                Toast.show("msg");
-                if (value.coachesEntity.items != null &&
-                    value.coachesEntity.items!.isNotEmpty) {
-                  for (int i = 0; i < value.coachesEntity.items!.length; i++) {
-                    // if(value.coachesEntity.items![i].specializationId==sn.categoryEntity!.types){
-                    //   sn.coaches.add(value.coachesEntity.items![i]);
-                    // }
-                    sn.coaches.add(value.coachesEntity.items![i]);
-                  }
-
-                  return CoachesListScreenContent();
-                } else {
-                  return EmptyScreenWidget(
-                    onButtonPressed: _apiRequest,
-                    title: Translation.of(context).no_data_found,
-                    buttonText: Translation.of(context).retry,
-                  );
-                }
+        body: Column(
+          children: [
+            BlocBuilder<CoachCubit, CoachState>(
+              bloc: sn.coachCubit,
+              builder: (context, state) {
+                return SizedBox(
+                  height: .08.sh,
+                  child: const AllCoachesSearchField(),
+                );
               },
-            );
-          },
+            ),
+            BlocBuilder<CoachCubit, CoachState>(
+              bloc: sn.coachCubit,
+              builder: (context, state) {
+                return state.map(
+                    coachInitState: (value) => WaitingWidget(),
+                    coachLoadingState: (value) =>
+                        Expanded(child: WaitingWidget()),
+                    coachErrorState: (value) => ErrorScreenWidget(
+                        error: value.error, callback: () => _apiRequest()),
+                    getCoachesState: (value) {
+                      if (value.coachesEntity.items != null &&
+                          value.coachesEntity.items!.isNotEmpty) {
+                        for (int i = 0;
+                            i < value.coachesEntity.items!.length;
+                            i++) {
+                          // if(value.coachesEntity.items![i].specializationId==sn.categoryEntity!.types){
+                          //   sn.coaches.add(value.coachesEntity.items![i]);
+                          // }
+                          sn.coaches.add(value.coachesEntity.items![i]);
+                        }
+                      }
+                      return Expanded(
+                        child: sn.coaches.isNotEmpty
+                            ? CoachesListScreenContent()
+                            : const NoDataFoundWidget(),
+                      );
+                    });
+              },
+            ),
+          ],
         ),
       ),
     );

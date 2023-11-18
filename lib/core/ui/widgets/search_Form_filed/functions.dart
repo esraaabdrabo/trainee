@@ -11,7 +11,7 @@ abstract class SearchFunctions {
       if (_searchOnStoppedTyping != null) {
         _searchOnStoppedTyping?.cancel();
       }
-      _searchOnStoppedTyping = Timer(_duration, handleSearch);
+      _searchOnStoppedTyping = Timer(_duration, () => handleSearch());
     }
   }
 }

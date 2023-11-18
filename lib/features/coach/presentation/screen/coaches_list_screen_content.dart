@@ -29,60 +29,52 @@ class _CoachesListScreenContentState extends State<CoachesListScreenContent> {
   Widget build(BuildContext context) {
     sn = Provider.of<CoachesListScreenNotifier>(context);
     sn.context = context;
-    return SizedBox(
-      height: 1.sh,
-      width: 1.sw,
-      child: Padding(
-        padding: EdgeInsets.only(top: 12.h, right: 12.w, left: 12.w),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            SizedBox(
-              height: .08.sh,
-              child: AllCoachesSearchField(),
-            ),
-            Gaps.vGap8,
-            sn.categoryEntity != null
-                ? Row(
-                    children: [
-                      Container(
-                        height: 32.h,
-                        width: 90.w,
-                        decoration: BoxDecoration(
-                            color: AppColors.accentColorLight,
-                            borderRadius: BorderRadius.circular(
-                                AppConstants.borderRadius24)),
-                        child: Center(
-                          child: CustomText(
-                            text: getTranslation(
-                                context: context,
-                                arText: sn.categoryEntity?.arName,
-                                enText: sn.categoryEntity?.enName,
-                                alternativeText: sn.categoryEntity?.name),
-                            color: AppColors.primaryColorLight,
-                            fontWeight: FontWeight.bold,
-                          ),
+    return Padding(
+      padding: EdgeInsets.only(top: 12.h, right: 12.w, left: 12.w),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Gaps.vGap8,
+          sn.categoryEntity != null
+              ? Row(
+                  children: [
+                    Container(
+                      height: 32.h,
+                      width: 90.w,
+                      decoration: BoxDecoration(
+                          color: AppColors.accentColorLight,
+                          borderRadius: BorderRadius.circular(
+                              AppConstants.borderRadius24)),
+                      child: Center(
+                        child: CustomText(
+                          text: getTranslation(
+                              context: context,
+                              arText: sn.categoryEntity?.arName,
+                              enText: sn.categoryEntity?.enName,
+                              alternativeText: sn.categoryEntity?.name),
+                          color: AppColors.primaryColorLight,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ],
-                  )
-                : const SizedBox.shrink(),
-            Gaps.vGap24,
-            const Expanded(
-              child: _CoachesList(),
+                    ),
+                  ],
+                )
+              : const SizedBox.shrink(),
+          Gaps.vGap24,
+          const Expanded(
+            child: _CoachesList(),
 
-              // child: PaginationWidget<CoachEntity>(
-              //   child: _buildCoachesList(),
-              //   getItems: (unit) async {
-              //     return sn.returnData(unit);
-              //   },
-              //   items: sn.coaches,
-              //   onDataFetched: sn.onDataFetched,
-              //   refreshController: sn.refreshController,
-              // ),
-            ),
-          ],
-        ),
+            // child: PaginationWidget<CoachEntity>(
+            //   child: _buildCoachesList(),
+            //   getItems: (unit) async {
+            //     return sn.returnData(unit);
+            //   },
+            //   items: sn.coaches,
+            //   onDataFetched: sn.onDataFetched,
+            //   refreshController: sn.refreshController,
+            // ),
+          ),
+        ],
       ),
     );
   }
