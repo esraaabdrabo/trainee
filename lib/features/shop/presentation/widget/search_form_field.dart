@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_text_field.dart';
+import 'package:upgrade_traine_project/core/ui/widgets/search_Form_filed/functions.dart';
 import 'package:upgrade_traine_project/features/shop/data/model/request/get_shops_request.dart';
 import 'package:upgrade_traine_project/features/shop/presentation/state_m/cubit/shop_cubit.dart';
 import 'package:upgrade_traine_project/generated/l10n.dart';
@@ -21,7 +22,8 @@ class AllShopsSearchField extends StatelessWidget {
                   icon: const Icon(Icons.cancel)),
               hintText: Translation.of(context).search,
               controller: BlocProvider.of<ShopCubit>(context).searchController,
-              onChanged: (input) => _handleSearch(input, context));
+              onChanged: (input) => SearchFunctions.onChangeHandler(
+                  input, () => _handleSearch(input, context)));
         } else {
           return const SizedBox();
         }
@@ -31,10 +33,8 @@ class AllShopsSearchField extends StatelessWidget {
 }
 
 void _handleSearch(String input, BuildContext context) {
-  if ((input.toString()).trim().isNotEmpty) {
-    BlocProvider.of<ShopCubit>(context)
-        .getShops(GetShopsRequest(q: {"Keyword": input}));
-  }
+  BlocProvider.of<ShopCubit>(context)
+      .getShops(GetShopsRequest(q: {"Keyword": input}));
 }
 
 void _clearSearch(BuildContext context) {

@@ -13,6 +13,7 @@ class ShopRemoteSource extends IShopRemoteSource {
   @override
   Future<Either<AppErrors, ShopsModel>> getShops(GetShopsRequest params) async {
     return request<ShopsModel>(
+        queryParameters: params.q,
         converter: (json) => ShopsModel.fromJson(json),
         method: HttpMethod.GET,
         url: APIUrls.API_GET_ALL_SHOPS,

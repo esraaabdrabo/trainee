@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_appbar.dart';
+import 'package:upgrade_traine_project/core/ui/widgets/no_data_found.dart';
 import 'package:upgrade_traine_project/features/restaurant/data/model/request/get_restaurants_request.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/screen/restaurant_details.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/state_m/cubit/restaurant_cubit.dart';
@@ -44,10 +45,7 @@ class RestaurantView extends StatelessWidget {
                               .restaurants!
                               .items!
                               .isEmpty
-                          ? Center(
-                              child: Text(
-                                  LanguageHelper.tr(context).no_data_found),
-                            )
+                          ? NoDataFoundWidget()
                           : ListView.builder(
                               itemCount:
                                   BlocProvider.of<RestaurantCubit>(context)
