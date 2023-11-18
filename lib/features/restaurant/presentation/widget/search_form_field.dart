@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_text_field.dart';
+import 'package:upgrade_traine_project/core/ui/widgets/search_Form_filed/functions.dart';
 import 'package:upgrade_traine_project/features/restaurant/data/model/request/get_restaurants_request.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/state_m/cubit/restaurant_cubit.dart';
 import 'package:upgrade_traine_project/generated/l10n.dart';
@@ -30,7 +31,8 @@ class _AllResraurantsSearchFieldState extends State<AllResraurantsSearchField> {
               hintText: Translation.of(context).search,
               controller:
                   BlocProvider.of<RestaurantCubit>(context).searchController,
-              onChanged: (input) => _onChangeHandler(input, context));
+              onChanged: (input) => SearchFunctions.onChangeHandler(
+                  input, () => _handleSearch(input, context)));
         } else {
           return const SizedBox();
         }
@@ -39,22 +41,9 @@ class _AllResraurantsSearchFieldState extends State<AllResraurantsSearchField> {
   }
 }
 
-var _duration = const Duration(seconds: 1);
-
 void _handleSearch(String input, BuildContext context) {
   BlocProvider.of<RestaurantCubit>(context)
       .getRestaurants(GetRestaurantsRequest(q: {"Keyword": input}));
-}
-
-Timer? _searchOnStoppedTyping;
-void _onChangeHandler(String? value, BuildContext context) {
-  if ((value.toString()).trim().isNotEmpty) {
-    if (_searchOnStoppedTyping != null) {
-      _searchOnStoppedTyping?.cancel();
-    }
-    _searchOnStoppedTyping =
-        Timer(_duration, () => _handleSearch(value!, context));
-  }
 }
 
 void _clearSearch(BuildContext context) {
