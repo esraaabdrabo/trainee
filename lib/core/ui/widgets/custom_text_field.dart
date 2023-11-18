@@ -59,11 +59,12 @@ class _CustomTextField extends StatelessWidget {
       validator: validator,
       textInputAction: textInputAction ?? TextInputAction.next,
       controller: controller,
-      decoration: InputDecoration(
+      decoration: InputDecoration(floatingLabelBehavior: FloatingLabelBehavior.always
+,
         hintText: labelText,
         //   hintStyle:  TextStyle(color: Colors.white),
         label: Text(
-          label ?? '',
+          label ?? ''
         ),
         suffixIcon: suffix,
         prefixIcon: prefix,

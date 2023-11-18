@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_text_field.dart';
@@ -5,9 +7,15 @@ import 'package:upgrade_traine_project/features/restaurant/data/model/request/ge
 import 'package:upgrade_traine_project/features/restaurant/presentation/state_m/cubit/restaurant_cubit.dart';
 import 'package:upgrade_traine_project/generated/l10n.dart';
 
-class AllResraurantsSearchField extends StatelessWidget {
+class AllResraurantsSearchField extends StatefulWidget {
   const AllResraurantsSearchField({super.key});
 
+  @override
+  State<AllResraurantsSearchField> createState() =>
+      _AllResraurantsSearchFieldState();
+}
+
+class _AllResraurantsSearchFieldState extends State<AllResraurantsSearchField> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RestaurantCubit, RestaurantState>(
@@ -22,7 +30,7 @@ class AllResraurantsSearchField extends StatelessWidget {
               hintText: Translation.of(context).search,
               controller:
                   BlocProvider.of<RestaurantCubit>(context).searchController,
-              onChanged: (input) => _handleSearch(input, context));
+              onChanged: (input) => _onChangeHandler(input, context));
         } else {
           return const SizedBox();
         }
@@ -31,10 +39,21 @@ class AllResraurantsSearchField extends StatelessWidget {
   }
 }
 
+var _duration = const Duration(seconds: 1);
+
 void _handleSearch(String input, BuildContext context) {
-  if ((input.toString()).trim().isNotEmpty) {
-    BlocProvider.of<RestaurantCubit>(context)
-        .getRestaurants(GetRestaurantsRequest(q: {"Keyword": input}));
+  BlocProvider.of<RestaurantCubit>(context)
+      .getRestaurants(GetRestaurantsRequest(q: {"Keyword": input}));
+}
+
+Timer? _searchOnStoppedTyping;
+void _onChangeHandler(String? value, BuildContext context) {
+  if ((value.toString()).trim().isNotEmpty) {
+    if (_searchOnStoppedTyping != null) {
+      _searchOnStoppedTyping?.cancel();
+    }
+    _searchOnStoppedTyping =
+        Timer(_duration, () => _handleSearch(value!, context));
   }
 }
 

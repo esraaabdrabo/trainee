@@ -523,17 +523,10 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                   bloc: sn.coachCubit,
                   builder: (context, state) {
                     return state.when(
-                      coachInitState: () {
-                        return const SizedBox.shrink();
-                      },
-                      coachLoadingState: () {
-                        return _buildCoachesSectionShimmer();
-                      },
-                      coachErrorState: (error, callback) {
-                        return const SizedBox.shrink();
-                      },
-                      getCoachesState: (CoachesEntity) {
-                        return SizedBox(
+                      coachInitState: () => const SizedBox.shrink(),
+                      coachLoadingState: () => _buildCoachesSectionShimmer(),
+                      coachErrorState: (error, callback) => const SizedBox.shrink(),
+                      getCoachesState: (CoachesEntity) => SizedBox(
                           width: 1.sw,
                           height: CoachesEntity.items!.length > 8
                               ? 0.54.sh
@@ -544,74 +537,59 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                               title: Translation.of(context).most_rated_coaches,
                               widgets: CoachesEntity.items!,
                               onSeeAllTapped: _goToCoaches),
-                        );
-                      },
+                        ),
                     );
                   },
                 ),
                 Gaps.vGap40,
                 BlocBuilder<CategoryCubit, CategoryState>(
                   bloc: sn.categoryCubit,
-                  builder: (context, state) {
-                    return state.when(
-                      categoryInitState: () {
-                        return const SizedBox.shrink();
-                      },
-                      categoryLoadingState: () {
-                        return _buildSectionShimmer();
-                      },
-                      categoryErrorState: (error, callback) {
-                        return const SizedBox.shrink();
-                      },
+                  builder: (context, state) => state.when(
+                      categoryInitState: () => const SizedBox.shrink(),
+                      categoryLoadingState: () => _buildSectionShimmer(),
+                      categoryErrorState: (error, callback) =>
+                          const SizedBox.shrink(),
                       getCategoriesState: (categoriesEntity) {
                         final List<TempWidget> categories = [];
-                        categoriesEntity.items?.forEach((element) {
-                          categories.add(TempWidget(
-                            id: element.id ?? 0,
-                            imgPath: element.iconUrl ?? '',
-                            title: getTranslation(
+                        categoriesEntity.items?.forEach(
+                          (element) => categories.add(
+                            TempWidget(
+                              id: element.id ?? 0,
+                              imgPath: element.iconUrl ?? '',
+                              title: getTranslation(
                                 context: context,
                                 alternativeText: element.name,
                                 enText: element.enName,
-                                arText: element.arName),
-                          ));
-                        });
+                                arText: element.arName,
+                              ),
+                            ),
+                          ),
+                        );
                         return SizedBox(
                           width: 1.sw,
                           height: 0.38.sh,
                           child: _buildSectionWidget(
                               title: Translation.of(context).categories,
                               widgets: categories,
-                              onItemSelected: (index) {
-                                _gotoCoachesScreen(
-                                    categoriesEntity.items?.elementAt(index));
-                              },
+                              onItemSelected: (index) => _gotoCoachesScreen(
+                                    categoriesEntity.items?.elementAt(index)),
                               onSeeAllTapped: _goToCategories),
                         );
                       },
-                    );
-                  },
+                    ),
                 ),
                 Gaps.vGap40,
                 BlocBuilder<RestaurantCubit, RestaurantState>(
                   bloc: sn.restaurantCubit,
-                  builder: (context, state) {
-                    return state.when(
+                  builder: (context, state) => state.when(
                       hideSearch: () => const SizedBox(),
                       showSearch: () => const SizedBox(),
-                      restaurantInitState: () {
-                        return const SizedBox.shrink();
-                      },
-                      restaurantLoadingState: () {
-                        return _buildSectionShimmer();
-                      },
-                      restaurantErrorState: (error, callback) {
-                        return const SizedBox.shrink();
-                      },
+                      restaurantInitState: () => const SizedBox.shrink(),
+                      restaurantLoadingState: () => _buildSectionShimmer(),
+                      restaurantErrorState: (error, callback) => const SizedBox.shrink(),
                       getRestaurantsState: (restaurantsEntity) {
                         final List<TempWidget> categories0 = [];
-                        restaurantsEntity.items?.forEach((element) {
-                          categories0.add(
+                        restaurantsEntity.items?.forEach((element) => categories0.add(
                             TempWidget(
                               id: element.id ?? 0,
                               imgPath: element.cover ?? '',
@@ -628,8 +606,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                                 arText: element.arDescription,
                               ),
                             ),
-                          );
-                        });
+                          ));
                         return SizedBox(
                           width: 1.sw,
                           height: 0.38.sh,
@@ -637,18 +614,15 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                             title: Translation.of(context).restaurants,
                             widgets: categories0,
                             onSeeAllTapped: () => _goToRestaurant(),
-                            onItemSelected: (index) {
-                              Navigator.of(context).push(MaterialPageRoute(
+                            onItemSelected: (index) => Navigator.of(context).push(MaterialPageRoute(
                                   builder: (_) => PlayingSliverState(
                                         restaurantEntity:
                                             restaurantsEntity.items![index],
-                                      )));
-                            },
+                                      ))),
                           ),
                         );
                       },
-                    );
-                  },
+                    ),
                 ),
                 Gaps.vGap40,
                 BlocBuilder<ShopCubit, ShopState>(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_appbar.dart';
 import 'package:upgrade_traine_project/features/restaurant/data/model/request/get_restaurants_request.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/screen/restaurant_details.dart';
@@ -34,32 +36,46 @@ class RestaurantView extends StatelessWidget {
               const AllResraurantsSearchField(),
               Expanded(
                 child: BlocBuilder<RestaurantCubit, RestaurantState>(
+                  buildWhen: (previous, current) =>
+                      current is GetRestaurantsState,
                   builder: (context, state) {
                     if (state is GetRestaurantsState) {
-                      return ListView.builder(
-                        itemCount: BlocProvider.of<RestaurantCubit>(context)
-                            .restaurants!
-                            .items!
-                            .length,
-                        itemBuilder: (context, index) {
-                          var item = BlocProvider.of<RestaurantCubit>(context)
+                      return BlocProvider.of<RestaurantCubit>(context)
                               .restaurants!
-                              .items![index];
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 8),
-                            child: RestaurantAndShopsCardShow(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (_) => PlayingSliverState(
-                                          restaurantEntity: item,
-                                        )));
+                              .items!
+                              .isEmpty
+                          ? Center(
+                              child: Text(
+                                  LanguageHelper.tr(context).no_data_found),
+                            )
+                          : ListView.builder(
+                              itemCount:
+                                  BlocProvider.of<RestaurantCubit>(context)
+                                      .restaurants!
+                                      .items!
+                                      .length,
+                              itemBuilder: (context, index) {
+                                var item =
+                                    BlocProvider.of<RestaurantCubit>(context)
+                                        .restaurants!
+                                        .items![index];
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 8),
+                                  child: RestaurantAndShopsCardShow(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  PlayingSliverState(
+                                                    restaurantEntity: item,
+                                                  )));
+                                    },
+                                    item: item,
+                                  ),
+                                );
                               },
-                              item: item,
-                            ),
-                          );
-                        },
-                      );
+                            );
                     } else {
                       return const SizedBox();
                     }
