@@ -39,8 +39,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
         tempToken: await AgoraFunctions.getToken(widget.channelName),
       ),
     );
-    await _client?.initialize();
-  }
+    await _client?.initialize();  }
 
   @override
   Widget build(BuildContext context) {

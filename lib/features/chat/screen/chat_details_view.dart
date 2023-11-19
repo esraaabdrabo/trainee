@@ -129,7 +129,7 @@ class _ChatDetailsViewState extends State<ChatDetailsView> {
                 children: [
                   IconButton(
                     onPressed: () async {
-                      if (messageController.text.isNotEmpty) {
+                      if (messageController.text.trim().isNotEmpty) {
                         await sendMessage();
                       }
                       messageController.clear();
@@ -148,16 +148,16 @@ class _ChatDetailsViewState extends State<ChatDetailsView> {
                           borderRadius: BorderRadius.circular(8)),
                       child: TextFormField(
                         controller: messageController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Enter text here',
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent),
-                          ),
-                          contentPadding: EdgeInsets.all(10.0),
+                          hintText: LanguageHelper.tr(context).enter_text_here,
+                          enabledBorder: const UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.transparent)),
+                          focusedBorder: const UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.transparent)),
+                          contentPadding: const EdgeInsets.all(10.0),
                         ),
                       ),
                     ),

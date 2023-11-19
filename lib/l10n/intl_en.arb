@@ -202,5 +202,7 @@
   "chat":"Chat",
   "current_location":"Current Location",
   "already_reviewed":"You already reviewed this item",
-  "need_specific_trainer":"Need specific trainer?"
+  "need_specific_trainer":"Need specific trainer?",
+  "need_chat_with_your_trainer":"Chat with your trainer?",
+  "enter_text_here":"Enter text here"
 }

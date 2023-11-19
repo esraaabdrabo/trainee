@@ -204,6 +204,7 @@
 "chat":"الرسائل",
 "current_location":"موقعك الحالي",
 "already_reviewed":"لقد قمت بمراجعة هذا العنصر بالفعل",
-"need_specific_trainer":"تبي مدرب محدد؟"
-
+"need_specific_trainer":"تبي مدرب محدد؟",
+"need_chat_with_your_trainer":"تريد التواصل مع مدربك؟",
+"enter_text_here":"ادخل النص هنا"
 }

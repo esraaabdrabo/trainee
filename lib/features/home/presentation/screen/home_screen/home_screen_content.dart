@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
 import 'package:upgrade_traine_project/features/coach/domain/entity/coach_entity.dart';
+import 'package:upgrade_traine_project/features/home/presentation/widget/map.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../../core/common/app_colors.dart';
 import '../../../../../core/common/session_data.dart';
@@ -138,47 +139,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     );
   }
 
-  Widget _buildMapPinSearchWidget(
-      {required Color color,
-      required String iconPath,
-      required String text,
-      required Function onPressed,
-      required bool selected}) {
-    return InkWell(
-      onTap: () {
-        onPressed();
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: color,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ImageIcon(
-                AssetImage(
-                  iconPath,
-                ),
-                color: AppColors.white,
-                size: 20.w,
-              ),
-            ),
-          ),
-          Gaps.vGap4,
-          CustomText(
-            text: text,
-            fontSize: AppConstants.textSize12,
-            fontWeight: FontWeight.bold,
-            color: selected ? AppColors.accentColorLight : AppColors.white,
-          )
-        ],
-      ),
-    );
-  }
-
   Widget _buildSectionWidget(
       {required String title,
       required Function onSeeAllTapped,
@@ -278,72 +238,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     );
   }
 
-  Widget _buildMapWidget() {
-    return Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(AppConstants.borderRadius32),
-              bottomLeft: Radius.circular(AppConstants.borderRadius32)),
-          child: SizedBox(
-            height: 0.53.sh,
-            child: MapWidget(
-              myLocation: sn.latLng,
-              markers: sn.markers.map((e) => e.marker).toSet(),
-              onMapCreated: _getMyLocation,
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 0,
-          child: SizedBox(
-            width: 1.sw,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                BlurWidget(
-                  height: 0.14.sh,
-                  width: 0.86.sw,
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        _buildMapPinSearchWidget(
-                            onPressed: sn.getShopsLocations,
-                            color: AppColors.green,
-                            iconPath: AppConstants.STORE_ICON,
-                            text: Translation.of(context).stores,
-                            selected: sn.shopsSelected),
-                        _buildMapPinSearchWidget(
-                            onPressed: sn.getRestaurantsLocations,
-                            color: AppColors.blue,
-                            iconPath: AppConstants.RESTAURANT_ICON,
-                            text: Translation.of(context).healthy_restaurants,
-                            selected: sn.restaurantsSelected),
-                        _buildMapPinSearchWidget(
-                            onPressed: sn.getGymsLocations,
-                            color: AppColors.red,
-                            iconPath: AppConstants.BOXER_ICON,
-                            text: Translation.of(context).gyms,
-                            selected: sn.gymsSelected),
-                        _buildMapPinSearchWidget(
-                            onPressed: sn.getCoachesLocations,
-                            color: AppColors.accentColorLight,
-                            iconPath: AppConstants.WHISTLE_ICON,
-                            text: Translation.of(context).sport_coaches,
-                            selected: sn.coachesSelected),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 
   Widget _buildHorizontalWidget({required List<CoachEntity> widgets}) {
     return SizedBox(
@@ -512,7 +406,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
           SizedBox(
             width: 1.sw,
             height: 0.58.sh,
-            child: _buildMapWidget(),
+            child: HomeMapWidget(),
           ),
           Gaps.vGap40,
           Padding(
@@ -748,22 +642,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   }
 
   LatLng? latLang;
-
-  void _getMyLocation() async {
-    Position? locationData = await getMyLocation();
-    print(locationData ?? "not getting it");
-    if (locationData != null) {
-      setState(() {
-        sn.latLng = LatLng(locationData.latitude, locationData.longitude);
-      });
-      var prefs = await SpUtil.getInstance();
-      prefs.putDouble(AppConstants.KEY_LATITUDE, locationData.latitude);
-      prefs.putDouble(AppConstants.KEY_LONGITUDE, locationData.longitude);
-
-      Provider.of<SessionDataProvider>(context, listen: false).myLocation =
-          LatLng(locationData.latitude, locationData.longitude);
-    }
-  }
 
   void _getNewLocation({required locationData}) async {
     if (locationData != null) {

@@ -30,7 +30,7 @@ class MapWidget extends StatefulWidget {
 
 class _MapWidgetState extends State<MapWidget> {
   Set<Marker> markers = {};
-  late final BitmapDescriptor? customIcon;
+  BitmapDescriptor? customIcon;
 
   late final String mapStyle;
   bool isInitialized = true;
@@ -78,15 +78,6 @@ class _MapWidgetState extends State<MapWidget> {
         markers.add(element);
       }
     }
-    Toast.show(
-        "${widget.myLocation} ${!isInitialized && !myLocationSet && widget.myLocation != null}");
-
-    if (!isInitialized && !myLocationSet && widget.myLocation != null) {
-      BlocProvider.of<MapsCubit>(context)
-          .controller
-          .moveCamera(CameraUpdate.newLatLng(widget.myLocation!));
-      myLocationSet = true;
-    }
   }
 
   @override
@@ -97,6 +88,14 @@ class _MapWidgetState extends State<MapWidget> {
               return GoogleMap(
                 onMapCreated: (controller) {
                   BlocProvider.of<MapsCubit>(context).controller = controller;
+                  if (!isInitialized &&
+                      !myLocationSet &&
+                      widget.myLocation != null) {
+                    BlocProvider.of<MapsCubit>(context)
+                        .controller
+                        .moveCamera(CameraUpdate.newLatLng(widget.myLocation!));
+                    myLocationSet = true;
+                  }
                   _setMapStyle();
                   if (widget.onMapCreated != null) {
                     widget.onMapCreated!();
