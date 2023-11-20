@@ -23,7 +23,7 @@ class PlaceItem extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            leading: _ListNumber(index: index),
+            leading: _Leading(),
             title: RichText(
               text: TextSpan(
                 children: [
@@ -51,26 +51,17 @@ class PlaceItem extends StatelessWidget {
   }
 }
 
-class _ListNumber extends StatelessWidget {
-  const _ListNumber({
-    super.key,
-    required this.index,
-  });
-
-  final int index;
+class _Leading extends StatelessWidget {
+  const _Leading();
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      backgroundColor: AppColors.primaryColorLight,
-      radius: 20.w,
-      child: Center(
-        child: Text(
-          index.toString(),
-          textAlign: TextAlign.center,
-          style: const TextStyle(color: AppColors.accentColorLight),
-        ),
-      ),
-    );
+        backgroundColor: AppColors.primaryColorLight,
+        radius: 20.w,
+        child: Icon(
+          Icons.location_on,
+          color: AppColors.lightGrey,
+        ));
   }
 }

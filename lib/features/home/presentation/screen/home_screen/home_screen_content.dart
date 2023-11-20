@@ -406,7 +406,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
           SizedBox(
             width: 1.sw,
             height: 0.58.sh,
-            child: HomeMapWidget(),
+            child: const HomeMapWidget(),
           ),
           Gaps.vGap40,
           Padding(

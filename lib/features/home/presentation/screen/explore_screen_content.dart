@@ -144,7 +144,7 @@ class _ExploreScreenContentState extends State<ExploreScreenContent> {
     );
   }
 
-/*
+
   Widget _buildHashtagWidget(String hashtag) {
     return Container(
       decoration: BoxDecoration(
@@ -162,7 +162,6 @@ class _ExploreScreenContentState extends State<ExploreScreenContent> {
       ),
     );
   }
-*/
 
   Widget _buildStoryItemWidget(StoryEntity storyEntity) {
     return storyEntity.id == ExploreScreenNotifier.LOADING_WIDGET_ID
