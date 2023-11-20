@@ -190,6 +190,7 @@ dev_dependencies:
 
   flutter_chat_bubble: ^2.0.2
   flutter_callkit_incoming: 1.0.3+3
+  agora_rtm: ^1.5.8
 
 
   # The "flutter_lints" package below contains a set of recommended lints to
