@@ -1,97 +1,73 @@
-import 'package:agora_uikit/agora_uikit.dart';
+// ignore_for_file: avoid_print, depend_on_referenced_packages
+
+import 'package:agora_rtm/agora_rtm.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/agoraConfig.dart';
 
 abstract class RTMfunction {
-  static //first step
-  void _createClient() async {
-    _client =
-        await AgoraRtmClient.createInstance("f7182aee25064259a00c0af909e551dd");
+  static Future<AgoraRtmClient> createClient() async {
+    AgoraRtmClient client;
 
-    _client?.onMessageReceived = (RtmMessage message, String peerId) {
-      _log("Peer msg: $peerId, msg: ${message.messageType} ${message.text}");
+    client = await AgoraRtmClient.createInstance(AgoraConstants.appId);
+
+    client.onMessageReceived = (RtmMessage message, String peerId) {
+      print("Peer msg: $peerId, msg: ${message.messageType} ${message.text}");
     };
-    _client?.onPeersOnlineStatusChanged =
+    client.onPeersOnlineStatusChanged =
         (Map<String, RtmPeerOnlineState> peersStatus) {
-      _log("Peers online status changed ${peersStatus.toString()}");
+      print("Peers online status changed ${peersStatus.toString()}");
     };
 
-    var callManager = _client?.getRtmCallManager();
+    var callManager = client.getRtmCallManager();
 
-    callManager?.onLocalInvitationReceivedByPeer =
+    callManager.onLocalInvitationReceivedByPeer =
         (LocalInvitation localInvitation) {
-      _log(
+      print(
           'Local invitation received by peer: ${localInvitation.calleeId}, content: ${localInvitation.content}');
     };
-    callManager?.onLocalInvitationAccepted =
+    callManager.onLocalInvitationAccepted =
         (LocalInvitation localInvitation, String response) {
-      _log(
+      print(
           'Local invitation accepted by peer: ${localInvitation.calleeId}, response: $response');
-      setState(() {
-        _localInvitation = null;
-      });
     };
-    callManager?.onLocalInvitationRefused =
+    callManager.onLocalInvitationRefused =
         (LocalInvitation localInvitation, String response) {
-      _log(
+      print(
           'Local invitation refused by peer: ${localInvitation.calleeId}, response: $response');
-      setState(() {
-        _localInvitation = null;
-      });
     };
-    callManager?.onLocalInvitationCanceled = (LocalInvitation localInvitation) {
-      _log(
+    callManager.onLocalInvitationCanceled = (LocalInvitation localInvitation) {
+      print(
           'Local invitation canceled: ${localInvitation.calleeId}, content: ${localInvitation.content}');
-      setState(() {
-        _localInvitation = null;
-      });
     };
-    callManager?.onLocalInvitationFailure =
+    callManager.onLocalInvitationFailure =
         (LocalInvitation localInvitation, int errorCode) {
-      _log(
+      print(
           'Local invitation failure: ${localInvitation.calleeId}, errorCode: $errorCode');
-      setState(() {
-        _localInvitation = null;
-      });
     };
-    callManager?.onRemoteInvitationReceived =
+    callManager.onRemoteInvitationReceived =
         (RemoteInvitation remoteInvitation) {
-      _log(
+      print(
           'Remote invitation received by peer: ${remoteInvitation.callerId}, content: ${remoteInvitation.content}');
-      setState(() {
-        _remoteInvitation = remoteInvitation;
-      });
     };
-    callManager?.onRemoteInvitationAccepted =
+    callManager.onRemoteInvitationAccepted =
         (RemoteInvitation remoteInvitation) {
-      _log(
+      print(
           'Remote invitation accepted by peer: ${remoteInvitation.callerId}, content: ${remoteInvitation.content}');
-      setState(() {
-        _remoteInvitation = null;
-      });
     };
-    callManager?.onRemoteInvitationRefused =
+    callManager.onRemoteInvitationRefused =
         (RemoteInvitation remoteInvitation) {
-      _log(
+      print(
           'Remote invitation refused by peer: ${remoteInvitation.callerId}, content: ${remoteInvitation.content}');
-      setState(() {
-        _remoteInvitation = null;
-      });
     };
-    callManager?.onRemoteInvitationCanceled =
+    callManager.onRemoteInvitationCanceled =
         (RemoteInvitation remoteInvitation) {
-      _log(
+      print(
           'Remote invitation canceled: ${remoteInvitation.callerId}, content: ${remoteInvitation.content}');
-      setState(() {
-        _remoteInvitation = null;
-      });
     };
-    callManager?.onRemoteInvitationFailure =
+    callManager.onRemoteInvitationFailure =
         (RemoteInvitation remoteInvitation, int errorCode) {
-      _log(
+      print(
           'Remote invitation failure: ${remoteInvitation.callerId}, errorCode: $errorCode');
-      setState(() {
-        _remoteInvitation = null;
-      });
     };
+    return client;
   }
-
 }
