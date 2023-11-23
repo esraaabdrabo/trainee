@@ -207,5 +207,6 @@
 "need_specific_trainer":"تبي مدرب محدد؟",
 "need_chat_with_your_trainer":"تريد التواصل مع مدربك؟",
 "enter_text_here":"ادخل النص هنا",
-"the_member_left_the_call":"{name} لقد غادر المكالمة "
+"the_member_left_the_call":"{name} لقد غادر المكالمة ",
+"the_member_decline_the_call":"{name} رفض المكالمة"
 }

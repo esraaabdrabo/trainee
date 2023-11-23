@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:agora_uikit/agora_uikit.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/ui/toast.dart';
@@ -9,7 +10,6 @@ import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/mute.d
 import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/switch_camera.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/disabled_video_widget.dart';
 import 'agoraConfig.dart';
-import 'package:agora_rtm/agora_rtm.dart';
 
 class VideoCallScreen extends StatefulWidget {
   static const String routeName = "/VideoScreen";
@@ -28,11 +28,20 @@ class VideoCallScreen extends StatefulWidget {
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
   AgoraClient? _client;
-  AgoraRtmClient? rtmClient;
+  StreamSubscription<RemoteMessage>? notificationsListner;
   @override
   void initState() {
     super.initState();
     _initAgora();
+    notificationsListner = FirebaseMessaging.onMessage.listen((event) async {
+      if (_wannaCancel(event)) {
+        Toast.show(LanguageHelper.tr(context)
+            .the_member_decline_the_call(widget.remoteName));
+        Navigator.pop(context);
+        await _client!.release();
+        notificationsListner?.cancel();
+      }
+    });
   }
 
   Future<void> _initAgora() async {
@@ -49,6 +58,11 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
       ),
     );
     await _client?.initialize();
+  }
+
+  bool _wannaCancel(RemoteMessage event) {
+    return event.data['MsgType'] == "-1" &&
+        event.data['SenderId'] == "${widget.trainerId}";
   }
 
   void _handleMemberLeft() async {
@@ -79,7 +93,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             showNumberOfUsers: true,
           ),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            EndCallButton(_client!,widget.trainerId!),
+            EndCallButton(_client!, widget.trainerId!),
             DisableVideoButton(_client!),
             SwitchCameraButton(_client!),
             MuteVoiceButton(client: _client),
