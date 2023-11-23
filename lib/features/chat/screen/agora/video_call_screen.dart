@@ -8,8 +8,6 @@ import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/end_ca
 import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/mute.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/buttons/switch_camera.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/disabled_video_widget.dart';
-import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
-import 'package:upgrade_traine_project/features/chat/widgets/agora_loading.dart';
 import 'agoraConfig.dart';
 import 'package:agora_rtm/agora_rtm.dart';
 
@@ -44,9 +42,6 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
         //show the user that the remote user left the group
         _handleMemberLeft();
       }),
-      agoraEventHandlers: AgoraRtcEventHandlers(
-        onUserJoined: (_, __, ___) => Toast.show("user join"),
-      ),
       agoraConnectionData: AgoraConnectionData(
         rtmChannelName: widget.channelName,
         appId: AgoraConstants.appId,
@@ -62,14 +57,14 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
         LanguageHelper.tr(context).the_member_left_the_call(widget.remoteName));
     await Future.delayed(const Duration(milliseconds: 500));
     context.mounted ? Navigator.pop(context) : null;
-    _client?.release();
+    _endCall();
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        _client!.release();
+        _endCall();
         return true;
       },
       child: Scaffold(
@@ -78,12 +73,13 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
         children: [
           AgoraVideoViewer(
             client: _client!,
-            disabledVideoWidget: DisabledVideoWidget(_client!, remoteName: ""),
-            layoutType: Layout.floating,
+            disabledVideoWidget:
+                DisabledVideoWidget(_client!, remoteName: widget.remoteName),
+            layoutType: Layout.grid,
             showNumberOfUsers: true,
           ),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            EndCallButton(_client!),
+            EndCallButton(_client!,widget.trainerId!),
             DisableVideoButton(_client!),
             SwitchCameraButton(_client!),
             MuteVoiceButton(client: _client),
@@ -91,5 +87,9 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
         ],
       )),
     );
+  }
+
+  void _endCall() {
+    _client!.release();
   }
 }

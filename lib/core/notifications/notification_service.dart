@@ -16,7 +16,6 @@ void setupNotifications() {
 
 @pragma("vm:entry-point")
 Future<void> handleBackGround(message) async {
-  print("in back ground ");
   //show the notification with accept & cancel options
   handleOnMessageListener(message);
 }

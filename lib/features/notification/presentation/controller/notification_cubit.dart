@@ -30,6 +30,12 @@ class NotificationCubit extends Cubit<NotificationState> {
     );
   }
 
+  Future<void> sendCancelCallNotification(
+    int userId,
+  ) async {
+    await NotificationRepo().createNotification(userId, -1, "cancel_call");
+  }
+
   Future createNotifications(int userId, int messageType, String data) async {
     emit(CreateNotificationsLoading());
 

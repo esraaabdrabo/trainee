@@ -9,7 +9,6 @@ Future<void> handleNotificationsTap(NotificationResponse? payload) async {
   print('payload is ${payload?.actionId} ${payload?.id} ${payload?.input}');
   print("id ${payload?.payload}");
   if (payload?.input == 'Accept') {
-    print("user clicked on accept button");
     if (_isVideoCall(payload)) {
       await _goToVideoCallScreen(payload);
     } else if (_isAudioCall(payload)) {
@@ -29,10 +28,8 @@ Future<void> _goToVoiceCallScreen(NotificationResponse? payload) async =>
     await NavigationService().navigateTo(VoiceCallScreen.routeName,
         arguments: (_getChannelNameAndId(payload)));
 
-Map<String, Object> _getChannelNameAndId(NotificationResponse? payload) => {
-    "id": _getTrainerId(payload),
-    "channel_name": _getChannelName(payload)
-  };
+Map<String, Object> _getChannelNameAndId(NotificationResponse? payload) =>
+    {"id": _getTrainerId(payload), "channel_name": _getChannelName(payload)};
 
 void _hideNotification(NotificationResponse? payload) {
   FlutterLocalNotificationsPlugin().cancel(payload!.id!);

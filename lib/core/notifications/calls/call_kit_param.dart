@@ -1,8 +1,9 @@
 import 'package:flutter_callkit_incoming/entities/entities.dart';
 
-CallKitParams callKitParams({required String name, required int type}) =>
+CallKitParams callKitParams(
+        {required String senderId, required String name, required int type}) =>
     CallKitParams(
-      id: "1",
+      id: senderId,
       nameCaller: '$name is calling you.',
       appName: 'Callkit',
       avatar: 'https://i.pravatar.cc/100',

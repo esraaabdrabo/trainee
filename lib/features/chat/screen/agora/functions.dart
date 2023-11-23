@@ -12,12 +12,14 @@ abstract class AgoraFunctions {
     return (await DioHelper.get(url)
         .then((value) => value.data['result']['token']));
   }
+
   static Future<String> getRtmToken(String channelName) async {
     var url =
         "https://api.yacotch.com/api/services/app/Agora/GetToken?Channel=$channelName";
     return (await DioHelper.get(url)
         .then((value) => value.data['result']['token']));
   }
+
   static bool isLocalDisabledVideo(AgoraClient client) =>
       client.sessionController.value.isLocalVideoDisabled;
 

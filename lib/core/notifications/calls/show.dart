@@ -5,20 +5,34 @@ import 'package:upgrade_traine_project/core/notifications/calls/navigator.dart';
 import 'package:upgrade_traine_project/core/notifications/calls/payload_extractor.dart';
 
 void showCallNotification(String payload) {
-  FlutterCallkitIncoming.showCallkitIncoming(callKitParams(
-      name: PayLoadDataExtractor.getTrainerName(payload),
-      type: PayLoadDataExtractor.getMsgType(payload)));
-  FlutterCallkitIncoming.onEvent.listen((event) async {
-    if (event!.event == Event.ACTION_CALL_DECLINE) {
-      print("cancel");
-    } else if (event.event == Event.ACTION_CALL_CALLBACK) {
-      print("call back");
-    } else if (event.event == Event.ACTION_CALL_ACCEPT) {
-      if (PayLoadDataExtractor.getMsgType(payload) == 1) {
-        await CallsNavigator.goToVideoCallScreen(payload);
-      } else {
-        await CallsNavigator.goToVoiceCallScreen(payload);
+  if (_isCancelNotification(payload)) {
+    print("cancel notification type");
+    _endCall(payload);
+  } else {
+    FlutterCallkitIncoming.showCallkitIncoming(callKitParams(
+        senderId: "${PayLoadDataExtractor.getSenderId(payload)}",
+        name: PayLoadDataExtractor.getTrainerName(payload),
+        type: PayLoadDataExtractor.getMsgType(payload)));
+    FlutterCallkitIncoming.onEvent.listen((event) async {
+      if (event!.event == Event.ACTION_CALL_DECLINE) {
+        print("cancel");
+      } else if (event.event == Event.ACTION_CALL_CALLBACK) {
+        print("call back");
+      } else if (event.event == Event.ACTION_CALL_ACCEPT) {
+        if (PayLoadDataExtractor.getMsgType(payload) == 1) {
+          await CallsNavigator.goToVideoCallScreen(payload);
+        } else {
+          await CallsNavigator.goToVoiceCallScreen(payload);
+        }
       }
-    }
-  });
+    });
+  }
+}
+
+bool _isCancelNotification(String payload) =>
+    PayLoadDataExtractor.getMsgType(payload) == -1;
+
+void _endCall(String payload) {
+  FlutterCallkitIncoming.endCall(
+      "${PayLoadDataExtractor.getSenderId(payload)}");
 }

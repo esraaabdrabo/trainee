@@ -17,8 +17,11 @@ void initLocalNotification() async {
     android: initializationSettingsAndroid,
     iOS: initializationSettingsIOS,
   );
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onDidReceiveNotificationResponse: (payload) {
-    handleNotificationsTap(payload);
-  }, onDidReceiveBackgroundNotificationResponse: handleBackGround);
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+
+    onDidReceiveNotificationResponse: (payload) {
+  handleNotificationsTap(payload);
+}, onDidReceiveBackgroundNotificationResponse: handleBackGround
+  );
 }

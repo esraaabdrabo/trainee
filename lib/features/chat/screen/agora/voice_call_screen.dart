@@ -83,7 +83,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              EndCallButton(_client!),
+              EndCallButton(_client!, widget.trainerId!),
               MuteVoiceButton(client: _client),
             ],
           ),
