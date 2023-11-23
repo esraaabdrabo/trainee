@@ -6,8 +6,12 @@ abstract class PayLoadDataExtractor {
       .firstWhere((element) => element.contains('HiddenData'))
       .replaceAll("{HiddenData:", '')
       .trim();
-  static Map<String, Object> getChannelNameAndId(String? payload) =>
-      {"id": getTrainerId(payload), "channel_name": getChannelName(payload)};
+  static Map<String, Object> getChannelNameAndId(String? payload) => {
+        "id": getTrainerId(payload),
+        "channel_name": getChannelName(payload),
+        "remote_name": getTrainerName(payload!)
+      };
+
   static int getTrainerId(String? payload) {
     return int.parse(payload!
         .split(',')

@@ -475,16 +475,22 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
 
   void _goToVideoCallScreen() {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) =>
-            VideoCallScreen(sn.coachEntity.id!, _getChannelName(context))));
+        builder: (context) => VideoCallScreen(
+              sn.coachEntity.id!,
+              _getChannelName(context),
+              remoteName: sn.coachEntity.name!,
+            )));
     BlocProvider.of<NotificationCubit>(context)
         .createNotifications(sn.coachEntity.id!, 1, _getChannelName(context));
   }
 
   void _goToVoiceCallScreen() {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) =>
-            VoiceCallScreen(sn.coachEntity.id!, _getChannelName(context))));
+        builder: (context) => VoiceCallScreen(
+              sn.coachEntity.id!,
+              _getChannelName(context),
+              remoteName: sn.coachEntity.name!,
+            )));
     BlocProvider.of<NotificationCubit>(context)
         .createNotifications(sn.coachEntity.id!, 2, _getChannelName(context));
   }

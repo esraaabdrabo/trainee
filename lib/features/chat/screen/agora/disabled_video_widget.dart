@@ -7,7 +7,8 @@ import 'package:upgrade_traine_project/features/profile/presentation/state_m/cub
 
 class DisabledVideoWidget extends StatelessWidget {
   final AgoraClient client;
-  const DisabledVideoWidget(this.client, {super.key});
+  final String remoteName;
+  const DisabledVideoWidget(this.client, {required this.remoteName, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +20,9 @@ class DisabledVideoWidget extends StatelessWidget {
         width: .5.sw,
         child: Center(
           child: Text(
-            AgoraFunctions.isLocalDisabledVideo(client)
+         AgoraFunctions.isLocalDisabledVideo(client)
                 ? _getMyName(context)
-                : "remote",
+                : remoteName,
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

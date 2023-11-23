@@ -1,9 +1,15 @@
 // ignore_for_file: avoid_print, depend_on_referenced_packages
 
 import 'package:agora_rtm/agora_rtm.dart';
+import 'package:upgrade_traine_project/core/dioHelper/dio_helper.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/agoraConfig.dart';
 
 abstract class RTMfunction {
+  static Future<String> getRTMtoken(String id) async {
+    return await DioHelper.get("/services/app/Agora/GetRtmToken?Uid=$id")
+        .then((value) => value.data['result']['token']);
+  }
+
   static Future<AgoraRtmClient> createClient() async {
     AgoraRtmClient client;
 

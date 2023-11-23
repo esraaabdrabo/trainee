@@ -78,6 +78,7 @@ class _ChatDetailsViewState extends State<ChatDetailsView> {
     });
     BlocProvider.of<NotificationCubit>(context)
         .createNotifications(widget.chatModel!.trainerId!, 0, '');
+    messageController.clear();
   }
 
   Future<void> _uploadImage(File image) async {
@@ -132,7 +133,7 @@ class _ChatDetailsViewState extends State<ChatDetailsView> {
                       if (messageController.text.trim().isNotEmpty) {
                         await sendMessage();
                       }
-                      messageController.clear();
+                      // messageController.clear();
                     },
                     icon: const Icon(
                       FontAwesomeIcons.paperPlane,
@@ -147,6 +148,8 @@ class _ChatDetailsViewState extends State<ChatDetailsView> {
                           border: Border.all(color: AppColors.white),
                           borderRadius: BorderRadius.circular(8)),
                       child: TextFormField(
+                        onFieldSubmitted: (p) =>
+                            p.trim().isNotEmpty ? sendMessage() : null,
                         controller: messageController,
                         decoration: InputDecoration(
                           border: InputBorder.none,

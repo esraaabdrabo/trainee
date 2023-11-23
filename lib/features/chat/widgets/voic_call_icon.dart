@@ -6,8 +6,9 @@ import 'package:upgrade_traine_project/features/notification/presentation/contro
 
 class VoiceCallIcon extends StatelessWidget {
   final int id;
-  final String channelName;
-  const VoiceCallIcon(this.id, this.channelName, {super.key});
+  final String channelName, remoteName;
+  const VoiceCallIcon(this.id, this.channelName,
+      {required this.remoteName, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,11 @@ class VoiceCallIcon extends StatelessWidget {
 
   void _goToVoiceCallScreen(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => VoiceCallScreen(id, channelName)));
+        builder: (context) => VoiceCallScreen(
+              id,
+              channelName,
+              remoteName: remoteName,
+            )));
   }
 
   void _sendNotification(BuildContext context) {

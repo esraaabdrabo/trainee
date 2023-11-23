@@ -28,9 +28,11 @@ class AgoraActionsWidget extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                 VoiceCallIcon(chatModel.trainerId!, _getChannelName()),
-                 const _CustomDivder(),
-                 VideoCallIcon(chatModel.trainerId!, _getChannelName())
+                VoiceCallIcon(chatModel.trainerId!, _getChannelName(),
+                    remoteName: chatModel.trainerName!),
+                const _CustomDivder(),
+                VideoCallIcon(chatModel.trainerId!, _getChannelName(),
+                    remoteName: chatModel.trainerName!),
               ],
             ),
           )

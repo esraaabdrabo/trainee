@@ -44,22 +44,32 @@ class NavigationRoute {
       case VoiceCallScreen.routeName:
         int? trainerId;
         String? channelName;
+        String? remoteName;
+
         if (settings.arguments != null) {
           trainerId = ((settings.arguments as Map)['id'] as int);
           channelName = ((settings.arguments as Map)['channel_name'] as String);
+          remoteName = ((settings.arguments as Map)['remote_name'] as String);
         }
         return AnimatedRoute(
-            page: VoiceCallScreen(trainerId, channelName!), settings: settings);
+            page: VoiceCallScreen(trainerId, channelName!,
+                remoteName: remoteName!),
+            settings: settings);
       //agora video call screen
       case VideoCallScreen.routeName:
         int? trainerId;
         String? channelName;
+        String? remoteName;
+
         if (settings.arguments != null) {
           trainerId = ((settings.arguments as Map)['id'] as int);
           channelName = ((settings.arguments as Map)['channel_name'] as String);
+          remoteName = ((settings.arguments as Map)['remote_name'] as String);
         }
         return AnimatedRoute(
-            page: VideoCallScreen(trainerId, channelName!), settings: settings);
+            page: VideoCallScreen(trainerId, channelName!,
+                remoteName: remoteName!),
+            settings: settings);
       case LoginScreen.routeName:
         return AnimatedRoute(
             page: LoginScreen(

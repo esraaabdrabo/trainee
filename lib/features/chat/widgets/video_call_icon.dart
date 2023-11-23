@@ -2,14 +2,16 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:upgrade_traine_project/core/common/app_colors.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/video_call_screen.dart';
 import 'package:upgrade_traine_project/features/notification/presentation/controller/notification_cubit.dart';
 
 class VideoCallIcon extends StatelessWidget {
   final int id;
-  final String channelName;
-  const VideoCallIcon(this.id, this.channelName, {super.key});
+  final String channelName, remoteName;
+  const VideoCallIcon(this.id, this.channelName,
+      {required this.remoteName, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,11 @@ class VideoCallIcon extends StatelessWidget {
 
   void _goToVideoCallScreen(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => VideoCallScreen(id, channelName)));
+        builder: (context) => VideoCallScreen(
+              id,
+              channelName,
+              remoteName: remoteName,
+            )));
   }
 
   void _sendNotification(BuildContext context) {
