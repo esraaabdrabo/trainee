@@ -10,8 +10,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 void setupNotifications() {
   initLocalNotification();
   requestPermissions();
-  FirebaseMessaging.onMessage
-      .listen((RemoteMessage event) async => handleOnMessageListener(event));
+  FirebaseMessaging.onMessage.listen((RemoteMessage event) async => handleOnMessageListener(event));
 }
 
 @pragma("vm:entry-point")
