@@ -9,7 +9,6 @@ abstract class Repository {
   Result<AppErrors, Entity>
       execute<Model extends BaseModel<Entity>, Entity extends BaseEntity>(
           {required Either<AppErrors, Model> remoteResult}) {
-    debugPrint("ex:${remoteResult}");
     if (remoteResult.isRight()) {
       debugPrint("ex1:${remoteResult.isRight()}");
 

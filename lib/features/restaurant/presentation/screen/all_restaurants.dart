@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_appbar.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/no_data_found.dart';
 import 'package:upgrade_traine_project/features/restaurant/data/model/request/get_restaurants_request.dart';

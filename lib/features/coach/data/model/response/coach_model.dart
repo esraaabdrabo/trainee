@@ -130,31 +130,31 @@ class CoachModel extends BaseModel<CoachEntity> {
   @override
   CoachEntity toEntity() {
     return CoachEntity(
-        phoneNumber: this.phoneNumber,
-        ratingDetails: this.ratingDetailsModel?.toEntity(),
-        id: this.id,
-        name: this.name,
-        isActive: this.isActive,
-        latitude: this.latitude,
-        longitude: this.longitude,
-        rate: this.rate,
-        subscription: this.subscription?.toEntity(),
-        imageUrl: this.imageUrl,
-        countryCode: this.countryCode,
-        address: this.address,
-        age: this.age,
-        birthDate: this.birthDate,
-        coursesCount: this.coursesCount,
-        cvUrl: this.cvUrl,
-        emailAddress: this.emailAddress,
-        gender: this.gender,
-        isVerified: this.isVerified,
-        lastLoginDate: this.lastLoginDate,
-        specialization: this.specialization?.toEntity(),
-        specializationId: this.specializationId,
-        status: this.status,
-        hoursPrice: this.hourPrice,
-        yearsOfExperience: this.yearsOfExperience);
+        phoneNumber: phoneNumber,
+        ratingDetails: ratingDetailsModel?.toEntity(),
+        id: id,
+        name: name,
+        isActive: isActive,
+        latitude: latitude,
+        longitude: longitude,
+        rate: rate,
+        subscription: subscription?.toEntity(),
+        imageUrl: imageUrl,
+        countryCode: countryCode,
+        address: address,
+        age: age,
+        birthDate: birthDate,
+        coursesCount: coursesCount,
+        cvUrl: cvUrl,
+        emailAddress: emailAddress,
+        gender: gender,
+        isVerified: isVerified,
+        lastLoginDate: lastLoginDate,
+        specialization: specialization?.toEntity(),
+        specializationId: specializationId,
+        status: status,
+        hoursPrice: hourPrice,
+        yearsOfExperience: yearsOfExperience);
   }
 }
 
@@ -181,11 +181,11 @@ class RatingDetailsModel extends BaseModel<RatingDetails> {
   @override
   RatingDetails toEntity() {
     return RatingDetails(
-      i1: this.i1,
-      i2: this.i2,
-      i3: this.i3,
-      i4: this.i4,
-      i5: this.i5,
+      i1: i1,
+      i2: i2,
+      i3: i3,
+      i4: i4,
+      i5: i5,
     );
   }
 }

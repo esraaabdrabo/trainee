@@ -72,10 +72,10 @@ class RatingDetails extends BaseEntity {
   @override
   // TODO: implement props
   List<Object?> get props =>[
-    this.i1,
-    this.i2,
-    this.i3,
-    this.i4,
-    this.i5,
+    i1,
+    i2,
+    i3,
+    i4,
+    i5,
   ];
 }

@@ -1,3 +1,5 @@
+import 'package:upgrade_traine_project/features/shop/data/model/response/products_model.dart';
+
 import '../../../../../core/models/city_model.dart';
 import '../../../../../core/models/manager_model.dart';
 import '../../../../../core/models/opening_day_model.dart';
@@ -6,6 +8,7 @@ import '../../../domain/entity/restaurant_entity.dart';
 
 class RestaurantModel {
   RestaurantModel({
+    this.ratingDetailsModel,
     this.arLogo,
     this.enLogo,
     this.logo,
@@ -72,136 +75,129 @@ class RestaurantModel {
   final String? arDescription;
   final String? enDescription;
   final String? description;
-
+  final RatingDetails? ratingDetailsModel;
   factory RestaurantModel.fromJson(Map<String, dynamic> json) =>
       RestaurantModel(
-        arLogo: json["arLogo"] == null ? null : json["arLogo"],
-        enLogo: json["enLogo"] == null ? null : json["enLogo"],
-        logo: json["logo"] == null ? null : json["logo"],
-        arCover: json["arCover"] == null ? null : json["arCover"],
-        enCover: json["enCover"] == null ? null : json["enCover"],
-        cover: json["cover"] == null ? null : json["cover"],
-        commercialRegisterNumber: json["commercialRegisterNumber"] == null
+        ratingDetailsModel: json["ratingDetails"] == null
             ? null
-            : json["commercialRegisterNumber"],
-        commercialRegisterDocument: json["commercialRegisterDocument"] == null
-            ? null
-            : json["commercialRegisterDocument"],
-        cityId: json["cityId"] == null ? null : json["cityId"],
+            : RatingDetails.fromJson(json["ratingDetails"]),
+        arLogo: json["arLogo"],
+        enLogo: json["enLogo"],
+        logo: json["logo"],
+        arCover: json["arCover"],
+        enCover: json["enCover"],
+        cover: json["cover"],
+        commercialRegisterNumber: json["commercialRegisterNumber"],
+        commercialRegisterDocument: json["commercialRegisterDocument"],
+        cityId: json["cityId"],
         city: json["city"] == null ? null : CityModel.fromJson(json["city"]),
-        street: json["street"] == null ? null : json["street"],
-        buildingNumber:
-            json["buildingNumber"] == null ? null : json["buildingNumber"],
-        phoneNumber: json["phoneNumber"] == null ? null : json["phoneNumber"],
+        street: json["street"],
+        buildingNumber: json["buildingNumber"],
+        phoneNumber: json["phoneNumber"],
         manager: json["manager"] == null
             ? null
             : ManagerModel.fromJson(json["manager"]),
-        facebookUrl: json["facebookUrl"] == null ? null : json["facebookUrl"],
-        instagramUrl:
-            json["instagramUrl"] == null ? null : json["instagramUrl"],
-        twitterUrl: json["twitterUrl"] == null ? null : json["twitterUrl"],
-        websiteUrl: json["websiteUrl"] == null ? null : json["websiteUrl"],
-        latitude: json["latitude"] == null ? null : json["latitude"],
-        longitude: json["longitude"] == null ? null : json["longitude"],
+        facebookUrl: json["facebookUrl"],
+        instagramUrl: json["instagramUrl"],
+        twitterUrl: json["twitterUrl"],
+        websiteUrl: json["websiteUrl"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
         openingDays: json["openingDays"] == null
             ? null
             : List<OpeningDayModel>.from(
                 json["openingDays"].map((x) => OpeningDayModel.fromJson(x))),
-        rate: json["rate"] == null ? null : json["rate"],
+        rate: json["rate"],
         creationTime: json["creationTime"] == null
             ? null
             : DateTime.parse(json["creationTime"]),
         subscription: json["subscription"] == null
             ? null
             : SubscriptionModel.fromJson(json["subscription"]),
-        isActive: json["isActive"] == null ? null : json["isActive"],
-        arName: json["arName"] == null ? null : json["arName"],
-        description: json["description"] == null ? null : json["description"],
-        arDescription:
-            json["arDescription"] == null ? null : json["arDescription"],
-        enDescription:
-            json["enDescription"] == null ? null : json["enDescription"],
-        enName: json["enName"] == null ? null : json["enName"],
-        name: json["name"] == null ? null : json["name"],
-        id: json["id"] == null ? null : json["id"],
+        isActive: json["isActive"],
+        arName: json["arName"],
+        description: json["description"],
+        arDescription: json["arDescription"],
+        enDescription: json["enDescription"],
+        enName: json["enName"],
+        name: json["name"],
+        id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "arLogo": arLogo == null ? null : arLogo,
-        "enLogo": enLogo == null ? null : enLogo,
-        "logo": logo == null ? null : logo,
-        "arCover": arCover == null ? null : arCover,
-        "enCover": enCover == null ? null : enCover,
-        "cover": cover == null ? null : cover,
-        "commercialRegisterNumber":
-            commercialRegisterNumber == null ? null : commercialRegisterNumber,
-        "commercialRegisterDocument": commercialRegisterDocument == null
-            ? null
-            : commercialRegisterDocument,
-        "cityId": cityId == null ? null : cityId,
+        "arLogo": arLogo,
+        "enLogo": enLogo,
+        "logo": logo,
+        "arCover": arCover,
+        "enCover": enCover,
+        "cover": cover,
+        "commercialRegisterNumber": commercialRegisterNumber,
+        "commercialRegisterDocument": commercialRegisterDocument,
+        "cityId": cityId,
         "city": city == null ? null : city!.toJson(),
-        "street": street == null ? null : street,
-        "buildingNumber": buildingNumber == null ? null : buildingNumber,
-        "phoneNumber": phoneNumber == null ? null : phoneNumber,
+        "street": street,
+        "buildingNumber": buildingNumber,
+        "phoneNumber": phoneNumber,
         "manager": manager == null ? null : manager!.toJson(),
-        "facebookUrl": facebookUrl == null ? null : facebookUrl,
-        "instagramUrl": instagramUrl == null ? null : instagramUrl,
-        "twitterUrl": twitterUrl == null ? null : twitterUrl,
-        "websiteUrl": websiteUrl == null ? null : websiteUrl,
-        "latitude": latitude == null ? null : latitude,
-        "longitude": longitude == null ? null : longitude,
+        "facebookUrl": facebookUrl,
+        "instagramUrl": instagramUrl,
+        "twitterUrl": twitterUrl,
+        "websiteUrl": websiteUrl,
+        "latitude": latitude,
+        "longitude": longitude,
         "openingDays": openingDays == null
             ? null
             : List<dynamic>.from(openingDays!.map((x) => x.toJson())),
-        "rate": rate == null ? null : rate,
+        "rate": rate,
         "creationTime":
             creationTime == null ? null : creationTime!.toIso8601String(),
         "subscription": subscription == null ? null : subscription!.toJson(),
-        "isActive": isActive == null ? null : isActive,
-        "arName": arName == null ? null : arName,
-        "enName": enName == null ? null : enName,
-        "arDescription": arDescription == null ? null : arDescription,
-        "enDescription": enDescription == null ? null : enDescription,
-        "description": description == null ? null : description,
-        "name": name == null ? null : name,
-        "id": id == null ? null : id,
+        "isActive": isActive,
+        "arName": arName,
+        "enName": enName,
+        "arDescription": arDescription,
+        "enDescription": enDescription,
+        "description": description,
+        "name": name,
+        "id": id,
       };
 
   @override
   RestaurantEntity toEntity() {
     return RestaurantEntity(
-      phoneNumber: this.phoneNumber,
-      id: this.id,
-      name: this.name,
-      creationTime: this.creationTime,
-      isActive: this.isActive,
-      enName: this.enName,
-      arName: this.arName,
-      arCover: this.arCover,
-      arLogo: this.arLogo,
-      buildingNumber: this.buildingNumber,
-      city: this.city?.toEntity(),
-      cityId: this.cityId,
-      commercialRegisterDocument: this.commercialRegisterDocument,
-      commercialRegisterNumber: this.commercialRegisterNumber,
-      cover: this.cover,
-      enCover: this.enCover,
-      enLogo: this.enLogo,
-      facebookUrl: this.facebookUrl,
-      instagramUrl: this.instagramUrl,
-      latitude: this.latitude,
-      logo: this.logo,
-      longitude: this.longitude,
-      manager: this.manager?.toEntity(),
-      openingDays: this.openingDays?.map((e) => e.toEntity()).toList(),
-      rate: this.rate,
-      street: this.street,
-      subscription: this.subscription?.toEntity(),
-      twitterUrl: this.twitterUrl,
-      websiteUrl: this.websiteUrl,
-      description: this.description,
-      arDescription: this.arDescription,
-      enDescription: this.enDescription,
+      ratingDetails: ratingDetailsModel,
+      phoneNumber: phoneNumber,
+      id: id,
+      name: name,
+      creationTime: creationTime,
+      isActive: isActive,
+      enName: enName,
+      arName: arName,
+      arCover: arCover,
+      arLogo: arLogo,
+      buildingNumber: buildingNumber,
+      city: city?.toEntity(),
+      cityId: cityId,
+      commercialRegisterDocument: commercialRegisterDocument,
+      commercialRegisterNumber: commercialRegisterNumber,
+      cover: cover,
+      enCover: enCover,
+      enLogo: enLogo,
+      facebookUrl: facebookUrl,
+      instagramUrl: instagramUrl,
+      latitude: latitude,
+      logo: logo,
+      longitude: longitude,
+      manager: manager?.toEntity(),
+      openingDays: openingDays?.map((e) => e.toEntity()).toList(),
+      rate: rate,
+      street: street,
+      subscription: subscription?.toEntity(),
+      twitterUrl: twitterUrl,
+      websiteUrl: websiteUrl,
+      description: description,
+      arDescription: arDescription,
+      enDescription: enDescription,
     );
   }
 }

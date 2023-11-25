@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:upgrade_traine_project/core/common/app_colors.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
+import 'package:upgrade_traine_project/core/ui/error_ui/toast.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/screen/all_restaurants.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/widget/dishes_section.dart';
 import 'package:upgrade_traine_project/features/shop/data/model/response/products_model.dart';
@@ -103,16 +104,14 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
   Widget _buildRateIndicatorWidget(String title, double percent) {
     return Row(
       children: [
-        CustomText(
-          text: title
-        ),
+        CustomText(text: title),
         Gaps.hGap4,
         SizedBox(
           width: 150.w,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(AppConstants.borderRadius10),
             child: LinearProgressIndicator(
-              value: percent,
+              value: percent / 5,
             ),
           ),
         )

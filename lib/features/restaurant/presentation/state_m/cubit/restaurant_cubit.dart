@@ -27,7 +27,6 @@ class RestaurantCubit extends Cubit<RestaurantState> {
     final result = await getIt<GetRestaurantsUseCse>()(params);
     result.pick(onData: (data) {
       restaurants = data;
-      print(restaurants);
       emit(RestaurantState.getRestaurantsState(data));
     }, onError: (error) {
       emit(RestaurantState.restaurantErrorState(
