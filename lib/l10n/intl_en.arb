@@ -207,5 +207,6 @@
   "enter_text_here":"Enter text here",
   "the_member_left_the_call":"{name} has left the call. If you need anything, feel free to reach out. See you!",
 "the_member_decline_the_call":"{name} declined the call ",
-"invalid_credintials":"Invalid Credintials"
+"invalid_credintials":"Invalid Credintials",
+"off":"Off"
 }

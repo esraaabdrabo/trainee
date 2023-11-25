@@ -92,6 +92,7 @@ class _Map extends StatelessWidget {
           child: SizedBox(
             height: 0.53.sh,
             child: MapWidget(
+              
               myLocation: latLng,
               markers: sn.markers.map((e) => e.marker).toSet(),
               //   onMapCreated: _getMyLocation,

@@ -1,3 +1,5 @@
+import 'package:upgrade_traine_project/features/shop/data/model/response/products_model.dart';
+
 import '../../../../core/entities/base_entity.dart';
 import '../../../../core/entities/city_entity.dart';
 import '../../../../core/entities/manager_entity.dart';
@@ -19,6 +21,7 @@ abstract class PartnerEntity {
   final String? arDescription;
   final String? enDescription;
   final String? description;
+
   PartnerEntity(
       {this.arCover,
       this.arDescription,
@@ -37,6 +40,7 @@ abstract class PartnerEntity {
 
 class RestaurantEntity extends PartnerEntity {
   RestaurantEntity({
+    this.ratingDetails,
     super.arLogo,
     super.enLogo,
     super.logo,
@@ -87,6 +91,8 @@ class RestaurantEntity extends PartnerEntity {
   final double? longitude;
   final List<OpeningDayEntity>? openingDays;
   final double? rate;
+  final RatingDetails? ratingDetails;
+
   final DateTime? creationTime;
   final SubscriptionEntity? subscription;
   final bool? isActive;

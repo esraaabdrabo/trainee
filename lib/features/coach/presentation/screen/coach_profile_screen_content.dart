@@ -71,10 +71,8 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                 BlocProvider(
                   create: (context) => CourseCubit()
                     ..getCoachCurrentCourses(trainerId: sn.coachEntity.id!),
-                  child: BlocConsumer<CourseCubit, CourseState>(
-                    listener: (context, state) {
-                      // TODO: implement listener
-                    },
+                  child: BlocBuilder<CourseCubit, CourseState>(
+               
                     buildWhen: (previous, current) {
                       return current is CurrentCoursesSuccess ||
                           current is CurrentCoursesLoading;

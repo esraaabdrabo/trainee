@@ -189,7 +189,7 @@ class _CoursesCarouselWidgetState extends State<CoursesCarouselWidget> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppConstants.borderRadius12),
             image: courseModel.imageUrl == null
-                ? DecorationImage(
+                ? const DecorationImage(
                     image: AssetImage(AppConstants.COACH1_IMAGE),
                     fit: BoxFit.cover,
                   )
@@ -206,73 +206,89 @@ class _CoursesCarouselWidgetState extends State<CoursesCarouselWidget> {
               ),
             ],
           ),
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
-              height: 80.h,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+          child: Stack(
+            children: [
+              if (courseModel.discountPercentage != null)
+                Align(
+                    alignment: Alignment.topLeft,
                     child: BlurWidget(
-                      height: 63.h,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomText(
-                                text: courseModel.name!,
-                                fontWeight: FontWeight.w500,
-                                fontSize: AppConstants.textSize14,
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.h, horizontal: 10.w),
+                        child: Text(
+                            " ${courseModel.discountPercentage!}% ${LanguageHelper.tr(context).off}"),
+                      ),
+                    )),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  height: 85.h,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.w, vertical: 8.h),
+                        child: BlurWidget(
+                          height: 70.h,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomText(
+                                    text: courseModel.name!,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: AppConstants.textSize14,
+                                  ),
+                                  Gaps.vGap12,
+                                  CustomText(
+                                    text:
+                                        '${courseModel.fee} ${Translation.of(context).saudi_riyal}',
+                                    fontSize: AppConstants.textSize15,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.accentColorLight,
+                                  ),
+                                  Gaps.vGap12,
+                                ],
                               ),
-                              Gaps.vGap12,
-                              CustomText(
-                                text: courseModel.fee.toString() +
-                                    ' ' +
-                                    Translation.of(context).saudi_riyal,
-                                fontSize: AppConstants.textSize15,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.accentColorLight,
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 16.w,
-                    child: SizedBox(
-                      height: 28.h,
-                      child: BlocBuilder<CourseCubit, CourseState>(
-                        builder: (context, state) {
-                          return CustomElevatedButton(
-                            textMaxLines: 1,
-                            text: Translation.of(context).book_now,
-                            textSize: AppConstants.textSize12,
-                            onTap: () {
-                              CourseCubit.get(context)
-                                  .bookCourse(courseId: courseModel.id!);
+                      Positioned(
+                        left: 16.w,
+                        child: SizedBox(
+                          height: 28.h,
+                          child: BlocBuilder<CourseCubit, CourseState>(
+                            builder: (context, state) {
+                              return CustomElevatedButton(
+                                textMaxLines: 1,
+                                text: Translation.of(context).book_now,
+                                textSize: AppConstants.textSize12,
+                                onTap: () {
+                                  CourseCubit.get(context)
+                                      .bookCourse(courseId: courseModel.id!);
+                                },
+                                borderRadius: AppConstants.borderRadius4,
+                              );
                             },
-                            borderRadius: AppConstants.borderRadius4,
-                          );
-                        },
+                          ),
+                        ),
                       ),
-                    ),
+                      Positioned(
+                          left: 16.w,
+                          bottom: 10.h,
+                          child: ClockWidget(
+                            duration:
+                                courseModel.trainingHoursCount!.toDouble(),
+                          )),
+                    ],
                   ),
-                  Positioned(
-                      left: 16.w,
-                      bottom: 10.h,
-                      child: ClockWidget(
-                        duration: courseModel.trainingHoursCount!.toDouble(),
-                      ))
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),

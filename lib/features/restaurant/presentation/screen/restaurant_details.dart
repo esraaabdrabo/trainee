@@ -6,7 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:upgrade_traine_project/core/common/app_colors.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
+import 'package:upgrade_traine_project/features/restaurant/presentation/screen/all_restaurants.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/widget/dishes_section.dart';
+import 'package:upgrade_traine_project/features/shop/data/model/response/products_model.dart';
 import '../../../../core/common/style/gaps.dart';
 import '../../../../core/constants/app/app_constants.dart';
 import '../../../../core/navigation/nav.dart';
@@ -20,6 +22,7 @@ import '../../../../core/utils/validators/error_image.dart';
 import '../../../../generated/l10n.dart';
 import '../../domain/entity/restaurant_entity.dart';
 import '../state_m/cubit/new_cubit/new_restaurant_cubit.dart';
+
 class PlayingSliverState extends StatefulWidget {
   final RestaurantEntity restaurantEntity;
 
@@ -101,7 +104,7 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
     return Row(
       children: [
         CustomText(
-          text: title,
+          text: title
         ),
         Gaps.hGap4,
         SizedBox(
@@ -264,7 +267,8 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
     );
   }
 
-  Widget _buildRatingWidget({required double? rate}) {
+  Widget _buildRatingWidget(
+      {required double? rate, required RatingDetails? details}) {
     return BlocProvider(
       create: (context) => NewRestaurantCubit()
         ..getReview(RefId: widget.restaurantEntity.id!, refType: 2),
@@ -310,11 +314,16 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
                             const Spacer(),
                             Column(
                               children: [
-                                _buildRateIndicatorWidget('5', 0.95),
-                                _buildRateIndicatorWidget('4', 0.65),
-                                _buildRateIndicatorWidget('3', 0.1),
-                                _buildRateIndicatorWidget('2', 0.3),
-                                _buildRateIndicatorWidget('1', 0.2),
+                                _buildRateIndicatorWidget(
+                                    '5', double.parse("${details?.i5 ?? 0}")),
+                                _buildRateIndicatorWidget(
+                                    '4', double.parse("${details?.i4 ?? 0}")),
+                                _buildRateIndicatorWidget(
+                                    '3', double.parse("${details?.i3 ?? 0}")),
+                                _buildRateIndicatorWidget(
+                                    '2', double.parse("${details?.i2 ?? 0}")),
+                                _buildRateIndicatorWidget(
+                                    '1', double.parse("${details?.i1 ?? 0}")),
                               ],
                             ),
                           ],
@@ -381,10 +390,10 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
                 aboutRestaurant: LanguageHelper.isAr(context)
                     ? widget.restaurantEntity.arDescription
                     : widget.restaurantEntity.enDescription,
-                resaurantAvatar: "${widget.restaurantEntity.logo}",
+                resaurantAvatar: widget.restaurantEntity.logo ?? defaultRestImg,
                 restaurantName: "${widget.restaurantEntity.name}",
                 restaurantRate: "${widget.restaurantEntity.rate}",
-                image: "${widget.restaurantEntity.cover}",
+                image: widget.restaurantEntity.cover ?? defaultRestImg,
                 searchTap: () {},
                 expandedHeight: 220.h,
               ),
@@ -423,7 +432,9 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
                       ),
                     ),
                     Gaps.vGap24,
-                    _buildRatingWidget(rate: widget.restaurantEntity.rate),
+                    _buildRatingWidget(
+                        rate: widget.restaurantEntity.rate,
+                        details: widget.restaurantEntity.ratingDetails),
                     Gaps.vGap24,
                   ],
                 ),

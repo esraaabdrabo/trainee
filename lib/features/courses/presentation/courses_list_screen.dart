@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/features/coach/presentation/state_m/course_cubit/course_cubit.dart';
 import 'package:upgrade_traine_project/features/courses/widgets/search_form_field.dart';
 import 'package:upgrade_traine_project/features/courses/widgets/search_icon.dart';
+import 'package:upgrade_traine_project/main.dart';
 
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/style/gaps.dart';
@@ -371,7 +373,21 @@ class _TrainerCoursesScreenState extends State<TrainerCoursesScreen> {
                   )
                 ],
               ),
-            ))
+            )),
+            coursesList.discountPercentage != null
+                ? Align(
+                    alignment: LanguageHelper.isAr(navigatorKey.currentContext!)
+                        ? Alignment.bottomLeft
+                        : Alignment.bottomRight,
+                    child: BlurWidget(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.h, horizontal: 10.w),
+                        child: Text(
+                            " ${coursesList.discountPercentage!}% ${LanguageHelper.tr(context).off}"),
+                      ),
+                    ))
+                : const SizedBox(),
           ],
         ),
       ),

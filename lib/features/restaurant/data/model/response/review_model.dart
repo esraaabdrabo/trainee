@@ -8,15 +8,14 @@ class ReviewModel {
 
   ReviewModel(
       {this.result,
-        this.targetUrl,
-        this.success,
-        this.error,
-        this.unAuthorizedRequest,
-        this.bAbp});
+      this.targetUrl,
+      this.success,
+      this.error,
+      this.unAuthorizedRequest,
+      this.bAbp});
 
   ReviewModel.fromJson(Map<String, dynamic> json) {
-    result =
-    json['result'] != null ? new Result.fromJson(json['result']) : null;
+    result = json['result'] != null ? Result.fromJson(json['result']) : null;
     targetUrl = json['targetUrl'];
     success = json['success'];
     error = json['error'];
@@ -25,15 +24,15 @@ class ReviewModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.result != null) {
-      data['result'] = this.result!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (result != null) {
+      data['result'] = result!.toJson();
     }
-    data['targetUrl'] = this.targetUrl;
-    data['success'] = this.success;
-    data['error'] = this.error;
-    data['unAuthorizedRequest'] = this.unAuthorizedRequest;
-    data['__abp'] = this.bAbp;
+    data['targetUrl'] = targetUrl;
+    data['success'] = success;
+    data['error'] = error;
+    data['unAuthorizedRequest'] = unAuthorizedRequest;
+    data['__abp'] = bAbp;
     return data;
   }
 }
@@ -49,16 +48,16 @@ class Result {
     if (json['items'] != null) {
       items = <Items>[];
       json['items'].forEach((v) {
-        items!.add(new Items.fromJson(v));
+        items!.add(Items.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['totalCount'] = this.totalCount;
-    if (this.items != null) {
-      data['items'] = this.items!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['totalCount'] = totalCount;
+    if (items != null) {
+      data['items'] = items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -77,14 +76,14 @@ class Items {
 
   Items(
       {this.rate,
-        this.comment,
-        this.creationTime,
-        this.isHidden,
-        this.reviewerId,
-        this.reviewer,
-        this.refId,
-        this.refType,
-        this.id});
+      this.comment,
+      this.creationTime,
+      this.isHidden,
+      this.reviewerId,
+      this.reviewer,
+      this.refId,
+      this.refType,
+      this.id});
 
   Items.fromJson(Map<String, dynamic> json) {
     rate = json['rate'];
@@ -92,27 +91,26 @@ class Items {
     creationTime = json['creationTime'];
     isHidden = json['isHidden'];
     reviewerId = json['reviewerId'];
-    reviewer = json['reviewer'] != null
-        ? new Reviewer.fromJson(json['reviewer'])
-        : null;
+    reviewer =
+        json['reviewer'] != null ? Reviewer.fromJson(json['reviewer']) : null;
     refId = json['refId'];
     refType = json['refType'];
     id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['rate'] = this.rate;
-    data['comment'] = this.comment;
-    data['creationTime'] = this.creationTime;
-    data['isHidden'] = this.isHidden;
-    data['reviewerId'] = this.reviewerId;
-    if (this.reviewer != null) {
-      data['reviewer'] = this.reviewer!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['rate'] = rate;
+    data['comment'] = comment;
+    data['creationTime'] = creationTime;
+    data['isHidden'] = isHidden;
+    data['reviewerId'] = reviewerId;
+    if (reviewer != null) {
+      data['reviewer'] = reviewer!.toJson();
     }
-    data['refId'] = this.refId;
-    data['refType'] = this.refType;
-    data['id'] = this.id;
+    data['refId'] = refId;
+    data['refType'] = refType;
+    data['id'] = id;
     return data;
   }
 }
@@ -120,7 +118,7 @@ class Items {
 class Reviewer {
   String? name;
   String? phoneNumber;
-  Null? imageUrl;
+  String? imageUrl;
   int? id;
 
   Reviewer({this.name, this.phoneNumber, this.imageUrl, this.id});
@@ -133,11 +131,11 @@ class Reviewer {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['phoneNumber'] = this.phoneNumber;
-    data['imageUrl'] = this.imageUrl;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['name'] = name;
+    data['phoneNumber'] = phoneNumber;
+    data['imageUrl'] = imageUrl;
+    data['id'] = id;
     return data;
   }
 }
