@@ -16,10 +16,6 @@ class PlaceItem extends StatelessWidget {
         .replaceAll(suggestion.description.split(',')[0], '');
     return Container(
       width: double.infinity,
-      margin: const EdgeInsetsDirectional.all(8),
-      padding: const EdgeInsetsDirectional.all(4),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(8)),
       child: Column(
         children: [
           ListTile(
@@ -28,17 +24,17 @@ class PlaceItem extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: '${suggestion.description}\n',
+                    text: '${suggestion.description}',
                     style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.sp,
+                        color: AppColors.lightGrey,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w600),
                   ),
                   TextSpan(
                     text: subTitle,
                     style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15.sp,
+                      color: AppColors.lightGrey,
+                      fontSize: 14.sp,
                     ),
                   )
                 ],
@@ -57,11 +53,12 @@ class _Leading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-        backgroundColor: AppColors.primaryColorLight,
-        radius: 20.w,
+        backgroundColor: AppColors.lightGreyFontColor.withOpacity(.5),
+        radius: 15.w,
         child: Icon(
           Icons.location_on,
-          color: AppColors.lightGrey,
+          color: AppColors.white,
+          size: 16.sp,
         ));
   }
 }

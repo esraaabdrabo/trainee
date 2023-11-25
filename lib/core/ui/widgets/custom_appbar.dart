@@ -40,28 +40,50 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
               BlocConsumer<MapsCubit, MapsState>(
                 listener: (context, state) {},
                 builder: (context, state) {
-                  return SearchTextField(
-                      suffix: controller.text.isNotEmpty
-                          ? IconButton(
-                              onPressed: () {
-                                controller.clear();
-                                BlocProvider.of<MapsCubit>(context)
-                                    .emitPlaceSuggestion('');
-                              },
-                              icon: const Icon(
-                                Icons.close,
-                                color: Colors.white,
-                              ))
-                          : null,
-                      hintText: Translation.of(context).search,
-                      controller: controller,
-                      onChanged: (String query) =>
-                          //wait some milliseconds then make the request
-                          SearchFunctions.onChangeHandler(
-                            query,
-                            () => BlocProvider.of<MapsCubit>(context)
-                                .emitPlaceSuggestion(query),
-                          ));
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                          size: 22.sp,
+                        ),
+                      ),
+                      SizedBox(
+                        width: .45.sw,
+                        child: TextFormField(
+                            onChanged: (String query) =>
+                                //wait some milliseconds then make the request
+                                SearchFunctions.onChangeHandler(
+                                    query,
+                                    () => BlocProvider.of<MapsCubit>(context)
+                                        .emitPlaceSuggestion(query)),
+                            controller: controller,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(bottom: 10),
+                                hintText: Translation.of(context).search,
+                                focusedBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                border: InputBorder.none)),
+                      ),
+                      if (controller.text.isNotEmpty)
+                        IconButton(
+                            onPressed: () {
+                              controller.clear();
+                              BlocProvider.of<MapsCubit>(context)
+                                  .emitPlaceSuggestion('');
+                            },
+                            icon: Icon(
+                              Icons.close,
+                              color: Colors.white,
+                              size: 16.sp,
+                            ))
+                    ],
+                  );
                 },
               )
             ],
@@ -70,14 +92,15 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const NotificationScreen(),
-                  ));
-            },
-            child: const Icon(Icons.notifications)),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NotificationScreen(),
+                )),
+            child: const Icon(
+              Icons.notifications,
+              color: Colors.white,
+            )),
         Gaps.hGap16
       ],
     );

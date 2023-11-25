@@ -103,8 +103,12 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
       builder: (context, state) {
         return Container(
           color: Colors.black,
-          padding: EdgeInsets.all(5.h),
-          child: ListView.builder(
+          margin: EdgeInsets.only(top: .15.sh),
+          child: ListView.separated(
+              separatorBuilder: (context, index) => Divider(
+                    color: AppColors.grey,
+                    indent: .15.sw,
+                  ),
               itemBuilder: (ctx, index) {
                 return InkWell(
                   onTap: () {
@@ -119,6 +123,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
               },
               itemCount: places.length,
               shrinkWrap: true,
+              padding: EdgeInsets.symmetric(horizontal: .01.sw),
               physics: const ClampingScrollPhysics()),
         );
       },
@@ -128,8 +133,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   Widget _buildHomeScreen(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      extendBodyBehindAppBar: true,
-      appBar: HomeAppbar(controller: sn.searchTextController),
       body: Stack(
         children: [
           _buildHomeScreenBody(context),
@@ -237,7 +240,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
       ],
     );
   }
-
 
   Widget _buildHorizontalWidget({required List<CoachEntity> widgets}) {
     return SizedBox(
@@ -403,6 +405,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     return SingleChildScrollView(
       child: Column(
         children: [
+          HomeAppbar(controller: sn.searchTextController),
           SizedBox(
             width: 1.sw,
             height: 0.58.sh,
@@ -419,19 +422,20 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                     return state.when(
                       coachInitState: () => const SizedBox.shrink(),
                       coachLoadingState: () => _buildCoachesSectionShimmer(),
-                      coachErrorState: (error, callback) => const SizedBox.shrink(),
+                      coachErrorState: (error, callback) =>
+                          const SizedBox.shrink(),
                       getCoachesState: (CoachesEntity) => SizedBox(
-                          width: 1.sw,
-                          height: CoachesEntity.items!.length > 8
-                              ? 0.54.sh
-                              : CoachesEntity.items!.length > 5
-                                  ? 0.37.sh
-                                  : 0.23.sh,
-                          child: _buildCoachesWidget(
-                              title: Translation.of(context).most_rated_coaches,
-                              widgets: CoachesEntity.items!,
-                              onSeeAllTapped: _goToCoaches),
-                        ),
+                        width: 1.sw,
+                        height: CoachesEntity.items!.length > 8
+                            ? 0.54.sh
+                            : CoachesEntity.items!.length > 5
+                                ? 0.37.sh
+                                : 0.23.sh,
+                        child: _buildCoachesWidget(
+                            title: Translation.of(context).most_rated_coaches,
+                            widgets: CoachesEntity.items!,
+                            onSeeAllTapped: _goToCoaches),
+                      ),
                     );
                   },
                 ),
@@ -439,84 +443,87 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                 BlocBuilder<CategoryCubit, CategoryState>(
                   bloc: sn.categoryCubit,
                   builder: (context, state) => state.when(
-                      categoryInitState: () => const SizedBox.shrink(),
-                      categoryLoadingState: () => _buildSectionShimmer(),
-                      categoryErrorState: (error, callback) =>
-                          const SizedBox.shrink(),
-                      getCategoriesState: (categoriesEntity) {
-                        final List<TempWidget> categories = [];
-                        categoriesEntity.items?.forEach(
-                          (element) => categories.add(
-                            TempWidget(
-                              id: element.id ?? 0,
-                              imgPath: element.iconUrl ?? '',
-                              title: getTranslation(
-                                context: context,
-                                alternativeText: element.name,
-                                enText: element.enName,
-                                arText: element.arName,
-                              ),
+                    categoryInitState: () => const SizedBox.shrink(),
+                    categoryLoadingState: () => _buildSectionShimmer(),
+                    categoryErrorState: (error, callback) =>
+                        const SizedBox.shrink(),
+                    getCategoriesState: (categoriesEntity) {
+                      final List<TempWidget> categories = [];
+                      categoriesEntity.items?.forEach(
+                        (element) => categories.add(
+                          TempWidget(
+                            id: element.id ?? 0,
+                            imgPath: element.iconUrl ?? '',
+                            title: getTranslation(
+                              context: context,
+                              alternativeText: element.name,
+                              enText: element.enName,
+                              arText: element.arName,
                             ),
                           ),
-                        );
-                        return SizedBox(
-                          width: 1.sw,
-                          height: 0.38.sh,
-                          child: _buildSectionWidget(
-                              title: Translation.of(context).categories,
-                              widgets: categories,
-                              onItemSelected: (index) => _gotoCoachesScreen(
-                                    categoriesEntity.items?.elementAt(index)),
-                              onSeeAllTapped: _goToCategories),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                      return SizedBox(
+                        width: 1.sw,
+                        height: 0.38.sh,
+                        child: _buildSectionWidget(
+                            title: Translation.of(context).categories,
+                            widgets: categories,
+                            onItemSelected: (index) => _gotoCoachesScreen(
+                                categoriesEntity.items?.elementAt(index)),
+                            onSeeAllTapped: _goToCategories),
+                      );
+                    },
+                  ),
                 ),
                 Gaps.vGap40,
                 BlocBuilder<RestaurantCubit, RestaurantState>(
                   bloc: sn.restaurantCubit,
                   builder: (context, state) => state.when(
-                      hideSearch: () => const SizedBox(),
-                      showSearch: () => const SizedBox(),
-                      restaurantInitState: () => const SizedBox.shrink(),
-                      restaurantLoadingState: () => _buildSectionShimmer(),
-                      restaurantErrorState: (error, callback) => const SizedBox.shrink(),
-                      getRestaurantsState: (restaurantsEntity) {
-                        final List<TempWidget> categories0 = [];
-                        restaurantsEntity.items?.forEach((element) => categories0.add(
-                            TempWidget(
-                              id: element.id ?? 0,
-                              imgPath: element.cover ?? '',
-                              title: getTranslation(
-                                context: context,
-                                arText: element.arName,
-                                enText: element.enName,
-                                alternativeText: element.name,
-                              ),
-                              description: getTranslation(
-                                context: context,
-                                alternativeText: element.description,
-                                enText: element.enDescription,
-                                arText: element.arDescription,
-                              ),
-                            ),
-                          ));
-                        return SizedBox(
-                          width: 1.sw,
-                          height: 0.38.sh,
-                          child: _buildSectionWidget(
-                            title: Translation.of(context).restaurants,
-                            widgets: categories0,
-                            onSeeAllTapped: () => _goToRestaurant(),
-                            onItemSelected: (index) => Navigator.of(context).push(MaterialPageRoute(
+                    hideSearch: () => const SizedBox(),
+                    showSearch: () => const SizedBox(),
+                    restaurantInitState: () => const SizedBox.shrink(),
+                    restaurantLoadingState: () => _buildSectionShimmer(),
+                    restaurantErrorState: (error, callback) =>
+                        const SizedBox.shrink(),
+                    getRestaurantsState: (restaurantsEntity) {
+                      final List<TempWidget> categories0 = [];
+                      restaurantsEntity.items
+                          ?.forEach((element) => categories0.add(
+                                TempWidget(
+                                  id: element.id ?? 0,
+                                  imgPath: element.cover ?? '',
+                                  title: getTranslation(
+                                    context: context,
+                                    arText: element.arName,
+                                    enText: element.enName,
+                                    alternativeText: element.name,
+                                  ),
+                                  description: getTranslation(
+                                    context: context,
+                                    alternativeText: element.description,
+                                    enText: element.enDescription,
+                                    arText: element.arDescription,
+                                  ),
+                                ),
+                              ));
+                      return SizedBox(
+                        width: 1.sw,
+                        height: 0.38.sh,
+                        child: _buildSectionWidget(
+                          title: Translation.of(context).restaurants,
+                          widgets: categories0,
+                          onSeeAllTapped: () => _goToRestaurant(),
+                          onItemSelected: (index) =>
+                              Navigator.of(context).push(MaterialPageRoute(
                                   builder: (_) => PlayingSliverState(
                                         restaurantEntity:
                                             restaurantsEntity.items![index],
                                       ))),
-                          ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 Gaps.vGap40,
                 BlocBuilder<ShopCubit, ShopState>(
