@@ -104,6 +104,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
         return Container(
           color: Colors.black,
           margin: EdgeInsets.only(top: .15.sh),
+          height: .9.sh,
           child: ListView.separated(
               separatorBuilder: (context, index) => Divider(
                     color: AppColors.grey,
