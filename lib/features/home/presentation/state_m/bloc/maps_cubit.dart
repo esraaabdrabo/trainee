@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
+import 'package:upgrade_traine_project/core/ui/error_ui/toast.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../data/model/request/place_direction.dart';
@@ -14,11 +15,12 @@ class MapsCubit extends Cubit<MapsState> {
   final PlaceSuggestationRepo placeSuggestationRepo;
 
   MapsCubit(this.placeSuggestationRepo) : super(MapsInitial());
-  
+
   void emitPlaceSuggestion(String place) {
     placeSuggestationRepo
         .fetchPlaceSuggestationRepo(place, const Uuid().v4())
         .then((places) {
+      Toast.show(places.length.toString());
       emit(MapsPlacesLoaded(places));
     });
   }

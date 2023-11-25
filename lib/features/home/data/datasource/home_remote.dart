@@ -126,7 +126,7 @@ class PlacesWebServices {
       Response response = await dio.get(APIUrls.BASE_URL_MAP, queryParameters: {
         "input": place,
         "type": "address",
-        "components": "country:eg",
+      //  "components": "country:eg",
         "key": APIUrls.KEY_MAP,
         "sessiontoken": sessionToken
       });

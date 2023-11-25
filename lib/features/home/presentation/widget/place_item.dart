@@ -28,14 +28,14 @@ class PlaceItem extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: '${suggestion.description.split(',')[0]}\n',
+                    text: '${suggestion.description}\n',
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600),
                   ),
                   TextSpan(
-                    text: subTitle.substring(2),
+                    text: subTitle,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 15.sp,

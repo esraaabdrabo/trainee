@@ -69,7 +69,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     return BlocBuilder<MapsCubit, MapsState>(
       builder: (context, state) {
         if (state is MapsPlacesLoaded) {
-          places = (state).places;
+          places = state.places;
           if (places.isNotEmpty) {
             return buildPlacesList();
           } else {

@@ -28,7 +28,7 @@ class _HomeMapWidgetState extends State<HomeMapWidget> {
   void _getMyLocation(BuildContext context) async {
     Position? locationData = await getMyLocation();
     if (locationData != null) {
-      Provider.of<HomeScreenNotifier>(context).latLng =
+      Provider.of<HomeScreenNotifier>(context,listen: false).latLng =
           LatLng(locationData.latitude, locationData.longitude);
       var prefs = await SpUtil.getInstance();
       prefs.putDouble(AppConstants.KEY_LATITUDE, locationData.latitude);

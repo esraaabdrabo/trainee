@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/core/common/app_colors.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
+import 'package:upgrade_traine_project/core/ui/error_ui/error_viewer/errv_options.dart';
+import 'package:upgrade_traine_project/core/ui/error_ui/error_viewer/snack_bar/errv_snack_bar_options.dart';
 
 import '../../../../core/constants/app/app_constants.dart';
 import '../../../../core/datasources/shared_preference.dart';
@@ -75,9 +79,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (error is InternalServerWithDataError) {
                     if (error.errorCode == 4) {
                       _navigationToAccountVerification();
-                    } else {
-                      ErrorViewer.showError(
-                          context: context, error: error, callback: callback);
+                    } else if (error.errorCode == 3) {
+                      ErrorViewer.showCustomError(
+                        context,
+                        LanguageHelper.tr(context).invalid_credintials,
+                        errorViewerOptions: const ErrVSnackBarOptions(
+                            backgroundColor: AppColors.red),
+                      );
                     }
                   } else {
                     ErrorViewer.showError(

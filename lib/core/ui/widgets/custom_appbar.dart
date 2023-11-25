@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:upgrade_traine_project/core/ui/widgets/search_Form_filed/functions.dart';
 import 'package:upgrade_traine_project/features/notification/presentation/view/notification_screen.dart';
 import '../../../core/common/app_colors.dart';
 import '../../../core/common/style/gaps.dart';
@@ -40,24 +41,27 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                 listener: (context, state) {},
                 builder: (context, state) {
                   return SearchTextField(
-                    suffix: controller.text.isNotEmpty
-                        ? IconButton(
-                            onPressed: () {
-                              controller.clear();
-                              BlocProvider.of<MapsCubit>(context)
-                                  .emitPlaceSuggestion('');
-                            },
-                            icon: const Icon(
-                              Icons.close,
-                              color: Colors.white,
-                            ))
-                        : null,
-                    hintText: Translation.of(context).search,
-                    controller: controller,
-                    onChanged: (String query) =>
-                        BlocProvider.of<MapsCubit>(context)
-                            .emitPlaceSuggestion(query),
-                  );
+                      suffix: controller.text.isNotEmpty
+                          ? IconButton(
+                              onPressed: () {
+                                controller.clear();
+                                BlocProvider.of<MapsCubit>(context)
+                                    .emitPlaceSuggestion('');
+                              },
+                              icon: const Icon(
+                                Icons.close,
+                                color: Colors.white,
+                              ))
+                          : null,
+                      hintText: Translation.of(context).search,
+                      controller: controller,
+                      onChanged: (String query) =>
+                          //wait some milliseconds then make the request
+                          SearchFunctions.onChangeHandler(
+                            query,
+                            () => BlocProvider.of<MapsCubit>(context)
+                                .emitPlaceSuggestion(query),
+                          ));
                 },
               )
             ],

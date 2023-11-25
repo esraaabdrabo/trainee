@@ -128,7 +128,7 @@ class HttpClient {
         }
         return Right(model);
       } else if (responseValidator.hasError) {
-        return Left(CustomError(message: responseValidator.errorMessage!));
+        return Left(CustomError(message: responseValidator. errorMessage!));
       } else
         return Left(
           CustomError(
