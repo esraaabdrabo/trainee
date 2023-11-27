@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -6,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:upgrade_traine_project/core/datasources/shared_preference.dart';
+import 'package:upgrade_traine_project/core/notifications/calls/show.dart';
 import 'package:upgrade_traine_project/core/notifications/notification_service.dart';
-import 'package:upgrade_traine_project/core/notifications/onmessage_listener.dart';
 import 'package:upgrade_traine_project/firebase_options.dart';
+import 'package:upgrade_traine_project/state_observer.dart';
 import 'app.dart';
 import 'core/common/app_config.dart';
 import 'core/constants/app/app_constants.dart';
@@ -26,7 +29,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   await _initAppConfigs();
 
-  /// 1.1.1 define a navigator key
+  WidgetsBinding.instance.addObserver(MyAppStateObserver());
 
   runApp(App(navigatorKey: navigatorKey));
 }
@@ -39,9 +42,10 @@ _initAppConfigs() async {
   setupNotifications();
   FirebaseMessaging.onBackgroundMessage(handleBackGround);
 
-  FirebaseMessaging.onMessageOpenedApp.listen((event) {
-    handleOnMessageListener(event);
+  FlutterCallkitIncoming.onEvent.listen((event) async {
+    handleCallKitResponse(event);
   });
+
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: SystemUiOverlay.values);
 

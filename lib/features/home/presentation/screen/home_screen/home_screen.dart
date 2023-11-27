@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
 import '../../../../../core/params/no_params.dart';
 import '../../../../../core/ui/widgets/system/double_tap_back_exit_app.dart';
 import '../../../../coach/data/model/request/get_coaches_request.dart';
@@ -30,8 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-      BlocProvider.of<ProfileCubit>(context).getProfile();
-      BlocProvider.of<ProfileCubit>(context).getTrainers();
+    AgoraFunctions.handleNavigatingToAgora();
+    BlocProvider.of<ProfileCubit>(context).getProfile();
+    BlocProvider.of<ProfileCubit>(context).getTrainers();
     _apiRequest();
   }
 
@@ -72,9 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     element.id.toString(),
                                   ),
                                   onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return ShopDetails(shopsEntity:element);
-                          }));
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (_) {
+                                      return ShopDetails(shopsEntity: element);
+                                    }));
                                   },
                                   position: LatLng(
                                       element.latitude!, element.longitude!),
@@ -107,12 +110,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   markerId: MarkerId(
                                     element.id.toString(),
                                   ),
-
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                                        return PlayingSliverState(restaurantEntity:element);
-                                      }));
-                                    },
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (_) {
+                                      return PlayingSliverState(
+                                          restaurantEntity: element);
+                                    }));
+                                  },
                                   position: LatLng(
                                       element.latitude!, element.longitude!),
                                   icon: sn.customBlueMarker,
@@ -144,8 +148,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     element.id.toString(),
                                   ),
                                   onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                                      return CoachProfileScreen(coachModel:element);
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (_) {
+                                      return CoachProfileScreen(
+                                          coachModel: element);
                                     }));
                                   },
                                   position: LatLng(
@@ -172,5 +178,4 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Widget
 
   /// Logic
-
 }

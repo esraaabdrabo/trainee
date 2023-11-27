@@ -1,26 +1,24 @@
 import 'package:flutter_callkit_incoming/entities/entities.dart';
+import 'package:upgrade_traine_project/core/notifications/calls/payload_extractor.dart';
 
-CallKitParams callKitParams(
-        {required String senderId, required String name, required int type}) =>
-    CallKitParams(
-      id: senderId,
-      nameCaller: '$name is calling you.',
+CallKitParams callKitParams(String payload) => CallKitParams(
+      id: "${PayLoadDataExtractor.getSenderId(payload)}",
+      nameCaller:
+          '${PayLoadDataExtractor.getTrainerName(payload)} is calling you.',
       appName: 'Callkit',
       avatar: 'https://i.pravatar.cc/100',
       handle:
-          'It\'s a ${type == 2 ? "voice" : "video"} call for now. Pick up when you\'re ready!',
-      type: 0,
+          'It\'s a ${PayLoadDataExtractor.getMsgType(payload) == 2 ? "voice" : "video"} call for now. Pick up when you\'re ready!',
+      type: double.parse("${PayLoadDataExtractor.getMsgType(payload)}"),
       textAccept: 'Accept',
       textDecline: 'Decline',
-      textMissedCall: "missedddd callll",
+      //ca: "mised call",
       duration: 10000,
-      extra: <String, dynamic>{'userId': '1a2b3c4d'},
+      extra: <String, dynamic>{'payload': payload},
       headers: <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
       android: const AndroidParams(
         isCustomNotification: true,
         isShowLogo: true,
-        isShowMissedCallNotification: true,
-        isShowCallback: true,
         ringtonePath: 'system_ringtone_default',
         backgroundColor: '#0955fa',
         backgroundUrl: 'https://i.pravatar.cc/500',

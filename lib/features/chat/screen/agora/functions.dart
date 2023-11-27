@@ -1,6 +1,8 @@
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
+import 'package:upgrade_traine_project/core/datasources/shared_preference.dart';
 import 'package:upgrade_traine_project/core/dioHelper/dio_helper.dart';
+import 'package:upgrade_traine_project/core/notifications/calls/navigator.dart';
 
 abstract class AgoraFunctions {
   static bool isInitLoading(AsyncSnapshot<void> snapShot) =>
@@ -25,7 +27,8 @@ abstract class AgoraFunctions {
 
   static bool isLocalMuteVoice(AgoraClient client) =>
       client.sessionController.value.isLocalUserMuted;
-       /// from shared pref get the cached screen name (voice-video-null)
+
+  /// from shared pref get the cached screen name (voice-video-null)
   static Future<String?> getAgoraScreen() async =>
       (await SpUtil.instance).getString("navigate_to");
 
@@ -41,23 +44,15 @@ abstract class AgoraFunctions {
   static Future<void> handleNavigatingToAgora() async {
     String? agoraScreen = await getAgoraScreen();
     String? payload = await getAgoraPayload();
+
     if (isAppOpenedForAgora(agoraScreen)) {
       //clear the key we will not need it any more
       (await SpUtil.instance)
         ..remove("navigate_to")
         ..remove("payload");
-
-      NavigationHelper.goto(
-          screen: agoraScreen == "video"
-              ? VideoCallScreen(PayLoadDataExtractor.getSenderId(payload),
-                  PayLoadDataExtractor.getChannelName(payload),
-                  remoteName: PayLoadDataExtractor.getSenderName(payload!))
-              : VoiceCallScreen(PayLoadDataExtractor.getSenderId(payload),
-                  PayLoadDataExtractor.getChannelName(payload),
-                  remoteName: PayLoadDataExtractor.getSenderName(payload!)),
-          context: navigatorKey.currentContext!);
+      agoraScreen == "video"
+          ? CallsNavigator.goToVideoCallScreen(payload)
+          : CallsNavigator.goToVoiceCallScreen(payload);
     }
   }
-}
-
 }
