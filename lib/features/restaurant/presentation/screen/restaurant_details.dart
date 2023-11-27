@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:upgrade_traine_project/core/common/app_colors.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
+import 'package:upgrade_traine_project/core/ui/error_ui/error_viewer/snack_bar/errv_snack_bar_options.dart';
 import 'package:upgrade_traine_project/core/ui/error_ui/toast.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/screen/all_restaurants.dart';
 import 'package:upgrade_traine_project/features/restaurant/presentation/widget/dishes_section.dart';
@@ -210,8 +211,15 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
                                     NewRestaurantState>(
                                   listener: (context, state) {
                                     if (state is ErrorCreateReviewData) {
+                                      Nav.pop();
+
                                       showErrorSnackBar(
-                                          context: context, message: state.msg);
+                                          errVSnackBarOptions:
+                                              const ErrVSnackBarOptions(
+                                                  backgroundColor:
+                                                      AppColors.red),
+                                          context: context,
+                                          message: state.msg);
                                     }
                                     if (state is SuccessCreateReviewData) {
                                       Nav.pop();
@@ -221,6 +229,13 @@ class _PlayingSliverStateState extends State<PlayingSliverState> {
                                               RefId:
                                                   widget.restaurantEntity.id!,
                                               refType: 2);
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PlayingSliverState(
+                                                      restaurantEntity: widget
+                                                          .restaurantEntity)));
                                     }
                                   },
                                   builder: (context, state) {

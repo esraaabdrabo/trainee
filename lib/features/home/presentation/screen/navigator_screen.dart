@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/dynamic_links.dart';
 import '../../../../core/common/session_data.dart';
@@ -56,8 +57,8 @@ class _NavigatorScreenState extends RouteAwareState<NavigatorScreen> {
 
   Widget _buildBottomNavigationBar() {
     List<String> titles = [
-      Translation.of(context).homePage,
-      Translation.of(context).mail,
+      LanguageHelper.tr(context).homePage,
+      LanguageHelper.tr(context).chat,
       Translation.of(context).search,
       Translation.of(context).profile,
       Translation.of(context).more
