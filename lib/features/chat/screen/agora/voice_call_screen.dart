@@ -77,7 +77,6 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Toast.show("${widget.trainerId}");
     return WillPopScope(
       onWillPop: () async {
         _client!.release();

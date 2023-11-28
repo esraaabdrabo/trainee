@@ -280,7 +280,7 @@ class _ChatViewState extends State<ChatView> {
               color: AppColors.white,
             ),
           ),
-          SearchContainer()
+    const      SearchContainer()
         ],
       ),
     );

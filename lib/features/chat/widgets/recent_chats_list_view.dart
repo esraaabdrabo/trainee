@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:upgrade_traine_project/core/common/app_colors.dart';
 import 'package:upgrade_traine_project/core/constants/app/app_constants.dart';
-import 'package:upgrade_traine_project/core/localization/language_helper.dart';
-import 'package:upgrade_traine_project/core/ui/error_ui/error_viewer/loader.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_text.dart';
 import 'package:upgrade_traine_project/features/chat/data/model/chat_model.dart';
 import 'package:upgrade_traine_project/features/chat/data/model/message_model.dart';
