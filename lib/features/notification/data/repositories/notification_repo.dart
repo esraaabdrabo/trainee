@@ -9,7 +9,6 @@ class NotificationRepo {
     final response = await DioHelper.get(
       APIUrls.API_GET_NOTIFICATIONS,
     );
-    print(response.data);
     try {
       if (response.data['success'] == true) {
         List<NotificationModel> notifications = [];

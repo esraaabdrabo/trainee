@@ -58,6 +58,7 @@
   "@@starterTranslations": "Delete from here to below",
   "homePage": "Home",
   "translationTest": "Translation Test",
+  "search_for_chat":"Search for any chat",
   "justLog": "Just Log",
   "testSuccessRequest": "Test Success Request",
   "testFailureRequest": "Test Failure Request",

@@ -210,5 +210,7 @@
 "the_member_left_the_call":"{name} لقد غادر المكالمة ",
 "the_member_decline_the_call":"{name} رفض المكالمة",
 "invalid_credintials":"بيانات الدخول خاطئة",
+"search_for_chat":"ابحث عن محادثة",
+
 "off":"تخفيض"
 }

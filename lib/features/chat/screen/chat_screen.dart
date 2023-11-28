@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
+import 'package:upgrade_traine_project/features/chat/widgets/chat_search.dart';
 import 'package:upgrade_traine_project/features/profile/presentation/state_m/cubit/profile_cubit.dart';
 
 import '../../../../core/ui/widgets/custom_appbar.dart';
@@ -109,6 +110,7 @@ class _ChatViewState extends State<ChatView> {
         ));
   }
 
+/*
   verticalListView() {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: chatsCollection,
@@ -261,7 +263,7 @@ class _ChatViewState extends State<ChatView> {
       },
     );
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -278,7 +280,7 @@ class _ChatViewState extends State<ChatView> {
               color: AppColors.white,
             ),
           ),
-          verticalListView()
+          SearchContainer()
         ],
       ),
     );

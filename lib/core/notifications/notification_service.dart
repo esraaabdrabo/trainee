@@ -22,5 +22,5 @@ void setupNotifications() {
 Future<void> handleBackGround(message) async {
   handleOnMessageListener(message);
   FlutterCallkitIncoming.onEvent
-      .listen((event) => handleCallKitResponseForBackground(event));
+      .listen((event) async => await handleCallKitResponseForBackground(event));
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:upgrade_traine_project/core/datasources/shared_preference.dart';
-import 'package:upgrade_traine_project/core/ui/error_ui/toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
 
 class MyAppStateObserver extends WidgetsBindingObserver {
@@ -12,8 +11,9 @@ class MyAppStateObserver extends WidgetsBindingObserver {
 
     // Handle state changes (resumed, inactive, paused, etc.)
     if (state == AppLifecycleState.resumed) {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      await pref.reload();
       //if this condition is true then it's indticates that the app has come from background
-      Toast.show("${(await SpUtil.instance).getKeys()} ");
 
       // App is in the foreground from background
       await AgoraFunctions.handleNavigatingToAgora();

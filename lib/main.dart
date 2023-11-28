@@ -28,9 +28,9 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   await _initAppConfigs();
+  await SpUtil.getInstance();
 
   WidgetsBinding.instance.addObserver(MyAppStateObserver());
-
   runApp(App(navigatorKey: navigatorKey));
 }
 

@@ -1,9 +1,12 @@
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_callkit_incoming/entities/entities.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:upgrade_traine_project/core/datasources/shared_preference.dart';
 import 'package:upgrade_traine_project/core/notifications/calls/call_kit_param.dart';
 import 'package:upgrade_traine_project/core/notifications/calls/navigator.dart';
 import 'package:upgrade_traine_project/core/notifications/calls/payload_extractor.dart';
+import 'package:upgrade_traine_project/core/ui/error_ui/toast.dart';
+import 'package:upgrade_traine_project/di/service_locator.dart';
 import 'package:upgrade_traine_project/features/notification/data/repositories/notification_repo.dart';
 
 void showCallNotification(String payload) {
@@ -29,7 +32,7 @@ void handleCallKitResponse(CallEvent? event) async {
 //in background we can not navigate to the video/voice screen because we do not have context
 //so we will cache a key that indicates which event happened
 //we the app is opened we will check for this key and perform specific action according to it
-void handleCallKitResponseForBackground(CallEvent? event) async {
+Future<void> handleCallKitResponseForBackground(CallEvent? event) async {
   String payload = event!.body['extra']['payload'];
 
   if (_isCancel(event)) {
@@ -47,11 +50,15 @@ void handleCallKitResponseForBackground(CallEvent? event) async {
   }
 }
 
-Future<void> cacheScreenName(String payload) async =>
-    (await SharedPreferences.getInstance())
-        .setString("navigate_to", _isVideo(payload) ? "video" : "voice");
-Future<void> cachePayload(String payload) async =>
-    (await SharedPreferences.getInstance()).setString("payload", payload);
+Future<void> cacheScreenName(String payload) async {
+  final pref = await SpUtil.getInstance();
+  await pref.putString("navigate_to", _isVideo(payload) ? "video" : "voice");
+}
+
+Future<void> cachePayload(String payload) async {
+  final pref = await SpUtil.getInstance();
+  await pref.putString("payload", payload);
+}
 
 CallKitParams _getParam(String payload) => callKitParams(payload);
 
