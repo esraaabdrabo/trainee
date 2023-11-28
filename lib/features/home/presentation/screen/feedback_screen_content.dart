@@ -1,87 +1,98 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import '../../../../core/common/app_colors.dart';
-import '../../../../core/common/style/gaps.dart';
-import '../../../../core/constants/app/app_constants.dart';
-import '../../../../core/ui/widgets/custom_button.dart';
-import '../../../../core/ui/widgets/custom_text.dart';
-import '../../../../core/ui/widgets/custom_text_field.dart';
-import '../../../../generated/l10n.dart';
-import '../screen/../state_m/provider/feedback_screen_notifier.dart';
+import 'package:upgrade_traine_project/features/home/presentation/state_m/bloc/more_cubit.dart';
+import 'package:upgrade_traine_project/features/home/presentation/state_m/bloc/more_state.dart';
+import '../../../../../core/common/app_colors.dart';
+import '../../../../../core/common/style/gaps.dart';
+import '../../../../../core/constants/app/app_constants.dart';
+import '../../../../../core/ui/widgets/custom_button.dart';
+import '../../../../../core/ui/widgets/custom_text.dart';
+import '../../../../../core/ui/widgets/custom_text_field.dart';
+import '../../../../../generated/l10n.dart';
 
-class FeedbackScreenContent extends StatefulWidget {
-  @override
-  State<FeedbackScreenContent> createState() => _FeedbackScreenContentState();
-}
-
-class _FeedbackScreenContentState extends State<FeedbackScreenContent> {
-  late FeedbackScreenNotifier sn;
+class FeedbackScreenContent extends StatelessWidget {
+  const FeedbackScreenContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    sn = Provider.of<FeedbackScreenNotifier>(context);
-    sn.context = context;
-    return Padding(
-      padding: EdgeInsets.only(top: 12.w, left: 12.w, right: 12.w),
-      child: SingleChildScrollView(
-        child: SizedBox(
-          width: 1.sw,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 0.6.sh,
-                child: Column(
-                  children: [
-                    Gaps.vGap16,
-                    Image.asset(
-                      AppConstants.APP_LOGO_IMG,
-                      width: 117.w,
-                      fit: BoxFit.contain,
-                    ),
-                    SizedBox(
-                      height: 50.h,
-                    ),
-                    _buildTextFieldFullBorderWithTitle(
-                      title: Translation.of(context).subject,
-                      focusNode: sn.subjectFocusNode,
-                      controller: sn.subjectController,
-                      textInputAction: TextInputAction.next,
-                      onSubmitted: () {
-                        FocusScope.of(context).requestFocus();
-                      },
-                    ),
-                    Gaps.vGap24,
-                    _buildTextFieldFullBorderWithTitle(
-                        title: Translation.of(context).details,
-                        focusNode: sn.detailsFocusNode,
-                        controller: sn.detailsController,
-                        textInputAction: TextInputAction.done,
-                        onSubmitted: () {},
-                        maxLines: 5),
-                  ],
+    return BlocProvider(
+      create: (context) => MoreCubit(),
+      child: BlocBuilder<MoreCubit, MoreState>(
+        builder: (context, state) {
+          return Form(
+            key: BlocProvider.of<MoreCubit>(context).formKey,
+            child: Padding(
+              padding: EdgeInsets.only(top: 12.w, left: 12.w, right: 12.w),
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  width: 1.sw,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 0.6.sh,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Gaps.vGap16,
+                              Image.asset(
+                                AppConstants.APP_LOGO_IMG,
+                                width: 117.w,
+                                fit: BoxFit.contain,
+                              ),
+                              SizedBox(
+                                height: 50.h,
+                              ),
+                              _buildTextFieldFullBorderWithTitle(
+                                title: Translation.of(context).subject,
+                                focusNode:
+                                    MoreCubit.of(context).subjectFocusNode,
+                                controller:
+                                    MoreCubit.of(context).subjectController,
+                                textInputAction: TextInputAction.next,
+                                onSubmitted: () {
+                                  FocusScope.of(context).requestFocus(
+                                      MoreCubit.of(context).descFocusNode);
+                                },
+                              ),
+                              Gaps.vGap24,
+                              _buildTextFieldFullBorderWithTitle(
+                                  title: Translation.of(context).details,
+                                  focusNode:
+                                      MoreCubit.of(context).descFocusNode,
+                                  controller:
+                                      MoreCubit.of(context).descController,
+                                  textInputAction: TextInputAction.next,
+                                  onSubmitted: () {},
+                                  maxLines: 5),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 0.2.sh,
+                        child: Column(
+                          children: [
+                            const Spacer(),
+                            SizedBox(
+                              width: 0.7.sw,
+                              height: 44.h,
+                              child: CustomElevatedButton(
+                                  text: Translation.of(context).send,
+                                  onTap: () {
+                                    MoreCubit.of(context).addFeedback(context);
+                                  }),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(
-                height: 0.2.sh,
-                child: Column(
-                  children: [
-                    const Spacer(),
-                    SizedBox(
-                      width: 0.7.sw,
-                      height: 44.h,
-                      child: CustomElevatedButton(
-                          text: Translation.of(context).send,
-                          onTap: () {
-//todo
-                          }),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -104,7 +115,7 @@ class _FeedbackScreenContentState extends State<FeedbackScreenContent> {
         NormalTextField(
           controller: controller,
           focusNode: focusNode,
-          inputBorder: OutlineInputBorder(
+          inputBorder: const OutlineInputBorder(
             borderSide: BorderSide(
               color: AppColors.white,
             ),

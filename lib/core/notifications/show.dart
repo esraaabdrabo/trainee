@@ -21,7 +21,7 @@ Future<void> _showNormalNotification(
       const AndroidNotificationDetails(
     "com.yacotch.partner",
     "yacotch",
-    styleInformation: const BigTextStyleInformation(''),
+    styleInformation: BigTextStyleInformation(''),
     channelDescription: "notificationBase",
     enableVibration: true,
     playSound: true,
@@ -33,13 +33,8 @@ Future<void> _showNormalNotification(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics,
       );
-  print(payload);
-  String title = hasActions
-      ? PayLoadDataExtractor.getTrainerName(payload)
-      : "${event.notification!.title}";
-  String body = hasActions
-      ? await PayLoadDataExtractor.getMsg(payload)
-      : "${event.notification!.body}";
+  String title = "${event.notification!.title}";
+  String body = "${event.notification!.body}";
 
   await FlutterLocalNotificationsPlugin().show(
     200,
