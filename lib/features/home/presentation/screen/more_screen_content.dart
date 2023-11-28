@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
+import 'package:upgrade_traine_project/features/home/presentation/state_m/bloc/more_cubit.dart';
+import 'package:upgrade_traine_project/features/home/presentation/state_m/bloc/more_state.dart';
 import 'package:upgrade_traine_project/features/orders/presenation/screens/cart_view.dart';
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/style/gaps.dart';
@@ -309,27 +312,32 @@ class _MoreScreenContentState extends State<MoreScreenContent> {
               ),
             ),
           ),
-          SizedBox(
-            height: 19.h,
-            child: Row(
-              children: [
-                CustomText(
-                  text: Translation.of(context).enable_notifications,
-                  fontSize: AppConstants.textSize16,
-                ),
-                const Spacer(),
-                Transform.scale(
-                  scale: 1.5,
-                  child: CustomCheckbox(
-                    value: true,
-                    onChanged: (value) {},
-                    checkColor: AppColors.white,
-                    activeColor: AppColors.accentColorLight,
+          BlocProvider(
+              create: (context) => MoreCubit(),
+              child: BlocBuilder<MoreCubit, MoreState>(
+                builder: (context, state) => SizedBox(
+                  height: 19.h,
+                  child: Row(
+                    children: [
+                      CustomText(
+                        text: Translation.of(context).enable_notifications,
+                        fontSize: AppConstants.textSize16,
+                      ),
+                      const Spacer(),
+                      Transform.scale(
+                        scale: 1.5,
+                        child: CustomCheckbox(
+                          value: MoreCubit.of(context).isEnableNotification,
+                          onChanged: (value) =>
+                              MoreCubit.of(context).enableNotifications(),
+                          checkColor: AppColors.white,
+                          activeColor: AppColors.accentColorLight,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
+              )),
           GestureDetector(
             onTap: () {
               Nav.to(FeedbackScreen.routeName, context: context);

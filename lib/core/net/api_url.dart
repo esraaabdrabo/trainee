@@ -18,6 +18,7 @@ class APIUrls {
 
   ///TODO: passed success
   static const API_LOGIN = "/TokenAuth/Authenticate";
+  static const API_CREATE_REPORT = "/services/app/Report/Create";
 
   ///TODO: passed success
   static const API_FORGOT_PASSWORD = "/services/app/Account/ForgotPassword";

@@ -268,8 +268,7 @@ class _CoursesCarouselWidgetState extends State<CoursesCarouselWidget> {
                                 text: Translation.of(context).book_now,
                                 textSize: AppConstants.textSize12,
                                 onTap: () {
-                                  CourseCubit.get(context)
-                                      .bookCourse(courseId: courseModel.id!);
+                                  CourseCubit.get(context).bookCourse(courseId: courseModel.id!);
                                 },
                                 borderRadius: AppConstants.borderRadius4,
                               );
