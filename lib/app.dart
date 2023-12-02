@@ -33,7 +33,6 @@ class App extends StatefulWidget {
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
-
 class _AppState extends State<App> with WidgetsBindingObserver {
   // late final Uuid _uuid;
   // String? _currentUuid;

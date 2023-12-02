@@ -396,7 +396,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   }
 
   Widget _buildMapWidget() {
-    Widget _buildMapPinSearchWidget(
+    Widget buildMapPinSearchWidget(
         {required Color color,
         required String iconPath,
         required String text,
@@ -467,30 +467,33 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        _buildMapPinSearchWidget(
-                            onPressed: sn.getShopsLocations,
-                            color: AppColors.green,
-                            iconPath: AppConstants.STORE_ICON,
-                            text: Translation.of(context).stores,
-                            selected: sn.shopsSelected),
-                        _buildMapPinSearchWidget(
-                            onPressed: sn.getRestaurantsLocations,
-                            color: AppColors.blue,
-                            iconPath: AppConstants.RESTAURANT_ICON,
-                            text: Translation.of(context).healthy_restaurants,
-                            selected: sn.restaurantsSelected),
-                        // _buildMapPinSearchWidget(
+                        buildMapPinSearchWidget(
+                          onPressed: sn.getShopsLocations,
+                          color: AppColors.green,
+                          iconPath: AppConstants.STORE_ICON,
+                          text: Translation.of(context).stores,
+                          selected: sn.shopsSelected,
+                        ),
+                        buildMapPinSearchWidget(
+                          onPressed: sn.getRestaurantsLocations,
+                          color: AppColors.blue,
+                          iconPath: AppConstants.RESTAURANT_ICON,
+                          text: Translation.of(context).healthy_restaurants,
+                          selected: sn.restaurantsSelected,
+                        ),
+                        // buildMapPinSearchWidget(
                         //     onPressed: sn.getGymsLocations,
                         //     color: AppColors.red,
                         //     iconPath: AppConstants.BOXER_ICON,
                         //     text: Translation.of(context).gyms,
                         //     selected: sn.gymsSelected),
-                        _buildMapPinSearchWidget(
-                            onPressed: sn.getCoachesLocations,
-                            color: AppColors.accentColorLight,
-                            iconPath: AppConstants.WHISTLE_ICON,
-                            text: Translation.of(context).sport_coaches,
-                            selected: sn.coachesSelected),
+                        buildMapPinSearchWidget(
+                          onPressed: sn.getCoachesLocations,
+                          color: AppColors.accentColorLight,
+                          iconPath: AppConstants.WHISTLE_ICON,
+                          text: Translation.of(context).sport_coaches,
+                          selected: sn.coachesSelected,
+                        ),
                       ],
                     ),
                   ),
@@ -762,6 +765,10 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
 
       Provider.of<SessionDataProvider>(context, listen: false).myLocation =
           LatLng(locationData.latitude!, locationData.longitude!);
+
+      BlocProvider.of<MapsCubit>(context)
+          .controller
+          .moveCamera(CameraUpdate.newLatLng(sn.latLng!));
     }
   }
 
