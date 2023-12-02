@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:upgrade_traine_project/features/chat/screen/agora/functions.dart';
+import 'package:upgrade_traine_project/core/ui/widgets/blur_widget.dart';
+import 'package:upgrade_traine_project/core/ui/widgets/custom_text.dart';
+import 'package:upgrade_traine_project/core/ui/widgets/google_map_widget.dart';
 import 'package:upgrade_traine_project/features/coach/domain/entity/coach_entity.dart';
 import 'package:upgrade_traine_project/features/home/presentation/widget/map.dart';
 import 'package:uuid/uuid.dart';
@@ -16,10 +17,7 @@ import '../../../../../core/common/utils.dart';
 import '../../../../../core/constants/app/app_constants.dart';
 import '../../../../../core/datasources/shared_preference.dart';
 import '../../../../../core/navigation/nav.dart';
-import '../../../../../core/ui/widgets/blur_widget.dart';
 import '../../../../../core/ui/widgets/custom_appbar.dart';
-import '../../../../../core/ui/widgets/custom_text.dart';
-import '../../../../../core/ui/widgets/google_map_widget.dart';
 import '../../../../../core/ui/widgets/image_with_title_widget.dart';
 import '../../../../../core/ui/widgets/title_widget.dart';
 import '../../../../../generated/l10n.dart';
@@ -51,11 +49,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   late HomeScreenNotifier sn;
   List<PlaceSuggestation> places = [];
   late PlaceSuggestation placeSuggestion;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -402,16 +395,120 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     );
   }
 
+  Widget _buildMapWidget() {
+    Widget _buildMapPinSearchWidget(
+        {required Color color,
+        required String iconPath,
+        required String text,
+        required Function onPressed,
+        required bool selected}) {
+      return InkWell(
+        onTap: () {
+          onPressed();
+        },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: color,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ImageIcon(
+                  AssetImage(
+                    iconPath,
+                  ),
+                  color: AppColors.white,
+                  size: 20.w,
+                ),
+              ),
+            ),
+            Gaps.vGap4,
+            CustomText(
+              text: text,
+              fontSize: AppConstants.textSize12,
+              fontWeight: FontWeight.bold,
+              color: selected ? AppColors.accentColorLight : AppColors.white,
+            )
+          ],
+        ),
+      );
+    }
+
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(AppConstants.borderRadius32),
+              bottomLeft: Radius.circular(AppConstants.borderRadius32)),
+          child: SizedBox(
+            height: 0.53.sh,
+            child: MapWidget(
+              myLocation: sn.latLng,
+              markers: sn.markers.map((e) => e.marker).toSet(),
+              onMapCreated: _getMyLocation,
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          child: SizedBox(
+            width: 1.sw,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                BlurWidget(
+                  height: 0.14.sh,
+                  width: 0.86.sw,
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        _buildMapPinSearchWidget(
+                            onPressed: sn.getShopsLocations,
+                            color: AppColors.green,
+                            iconPath: AppConstants.STORE_ICON,
+                            text: Translation.of(context).stores,
+                            selected: sn.shopsSelected),
+                        _buildMapPinSearchWidget(
+                            onPressed: sn.getRestaurantsLocations,
+                            color: AppColors.blue,
+                            iconPath: AppConstants.RESTAURANT_ICON,
+                            text: Translation.of(context).healthy_restaurants,
+                            selected: sn.restaurantsSelected),
+                        // _buildMapPinSearchWidget(
+                        //     onPressed: sn.getGymsLocations,
+                        //     color: AppColors.red,
+                        //     iconPath: AppConstants.BOXER_ICON,
+                        //     text: Translation.of(context).gyms,
+                        //     selected: sn.gymsSelected),
+                        _buildMapPinSearchWidget(
+                            onPressed: sn.getCoachesLocations,
+                            color: AppColors.accentColorLight,
+                            iconPath: AppConstants.WHISTLE_ICON,
+                            text: Translation.of(context).sport_coaches,
+                            selected: sn.coachesSelected),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildHomeScreenBody(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
           HomeAppbar(controller: sn.searchTextController),
-          SizedBox(
-            width: 1.sw,
-            height: 0.58.sh,
-            child: const HomeMapWidget(),
-          ),
+          _buildMapWidget(),
           Gaps.vGap40,
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -650,6 +747,23 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   }
 
   LatLng? latLang;
+
+  void _getMyLocation() async {
+    var locationData = await getMyLocation();
+    if (locationData != null) {
+      setState(() {
+        sn.latLng = LatLng(locationData.latitude!, locationData.longitude!);
+      });
+      var prefs = await SpUtil.getInstance();
+      if (locationData.latitude != null && locationData.longitude != null) {
+        prefs.putDouble(AppConstants.KEY_LATITUDE, locationData.latitude!);
+      }
+      prefs.putDouble(AppConstants.KEY_LONGITUDE, locationData.longitude!);
+
+      Provider.of<SessionDataProvider>(context, listen: false).myLocation =
+          LatLng(locationData.latitude!, locationData.longitude!);
+    }
+  }
 
   void _getNewLocation({required locationData}) async {
     if (locationData != null) {
