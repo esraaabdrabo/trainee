@@ -738,6 +738,10 @@ class _BuildMapWidgetState extends State<BuildMapWidget> {
       if (locationData != null) {
         setState(() {
           sn.latLng = LatLng(locationData.latitude!, locationData.longitude!);
+          sn.markers.add(CustomMarker(
+              type: MarkerType.myLocation,
+              marker: Marker(
+                  markerId: MarkerId("my_location"), position: sn.latLng!)));
         });
         var prefs = await SpUtil.getInstance();
         if (locationData.latitude != null && locationData.longitude != null) {
@@ -763,8 +767,6 @@ class _BuildMapWidgetState extends State<BuildMapWidget> {
           child: SizedBox(
             height: 0.53.sh,
             child: MapWidget(
-              myLocation: sn.latLng,
-          
               onMapCreated: _getMyLocation,
             ),
           ),
