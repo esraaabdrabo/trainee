@@ -46,132 +46,125 @@ class _RecentChatsListViewState extends State<RecentChatsListView> {
             }
           }
 
-          return Expanded(
-              child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ChatDetailsView(chatModel: chats[index]),
-                            ));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          height: 90.h,
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 80.w,
-                                height: 95.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.h),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                      chats[index].trainerImage ?? "",
-                                    ),
-                                  ),
+          return ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ChatDetailsView(chatModel: chats[index]),
+                        ));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      height: 90.h,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 80.w,
+                            height: 95.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.h),
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                  chats[index].trainerImage ?? "",
                                 ),
                               ),
-                              SizedBox(
-                                width: 15.w,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 15.w,
+                          ),
+                          Expanded(
+                              child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              CustomText(
+                                text: chats[index].trainerName ?? "",
+                                fontSize: AppConstants.textSize18,
+                                fontWeight: FontWeight.w600,
                               ),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  CustomText(
-                                    text: chats[index].trainerName ?? "",
-                                    fontSize: AppConstants.textSize18,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  StreamBuilder(
-                                    stream: FirebaseFirestore.instance
-                                        .collection('chats')
-                                        .doc(BlocProvider.of<ProfileCubit>(
-                                                    context)
-                                                .profileModel!
-                                                .result!
-                                                .id
-                                                .toString() +
-                                            chats[index].trainerId.toString())
-                                        .collection("messages")
-                                        .orderBy("messageTime",
-                                            descending: true)
-                                        .snapshots(),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.active) {
-                                        MessageModel message =
-                                            MessageModel.fromJson(snapshot
-                                                .data!.docs.last
-                                                .data());
-                                        return Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            if (message.type == "message")
-                                              Expanded(
-                                                child: CustomText(
-                                                  textAlign: TextAlign.start,
-                                                  text: message.message ?? "",
-                                                  textOverflow:
-                                                      TextOverflow.ellipsis,
-                                                  fontSize:
-                                                      AppConstants.textSize14,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            if (message.type == "file")
-                                              Expanded(
-                                                child: CustomText(
-                                                  textAlign: TextAlign.start,
-                                                  text: "image",
-                                                  textOverflow:
-                                                      TextOverflow.ellipsis,
-                                                  fontSize:
-                                                      AppConstants.textSize14,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            CustomText(
-                                              text: message.messageTime!
-                                                  .substring(0, 10),
+                              StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('chats')
+                                    .doc(BlocProvider.of<ProfileCubit>(context)
+                                            .profileModel!
+                                            .result!
+                                            .id
+                                            .toString() +
+                                        chats[index].trainerId.toString())
+                                    .collection("messages")
+                                    .orderBy("messageTime", descending: true)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.active) {
+                                    MessageModel message =
+                                        MessageModel.fromJson(
+                                            snapshot.data!.docs.last.data());
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        if (message.type == "message")
+                                          Expanded(
+                                            child: CustomText(
+                                              textAlign: TextAlign.start,
+                                              text: message.message ?? "",
+                                              textOverflow:
+                                                  TextOverflow.ellipsis,
                                               fontSize: AppConstants.textSize14,
                                               fontWeight: FontWeight.w500,
-                                              color: AppColors.grey,
                                             ),
-                                          ],
-                                        );
-                                      } else if (snapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                        return const SizedBox();
-                                      }
-                                      return const SizedBox();
-                                    },
-                                  )
-                                ],
-                              ))
+                                          ),
+                                        if (message.type == "file")
+                                          Expanded(
+                                            child: CustomText(
+                                              textAlign: TextAlign.start,
+                                              text: "image",
+                                              textOverflow:
+                                                  TextOverflow.ellipsis,
+                                              fontSize: AppConstants.textSize14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        CustomText(
+                                          text: message.messageTime!
+                                              .substring(0, 10),
+                                          fontSize: AppConstants.textSize14,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.grey,
+                                        ),
+                                      ],
+                                    );
+                                  } else if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const SizedBox();
+                                  }
+                                  return const SizedBox();
+                                },
+                              )
                             ],
-                          ),
-                        ),
+                          ))
+                        ],
                       ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return Container(
-                      height: 1,
-                      color: AppColors.white,
-                    );
-                  },
-                  itemCount: chats.length));
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return Container(
+                  height: 1,
+                  color: AppColors.white,
+                );
+              },
+              itemCount: chats.length);
         }
       },
     );

@@ -19,12 +19,12 @@ class PlaceItem extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            leading: _Leading(),
+            leading: const _Leading(),
             title: RichText(
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: '${suggestion.description}',
+                    text: suggestion.description,
                     style: TextStyle(
                         color: AppColors.lightGrey,
                         fontSize: 15.sp,
