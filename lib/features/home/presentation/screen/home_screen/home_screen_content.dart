@@ -824,6 +824,18 @@ class _BuildMapWidgetState extends State<BuildMapWidget> {
             ),
           ),
         ),
+        Positioned(
+            bottom: 0,
+            child: IconButton(
+                onPressed: () {
+                  BlocProvider.of<MapsCubit>(context).controller.animateCamera(
+                      CameraUpdate.newLatLng(
+                          LatLng(sn.latLng!.latitude, sn.latLng!.longitude)));
+                },
+                icon: const Icon(
+                  Icons.my_location,
+                  color: Colors.white,
+                )))
       ],
     );
   }
