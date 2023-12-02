@@ -59,6 +59,7 @@
   "homePage": "Home",
   "translationTest": "Translation Test",
   "search_for_chat":"Search for any chat",
+  "notifications":"Notifications",
   "justLog": "Just Log",
   "testSuccessRequest": "Test Success Request",
   "testFailureRequest": "Test Failure Request",

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import '../../../../../core/ui/widgets/custom_appbar.dart';
 import '../../../../core/ui/widgets/waiting_widget.dart';
 import '../../data/models/notification_model.dart';
@@ -11,8 +12,8 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: const TransparentAppBar(
-        title: "الاشعارات",
+     appBar:  TransparentAppBar(
+        title: LanguageHelper.tr(context).notifications
     ),
       body: BlocProvider(create: (context) => NotificationCubit()..getNotifications(context),
         child: BlocBuilder<NotificationCubit,NotificationState>(builder: (context, state) {
