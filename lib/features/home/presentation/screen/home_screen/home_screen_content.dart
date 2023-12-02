@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:upgrade_traine_project/core/ui/error_ui/toast.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/blur_widget.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_text.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/google_map_widget.dart';
@@ -395,123 +396,12 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     );
   }
 
-  Widget _buildMapWidget() {
-    Widget buildMapPinSearchWidget(
-        {required Color color,
-        required String iconPath,
-        required String text,
-        required Function onPressed,
-        required bool selected}) {
-      return InkWell(
-        onTap: () {
-          onPressed();
-        },
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: color,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: ImageIcon(
-                  AssetImage(
-                    iconPath,
-                  ),
-                  color: AppColors.white,
-                  size: 20.w,
-                ),
-              ),
-            ),
-            Gaps.vGap4,
-            CustomText(
-              text: text,
-              fontSize: AppConstants.textSize12,
-              fontWeight: FontWeight.bold,
-              color: selected ? AppColors.accentColorLight : AppColors.white,
-            )
-          ],
-        ),
-      );
-    }
-
-    return Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(AppConstants.borderRadius32),
-              bottomLeft: Radius.circular(AppConstants.borderRadius32)),
-          child: SizedBox(
-            height: 0.53.sh,
-            child: MapWidget(
-              myLocation: sn.latLng,
-              markers: sn.markers.map((e) => e.marker).toSet(),
-              onMapCreated: _getMyLocation,
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 0,
-          child: SizedBox(
-            width: 1.sw,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                BlurWidget(
-                  height: 0.14.sh,
-                  width: 0.86.sw,
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        buildMapPinSearchWidget(
-                          onPressed: sn.getShopsLocations,
-                          color: AppColors.green,
-                          iconPath: AppConstants.STORE_ICON,
-                          text: Translation.of(context).stores,
-                          selected: sn.shopsSelected,
-                        ),
-                        buildMapPinSearchWidget(
-                          onPressed: sn.getRestaurantsLocations,
-                          color: AppColors.blue,
-                          iconPath: AppConstants.RESTAURANT_ICON,
-                          text: Translation.of(context).healthy_restaurants,
-                          selected: sn.restaurantsSelected,
-                        ),
-                        // buildMapPinSearchWidget(
-                        //     onPressed: sn.getGymsLocations,
-                        //     color: AppColors.red,
-                        //     iconPath: AppConstants.BOXER_ICON,
-                        //     text: Translation.of(context).gyms,
-                        //     selected: sn.gymsSelected),
-                        buildMapPinSearchWidget(
-                          onPressed: sn.getCoachesLocations,
-                          color: AppColors.accentColorLight,
-                          iconPath: AppConstants.WHISTLE_ICON,
-                          text: Translation.of(context).sport_coaches,
-                          selected: sn.coachesSelected,
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildHomeScreenBody(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
           HomeAppbar(controller: sn.searchTextController),
-          _buildMapWidget(),
+          BuildMapWidget(),
           Gaps.vGap40,
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -787,6 +677,153 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
       Provider.of<SessionDataProvider>(context, listen: false).myLocation =
           LatLng(locationData.lat, locationData.lng);
     }
+  }
+}
+
+class BuildMapWidget extends StatefulWidget {
+  const BuildMapWidget({super.key});
+
+  @override
+  State<BuildMapWidget> createState() => _BuildMapWidgetState();
+}
+
+class _BuildMapWidgetState extends State<BuildMapWidget> {
+  @override
+  Widget build(BuildContext context) {
+    Widget buildMapPinSearchWidget(
+        {required Color color,
+        required String iconPath,
+        required String text,
+        required Function onPressed,
+        required bool selected}) {
+      return InkWell(
+        onTap: () {
+          onPressed();
+        },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: color,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ImageIcon(
+                  AssetImage(
+                    iconPath,
+                  ),
+                  color: AppColors.white,
+                  size: 20.w,
+                ),
+              ),
+            ),
+            Gaps.vGap4,
+            CustomText(
+              text: text,
+              fontSize: AppConstants.textSize12,
+              fontWeight: FontWeight.bold,
+              color: selected ? AppColors.accentColorLight : AppColors.white,
+            )
+          ],
+        ),
+      );
+    }
+
+    var sn = Provider.of<HomeScreenNotifier>(context);
+    sn.context = context;
+    void _getMyLocation() async {
+      var locationData = await getMyLocation();
+      if (locationData != null) {
+        setState(() {
+          sn.latLng = LatLng(locationData.latitude!, locationData.longitude!);
+        });
+        var prefs = await SpUtil.getInstance();
+        if (locationData.latitude != null && locationData.longitude != null) {
+          prefs.putDouble(AppConstants.KEY_LATITUDE, locationData.latitude!);
+        }
+        prefs.putDouble(AppConstants.KEY_LONGITUDE, locationData.longitude!);
+
+        Provider.of<SessionDataProvider>(context, listen: false).myLocation =
+            LatLng(locationData.latitude!, locationData.longitude!);
+
+        BlocProvider.of<MapsCubit>(context)
+            .controller
+            .moveCamera(CameraUpdate.newLatLng(sn.latLng!));
+      }
+    }
+
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(AppConstants.borderRadius32),
+              bottomLeft: Radius.circular(AppConstants.borderRadius32)),
+          child: SizedBox(
+            height: 0.53.sh,
+            child: MapWidget(
+              myLocation: sn.latLng,
+          
+              onMapCreated: _getMyLocation,
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          child: SizedBox(
+            width: 1.sw,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                BlurWidget(
+                  height: 0.14.sh,
+                  width: 0.86.sw,
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        buildMapPinSearchWidget(
+                          onPressed: () async {
+                            await sn.getShopsLocations();
+                            BlocProvider.of<MapsCubit>(context).update();
+                          },
+                          color: AppColors.green,
+                          iconPath: AppConstants.STORE_ICON,
+                          text: Translation.of(context).stores,
+                          selected: sn.shopsSelected,
+                        ),
+                        buildMapPinSearchWidget(
+                          onPressed: sn.getRestaurantsLocations,
+                          color: AppColors.blue,
+                          iconPath: AppConstants.RESTAURANT_ICON,
+                          text: Translation.of(context).healthy_restaurants,
+                          selected: sn.restaurantsSelected,
+                        ),
+                        // buildMapPinSearchWidget(
+                        //     onPressed: sn.getGymsLocations,
+                        //     color: AppColors.red,
+                        //     iconPath: AppConstants.BOXER_ICON,
+                        //     text: Translation.of(context).gyms,
+                        //     selected: sn.gymsSelected),
+                        buildMapPinSearchWidget(
+                          onPressed: sn.getCoachesLocations,
+                          color: AppColors.accentColorLight,
+                          iconPath: AppConstants.WHISTLE_ICON,
+                          text: Translation.of(context).sport_coaches,
+                          selected: sn.coachesSelected,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 

@@ -14,7 +14,7 @@ part 'shop_state.dart';
 class ShopCubit extends Cubit<ShopState> {
   ShopCubit() : super(const ShopState.shopInitState());
 
-  void getShops(GetShopsRequest params) async {
+  Future<void> getShops(GetShopsRequest params) async {
     emit(const ShopState.shopLoadingState());
     final result = await getIt<GetShopsUseCase>()(params);
     result.pick(

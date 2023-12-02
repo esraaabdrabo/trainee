@@ -84,12 +84,11 @@ class HomeScreenNotifier extends ScreenNotifier {
     notifyListeners();
   }
 
-  void getShopsLocations() {
-    // restaurantsSelected = false;
+  Future<void> getShopsLocations() async {
     shopsSelected = !shopsSelected;
     markers.removeWhere((element) => element.type == MarkerType.shop);
     if (shopsSelected) {
-      shopLocationCubit.getShops(GetShopsRequest(
+      await shopLocationCubit.getShops(GetShopsRequest(
         latitude: latLng?.latitude,
         longitude: latLng?.longitude,
       ));

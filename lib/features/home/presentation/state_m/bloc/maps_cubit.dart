@@ -44,4 +44,7 @@ class MapsCubit extends Cubit<MapsState> {
   }
 
   late GoogleMapController controller;
+  void update() {
+    emit(MapsUpdateState());
+  }
 }

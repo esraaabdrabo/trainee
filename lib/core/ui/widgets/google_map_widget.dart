@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/ui/toast.dart';
+import 'package:upgrade_traine_project/features/home/presentation/state_m/provider/home_screen_notifier.dart';
 import '../../../core/constants/app/app_constants.dart';
 import '../../../core/ui/widgets/waiting_widget.dart';
 import '../../../features/home/presentation/state_m/bloc/maps_cubit.dart';
@@ -82,6 +84,8 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var sn = Provider.of<HomeScreenNotifier>(context);
+    sn.context = context;
     return !isInitialized
         ? BlocBuilder<MapsCubit, MapsState>(
             builder: (context, state) {
@@ -107,7 +111,7 @@ class _MapWidgetState extends State<MapWidget> {
                   ..add(Factory<EagerGestureRecognizer>(
                       () => EagerGestureRecognizer())),
                 zoomControlsEnabled: false,
-                markers: markers,
+                markers: sn.markers.map((e) => e.marker).toSet(),
               );
             },
           )
