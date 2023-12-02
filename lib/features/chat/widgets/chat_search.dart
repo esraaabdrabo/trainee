@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:upgrade_traine_project/core/common/app_colors.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
-import 'package:upgrade_traine_project/core/ui/error_ui/toast.dart';
 import 'package:upgrade_traine_project/features/chat/data/model/chat_model.dart';
 import 'package:upgrade_traine_project/features/chat/widgets/recent_chats_list_view.dart';
 
