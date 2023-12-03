@@ -1,0 +1,38 @@
+{
+  "name": "agora_rtc_engine",
+  "version": "6.2.6",
+  "summary": "A new flutter plugin project.",
+  "description": "Flutter plugin of Agora RTC SDK, allow you to simply integrate Agora Video Calling or Live Video Streaming to your app with just a few lines of code.",
+  "homepage": "https://github.com/AgoraIO/Flutter-SDK",
+  "license": {
+    "file": "../LICENSE"
+  },
+  "authors": {
+    "Agora": "developer@agora.io"
+  },
+  "source": {
+    "path": "."
+  },
+  "source_files": "Classes/**/*.{h,mm,m,swift}",
+  "dependencies": {
+    "Flutter": [
+
+    ],
+    "AgoraIrisRTC_iOS": [
+      "4.2.6-build.3"
+    ],
+    "AgoraRtcEngine_iOS": [
+      "4.2.6"
+    ]
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "swift_versions": "5.0",
+  "libraries": "stdc++",
+  "pod_target_xcconfig": {
+    "DEFINES_MODULE": "YES",
+    "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "i386"
+  },
+  "swift_version": "5.0"
+}
