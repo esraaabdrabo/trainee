@@ -1,8 +1,8 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/ziadelblidy/Developer/flutter
-FLUTTER_APPLICATION_PATH=/Users/ziadelblidy/Projects/trainee
+FLUTTER_ROOT=E:\esraa\flutter
+FLUTTER_APPLICATION_PATH=D:\trainee
 COCOAPODS_PARALLEL_CODE_SIGN=true
-FLUTTER_TARGET=lib/main.dart
+FLUTTER_TARGET=lib\main.dart
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.0.2
 FLUTTER_BUILD_NUMBER=3
