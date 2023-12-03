@@ -1,0 +1,34 @@
+{
+  "name": "agora_rtm",
+  "version": "1.5.9",
+  "summary": "A new flutter plugin project.",
+  "description": "Flutter wrapper around the Agora Real Time Message SDKs for Android and iOS.",
+  "homepage": "https://www.agora.io",
+  "license": {
+    "file": "../LICENSE"
+  },
+  "authors": {
+    "Agora": "developer@agora.io"
+  },
+  "source": {
+    "path": "."
+  },
+  "source_files": "Classes/**/*",
+  "dependencies": {
+    "Flutter": [
+
+    ],
+    "AgoraRtm_iOS": [
+      "1.5.1"
+    ]
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "pod_target_xcconfig": {
+    "DEFINES_MODULE": "YES",
+    "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "i386"
+  },
+  "swift_versions": "5.0",
+  "swift_version": "5.0"
+}
