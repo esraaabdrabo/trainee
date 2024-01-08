@@ -89,7 +89,6 @@ class AccountRemoteSource extends IAccountRemoteSource {
       body: sendVerificationCodeRequest.toMap(),
       cancelToken: sendVerificationCodeRequest.cancelToken,
     );
-   
   }
 
   @override

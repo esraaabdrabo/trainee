@@ -4,6 +4,7 @@ import '../../../../../core/common/costum_modules/screen_notifier.dart';
 import '../../../domain/entity/categories_entity.dart';
 import '../../../domain/entity/category_entity.dart';
 import '../cubit/category_cubit.dart';
+
 class CategoryListScreenNotifier extends ScreenNotifier {
   /// Fields
   late BuildContext context;
@@ -87,8 +88,6 @@ class CategoryListScreenNotifier extends ScreenNotifier {
       if (element.types == 0) menCategories.add(element);
       if (element.types == 1) womenCategories.add(element);
       if (element.types == 2) under16Categories.add(element);
-
-
     });
     selectType(0);
   }
@@ -136,12 +135,11 @@ class CategoryListScreenNotifier extends ScreenNotifier {
       if (count < collections) {
         displayLists.add(CategoriesEntity(
             items: categories.getRange(5 * (count - 1), (5 * count)).toList()));
-      } else {
-      }
-        displayLists.add(CategoriesEntity(
-            items: categories
-                .getRange(5 * (count - 1), categories.length)
-                .toList()));
+      } else {}
+      displayLists.add(CategoriesEntity(
+          items: categories
+              .getRange(5 * (count - 1), categories.length)
+              .toList()));
     }
     notifyListeners();
   }
@@ -177,5 +175,5 @@ class TempTabBarItem {
     _id = value;
   }
 
-  TempTabBarItem(this._id, this._icon, this._title);
+  TempTabBarItem(this._id, this._title);
 }

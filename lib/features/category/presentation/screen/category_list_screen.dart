@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 
 import '../../../../core/common/style/gaps.dart';
 import '../../../../core/constants/app/app_constants.dart';
@@ -44,13 +45,9 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
   @override
   Widget build(BuildContext context) {
     String? _path = Nav.getCurrentPath(context: context);
-    if (_path != null) print('nnn' + _path);
-    _tabs.add(
-        TempTabBarItem(0, AppConstants.MALE_ICON, Translation.of(context).men));
-    _tabs.add(TempTabBarItem(
-        1, AppConstants.FEMALE_ICON, Translation.of(context).women));
-    _tabs.add(TempTabBarItem(
-        2, AppConstants.KID_ICON, Translation.of(context).under_16));
+    _tabs.add(TempTabBarItem(0, LanguageHelper.tr(context).men));
+    _tabs.add(TempTabBarItem(1, LanguageHelper.tr(context).women));
+    _tabs.add(TempTabBarItem(2, LanguageHelper.tr(context).kids));
     sn.tabs = _tabs;
     return ChangeNotifierProvider<CategoryListScreenNotifier>.value(
       value: sn,
@@ -59,8 +56,11 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
           title: Translation.of(context).categories,
           actions: [
             InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationScreen()));
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NotificationScreen()));
                 },
                 child: const Icon(Icons.notifications)),
             Gaps.hGap20,

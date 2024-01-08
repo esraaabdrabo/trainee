@@ -272,21 +272,14 @@ class _CategoryListScreenContentState extends State<CategoryListScreenContent>
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 18.w),
-        child: Row(
-          children: [
-            ImageIcon(
-              AssetImage(iconPath),
-              color: AppColors.primaryColorLight,
-            ),
-            Gaps.hGap4,
+        child: 
             CustomText(
               text: title,
               fontSize: AppConstants.textSize16,
               fontWeight: FontWeight.bold,
               color: AppColors.primaryColorLight,
             ),
-          ],
-        ),
+        
       ),
     );
   }
@@ -295,7 +288,6 @@ class _CategoryListScreenContentState extends State<CategoryListScreenContent>
     return GestureDetector(
       onTap: () {
         setState(() {
-          print("$id");
           sn.chosenTap = id;
           sn.selectType(id);
         });
@@ -309,20 +301,11 @@ class _CategoryListScreenContentState extends State<CategoryListScreenContent>
             )),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 18.w),
-          child: Row(
-            children: [
-              ImageIcon(
-                AssetImage(iconPath),
-                color: AppColors.accentColorLight,
-              ),
-              Gaps.hGap4,
-              CustomText(
-                text: title,
-                fontSize: AppConstants.textSize16,
-                fontWeight: FontWeight.bold,
-                color: AppColors.accentColorLight,
-              ),
-            ],
+          child: CustomText(
+            text: title,
+            fontSize: AppConstants.textSize16,
+            fontWeight: FontWeight.bold,
+            color: AppColors.accentColorLight,
           ),
         ),
       ),
@@ -335,14 +318,15 @@ class _CategoryListScreenContentState extends State<CategoryListScreenContent>
         child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              if (sn.chosenTap == sn.tabs.elementAt(index).id)
+              if (sn.chosenTap == sn.tabs.elementAt(index).id) {
                 return _buildChosenTabBarItem(sn.tabs.elementAt(index).title,
                     sn.tabs.elementAt(index).icon);
-              else
+              } else {
                 return _buildNotChosenTabBarItem(
                     sn.tabs.elementAt(index).id,
                     sn.tabs.elementAt(index).title,
                     sn.tabs.elementAt(index).icon);
+              }
             },
             separatorBuilder: (context, index) => SizedBox(
                   width: 8.w,
