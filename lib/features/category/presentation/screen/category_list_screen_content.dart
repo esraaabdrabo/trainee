@@ -264,7 +264,7 @@ class _CategoryListScreenContentState extends State<CategoryListScreenContent>
         : const SizedBox.shrink();
   }
 
-  Widget _buildChosenTabBarItem(String title, String iconPath) {
+  Widget _buildChosenTabBarItem(String title) {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.accentColorLight,
@@ -272,19 +272,17 @@ class _CategoryListScreenContentState extends State<CategoryListScreenContent>
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 18.w),
-        child: 
-            CustomText(
-              text: title,
-              fontSize: AppConstants.textSize16,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primaryColorLight,
-            ),
-        
+        child: CustomText(
+          text: title,
+          fontSize: AppConstants.textSize16,
+          fontWeight: FontWeight.bold,
+          color: AppColors.primaryColorLight,
+        ),
       ),
     );
   }
 
-  Widget _buildNotChosenTabBarItem(int id, String title, String iconPath) {
+  Widget _buildNotChosenTabBarItem(int id, String title) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -319,13 +317,12 @@ class _CategoryListScreenContentState extends State<CategoryListScreenContent>
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               if (sn.chosenTap == sn.tabs.elementAt(index).id) {
-                return _buildChosenTabBarItem(sn.tabs.elementAt(index).title,
-                    sn.tabs.elementAt(index).icon);
+                return _buildChosenTabBarItem(sn.tabs.elementAt(index).title);
               } else {
                 return _buildNotChosenTabBarItem(
-                    sn.tabs.elementAt(index).id,
-                    sn.tabs.elementAt(index).title,
-                    sn.tabs.elementAt(index).icon);
+                  sn.tabs.elementAt(index).id,
+                  sn.tabs.elementAt(index).title,
+                );
               }
             },
             separatorBuilder: (context, index) => SizedBox(
