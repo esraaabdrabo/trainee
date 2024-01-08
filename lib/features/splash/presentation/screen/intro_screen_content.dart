@@ -97,9 +97,7 @@ class _IntroScreenContentState extends State<IntroScreenContent> {
                   height: 0.47.sh,
                 ),
                 SizedBox(
-                    width: 0.143.sw, child: Image.asset(AppConstants.PLAY_IMG)),
-                SizedBox(
-                  height: 0.101.sh,
+                  height: 0.2.sh,
                 ),
                 CustomText(
                   text: title,
