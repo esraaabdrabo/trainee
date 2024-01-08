@@ -122,87 +122,84 @@ class _IntroScreenContentState extends State<IntroScreenContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Stack(
-        children: [
-          PageView(
-            controller: _pageController,
-            children: [
-              _buildIntroPageView(
-                  title: Translation.of(context).keep_fitness,
-                  body: Translation.of(context).intro1_text,
-                  imagePath: AppConstants.INTRO_BACK1_IMG,
-                  shadowImagePath: AppConstants.SHADOW1_IMG,
-                  isRight: true),
-              _buildIntroPageView(
-                  title: Translation.of(context).lookup_coach,
-                  body: Translation.of(context).intro2_text,
-                  imagePath: AppConstants.INTRO_BACK2_IMG,
-                  shadowImagePath: AppConstants.SHADOW2_IMG,
-                  isRight: false),
-              _buildIntroPageView(
-                  title: Translation.of(context).training_daily,
-                  body: Translation.of(context).intro3_text,
-                  imagePath: AppConstants.INTRO_BACK3_IMG,
-                  shadowImagePath: AppConstants.SHADOW3_IMG,
-                  isRight: true)
-            ],
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 0.125.sh,
-              ),
-              SizedBox(
-                  width: 0.57.sw,
-                  child: Image.asset(AppConstants.APP_LOGO_IMG_HORIZONTAL)),
-              SizedBox(
-                height: 0.61.sh,
-              ),
-              DotsIndicator(
-                dotsCount: _maxPages,
-                position: _currentPage,
-                decorator: DotsDecorator(
-                    color: AppColors.white,
-                    activeColor: AppColors.white,
-                    size: Size(6.w, 6.h),
-                    activeSize: Size(20.w, 6.h),
-                    activeShape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(AppConstants.borderRadius3)),
-                    spacing: EdgeInsets.all(3.w)),
-              ),
-              Gaps.vGap32,
-              SizedBox(
-                width: 1.sw,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 32, right: 16),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                          width: 104.w,
-                          height: 44.h,
-                          child: CustomElevatedButton(
-                            onTap: _onNextPressed,
-                            text: Translation.of(context).next,
-                          )),
-                      const Spacer(),
-                      SizedBox(
-                          width: 104.w,
-                          height: 44.h,
-                          child: CustomTextButton(
-                            text: Translation.of(context).skip,
-                            onTap: _onSkipPressed,
-                          )),
-                    ],
-                  ),
+    return Stack(
+      children: [
+        PageView(
+          controller: _pageController,
+          children: [
+            _buildIntroPageView(
+                title: Translation.of(context).keep_fitness,
+                body: Translation.of(context).intro1_text,
+                imagePath: AppConstants.INTRO_BACK1_IMG,
+                shadowImagePath: AppConstants.SHADOW1_IMG,
+                isRight: true),
+            _buildIntroPageView(
+                title: Translation.of(context).lookup_coach,
+                body: Translation.of(context).intro2_text,
+                imagePath: AppConstants.INTRO_BACK2_IMG,
+                shadowImagePath: AppConstants.SHADOW2_IMG,
+                isRight: false),
+            _buildIntroPageView(
+                title: Translation.of(context).training_daily,
+                body: Translation.of(context).intro3_text,
+                imagePath: AppConstants.INTRO_BACK3_IMG,
+                shadowImagePath: AppConstants.SHADOW3_IMG,
+                isRight: true)
+          ],
+        ),
+        Column(
+          children: [
+            SizedBox(
+              height: 0.125.sh,
+            ),
+            SizedBox(
+                width: 0.57.sw,
+                child: Image.asset(AppConstants.APP_LOGO_IMG_HORIZONTAL)),
+            SizedBox(
+              height: 0.61.sh,
+            ),
+            DotsIndicator(
+              dotsCount: _maxPages,
+              position: _currentPage,
+              decorator: DotsDecorator(
+                  color: AppColors.white,
+                  activeColor: AppColors.white,
+                  size: Size(6.w, 6.h),
+                  activeSize: Size(20.w, 6.h),
+                  activeShape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(AppConstants.borderRadius3)),
+                  spacing: EdgeInsets.all(3.w)),
+            ),
+            Gaps.vGap32,
+            SizedBox(
+              width: 1.sw,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 32, right: 16),
+                child: Row(
+                  children: [
+                    SizedBox(
+                        width: 104.w,
+                        height: 44.h,
+                        child: CustomElevatedButton(
+                          onTap: _onNextPressed,
+                          text: Translation.of(context).next,
+                        )),
+                    const Spacer(),
+                    SizedBox(
+                        width: 104.w,
+                        height: 44.h,
+                        child: CustomTextButton(
+                          text: Translation.of(context).skip,
+                          onTap: _onSkipPressed,
+                        )),
+                  ],
                 ),
-              )
-            ],
-          )
-        ],
-      ),
+              ),
+            )
+          ],
+        )
+      ],
     );
   }
 }

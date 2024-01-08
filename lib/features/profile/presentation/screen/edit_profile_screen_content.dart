@@ -72,6 +72,7 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
     String? date =
         BlocProvider.of<ProfileCubit>(context).profileModel!.result!.birthDate;
     birthDateController.text = date ?? '';
+
     gender.text =
         "${BlocProvider.of<ProfileCubit>(context).profileModel!.result!.gender ?? 1}";
     heightController.text = EdirProfileFunctions.isNull(
@@ -368,9 +369,11 @@ class _EditProfileScreenContentState extends State<EditProfileScreenContent> {
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Text(
-                    DateFormat("yyyy-MM-dd")
-                        .format(DateTime.parse(birthDateController.text))
-                        .toString(),
+                    birthDateController.text.isEmpty
+                        ? ""
+                        : DateFormat("yyyy-MM-dd")
+                            .format(DateTime.parse(birthDateController.text))
+                            .toString(),
                     style: TextStyle(fontSize: 18.sp),
                   )),
             ),
