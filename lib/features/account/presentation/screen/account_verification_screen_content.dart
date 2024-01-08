@@ -103,11 +103,10 @@ class _AccountVerificationScreenContentState
   }
 
   void _verifyAccount() {
-    debugPrint("ds");
     if (sn.pinCodeController.text.length == 6) {
       sn.accountCubit.verifyAccount(VerifyAccountRequest(
-          usernameOrEmailOrPhone: sn.phoneNumber, code: "000000"));
-      sn2.submitOTP(sn.otpValue);
+          usernameOrEmailOrPhone: sn.phoneNumber,
+          code: sn.pinCodeController.text));
     } else {
       ErrorViewer.showError(
           errorViewerOptions:

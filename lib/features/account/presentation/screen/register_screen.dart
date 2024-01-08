@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/params/screen_params/account_verification_screen_params.dart';
 import 'package:upgrade_traine_project/features/account/presentation/screen/account_verification_screen.dart';
+import 'package:upgrade_traine_project/main.dart';
 import '../../../../core/navigation/nav.dart';
 import '../../../../core/ui/dialogs/custom_dialogs.dart';
 import '../../../../core/ui/error_ui/error_viewer/error_viewer.dart';
@@ -59,17 +60,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   sn.isLoading = false;
                 });
                 _navigationToAccountVerification();
-                sn.submitPhoneNumber(
-                    newPhone: "${sn.countryDial}${sn.phoneController.text}");
               }, verifyAccountLoaded: (registerEntity) {
                 setState(() {
                   sn.isLoading = false;
                 });
-                _navigationToAccountVerification();
-                // sn.submitPhoneNumber(newPhone: "${sn.countryDial}${sn.phoneController.text}");
+                _onVerify();
               });
             },
-            child: RegisterScreenContent()),
+            child: const RegisterScreenContent()),
       ),
     );
   }
@@ -79,10 +77,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         context: context,
         arguments: AccountVerificationScreenParams(
             isCreateNewPassword: false,
-            onVerification: () {
-              Nav.off(LoginScreen.routeName,
-                  cleanHistory: true, context: context);
-            },
+            onVerification: () => Nav.off(LoginScreen.routeName,
+                cleanHistory: true,
+                context: navigatorKey.currentState!.context),
             phone: sn.phoneController.text));
   }
 
