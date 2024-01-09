@@ -17,14 +17,17 @@ class MoreScreenSections extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-        spacing: 40.w,
-        runSpacing: 16.h,
-        children: List.generate(
-            5,
-            (index) => CustomChipWidget(
-                imgPath: _getIcon(index),
-                onPressed: _getOnPress(index, context),
-                title: _getTitle(context, index))));
+      spacing: 40.w,
+      runSpacing: 16.h,
+      children: List.generate(
+        6,
+        (index) => CustomChipWidget(
+          imgPath: _getIcon(index),
+          onPressed: _getOnPress(index, context),
+          title: _getTitle(context, index),
+        ),
+      ),
+    );
   }
 
   String _getTitle(BuildContext context, int index) {

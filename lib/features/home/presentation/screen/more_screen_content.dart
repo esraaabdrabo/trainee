@@ -7,6 +7,7 @@ import 'package:upgrade_traine_project/features/home/presentation/screen/more_sc
 import 'package:upgrade_traine_project/features/home/presentation/screen/more_screen/privacy_policy/privacy_policy_screen.dart';
 import 'package:upgrade_traine_project/features/home/presentation/state_m/bloc/more_cubit.dart';
 import 'package:upgrade_traine_project/features/home/presentation/state_m/bloc/more_state.dart';
+import 'package:upgrade_traine_project/features/home/presentation/widget/more/account_setting/section.dart';
 import 'package:upgrade_traine_project/features/home/presentation/widget/more/sections.dart';
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/style/gaps.dart';
@@ -45,28 +46,8 @@ class _MoreScreenContentState extends State<MoreScreenContent> {
             TitleWidget(title: Translation.of(context).goto),
             Gaps.vGap16,
             const MoreScreenSections(),
-            Gaps.vGap30,
-            TitleWidget(
-              title: Translation.of(context).account_settings,
-            ),
-            Gaps.vGap10,
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () {
-                Nav.to(ChangePasswordScreen.routeName, context: context);
-              },
-              child: Padding(
-                padding: EdgeInsets.all(6.h),
-                child: CustomText(
-                  text: Translation.of(context).change_password,
-                  fontSize: AppConstants.textSize14,
-                ),
-              ),
-            ),
-            Gaps.vGap24,
-            TitleWidget(
-              title: Translation.of(context).app_settings,
-            ),
+            const AccountSettingWidget(),
+            TitleWidget(title: Translation.of(context).app_settings),
             Gaps.vGap16,
             _buildAppSettingsWidget(),
             Gaps.vGap30,

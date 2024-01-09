@@ -32,59 +32,86 @@ class _CustomChipWidgetState extends State<CustomChipWidget> {
     }
     return GestureDetector(
       onTap: () => widget.onPressed(),
-      child: Container(
+      child: SizedBox(
         width: 143.w,
         height: 45.h,
         child: Stack(
           children: [
-            Positioned.fill(
-              child: Padding(
-                padding: EdgeInsets.all(1.w),
-                child: BlurWidget(
-                  borderRadius: AppConstants.borderRadius32,
-                  child: Row(
-                    children: [
-                      const Spacer(
-                        flex: 4
-                      ),
-                      Expanded(
-                        flex: 5,
-                        child: SizedBox(
-                          height: 15.h,
-                          child: FittedBox(
-                            alignment: Alignment.center,
-                            fit: BoxFit.contain,
-                            child: CustomText(
-                              textAlign: TextAlign.center,
-                              text: widget.title,
-                              fontSize: AppConstants.textSize14,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Spacer(
-                        flex: 1
-                      ),
-                    ],
+            _Title(title: widget.title),
+            _Image(
+              rightPosition: rightPosition,
+              leftPosition: leftPosition,
+              path: widget.imgPath,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Title extends StatelessWidget {
+  const _Title({required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      child: Padding(
+        padding: EdgeInsets.all(1.w),
+        child: BlurWidget(
+          borderRadius: AppConstants.borderRadius32,
+          child: Row(
+            children: [
+              const Spacer(flex: 4),
+              Expanded(
+                flex: 5,
+                child: SizedBox(
+                  height: 15.h,
+                  child: FittedBox(
+                    alignment: Alignment.center,
+                    fit: BoxFit.contain,
+                    child: CustomText(
+                      textAlign: TextAlign.center,
+                      text: title,
+                      fontSize: AppConstants.textSize14,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              right: rightPosition,
-              left: leftPosition,
-              child: ClipRRect(
-                borderRadius:
-                    BorderRadius.circular(AppConstants.borderRadius32),
-                child: Image.asset(
-                  widget.imgPath,
-                  height: 45.h,
-                  width: 45.w,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            )
-          ],
+              const Spacer(flex: 1),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Image extends StatelessWidget {
+  const _Image({
+    required this.rightPosition,
+    required this.leftPosition,
+    required this.path,
+  });
+
+  final double? rightPosition;
+  final double? leftPosition;
+  final String path;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      right: rightPosition,
+      left: leftPosition,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppConstants.borderRadius32),
+        child: Image.asset(
+          path,
+          height: 45.h,
+          width: 45.w,
+          fit: BoxFit.cover,
         ),
       ),
     );
