@@ -4,10 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:upgrade_traine_project/core/ui/widgets/blur_widget.dart';
-import 'package:upgrade_traine_project/core/ui/widgets/custom_text.dart';
-import 'package:upgrade_traine_project/core/ui/widgets/google_map_widget.dart';
-import 'package:upgrade_traine_project/features/coach/domain/entity/coach_entity.dart';
+import 'package:upgrade_traine_project/features/home/presentation/widget/home_map.dart';
+import 'package:upgrade_traine_project/features/home/presentation/widget/home_sections/coaches.dart';
+import 'package:upgrade_traine_project/features/home/presentation/widget/shimmer/container_item.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../../core/common/app_colors.dart';
 import '../../../../../core/common/session_data.dart';
@@ -23,9 +22,7 @@ import '../../../../../generated/l10n.dart';
 import '../../../../category/domain/entity/category_entity.dart';
 import '../../../../category/presentation/screen/category_list_screen.dart';
 import '../../../../category/presentation/state_m/cubit/category_cubit.dart';
-import '../../../../coach/presentation/screen/coach_profile_screen.dart';
 import '../../../../coach/presentation/screen/coaches_list_screen.dart';
-import '../../../../coach/presentation/state_m/cubit/coach_cubit.dart';
 import '../../../../restaurant/presentation/screen/restaurant_details.dart';
 import '../../../../restaurant/presentation/screen/all_restaurants.dart';
 import '../../../../restaurant/presentation/state_m/cubit/restaurant_cubit.dart';
@@ -160,18 +157,14 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                     widgets.isNotEmpty
                         ? Expanded(
                             child: GestureDetector(
-                            onTap: () {
-                              onItemSelected(0);
-                            },
+                            onTap: () => onItemSelected(0),
                             child: ImageWithTitleWidget(
                                 title: widgets.elementAt(0).title,
                                 imgPath: widgets.elementAt(0).imgPath,
                                 description: widgets.elementAt(0).description),
                           ))
                         : const SizedBox.shrink(),
-                    SizedBox(
-                      width: 8.w,
-                    ),
+                    SizedBox(width: 8.w),
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -179,9 +172,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                           widgets.length > 1
                               ? Expanded(
                                   child: GestureDetector(
-                                  onTap: () {
-                                    onItemSelected(1);
-                                  },
+                                  onTap: () => onItemSelected(1),
                                   child: ImageWithTitleWidget(
                                       title: widgets.elementAt(1).title,
                                       imgPath: widgets.elementAt(1).imgPath,
@@ -189,15 +180,11 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                                           widgets.elementAt(1).description),
                                 ))
                               : const SizedBox.shrink(),
-                          SizedBox(
-                            height: 8.w,
-                          ),
+                          SizedBox(height: 8.w),
                           widgets.length > 2
                               ? Expanded(
                                   child: GestureDetector(
-                                  onTap: () {
-                                    onItemSelected(2);
-                                  },
+                                  onTap: () => onItemSelected(2),
                                   child: ImageWithTitleWidget(
                                       title: widgets.elementAt(2).title,
                                       imgPath: widgets.elementAt(2).imgPath,
@@ -211,9 +198,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 8.w,
-              ),
+              SizedBox(height: 8.w),
               widgets.length > 3
                   ? Expanded(
                       flex: 3,
@@ -234,49 +219,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     );
   }
 
-  Widget _buildHorizontalWidget({required List<CoachEntity> widgets}) {
-    return SizedBox(
-      width: 1.sw,
-      height: 0.13.sh,
-      child: ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: 8.w),
-        itemCount: widgets.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {
-              Nav.to(CoachProfileScreen.routeName,
-                  arguments: widgets[index], context: context);
-            },
-            child: ImageWithTitleWidget(
-              imgPath: widgets.elementAt(index).imageUrl ?? "",
-              title: widgets.elementAt(index).name ?? "",
-              description: widgets.elementAt(index).specialization!.text,
-              width: 0.25.sw,
-              height: 0.113.sh,
-            ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            width: 16.w,
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildShimmerContainerItem({double? height, double? width}) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppConstants.borderRadius4),
-        color: AppColors.grey,
-      ),
-      width: width,
-      height: height,
-    );
-  }
-
   Widget _buildSectionShimmer() {
     return SizedBox(
       width: 1.sw,
@@ -289,7 +231,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _buildShimmerContainerItem(height: 16.h, width: 0.2.sw),
+                  ShimmerContainerItem(height: 16.h, width: 0.2.sw),
                 ],
               ),
               Gaps.vGap16,
@@ -297,21 +239,21 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Expanded(child: _buildShimmerContainerItem()),
+                    const Expanded(child: ShimmerContainerItem()),
                     Gaps.hGap8,
                     Expanded(
                         child: Column(
                       children: [
-                        Expanded(child: _buildShimmerContainerItem()),
+                        const Expanded(child: ShimmerContainerItem()),
                         Gaps.vGap8,
-                        Expanded(child: _buildShimmerContainerItem()),
+                        const Expanded(child: ShimmerContainerItem()),
                       ],
                     )),
                   ],
                 ),
               ),
               Gaps.vGap8,
-              Expanded(child: _buildShimmerContainerItem())
+              const Expanded(child: ShimmerContainerItem())
             ],
           )),
     );
@@ -329,68 +271,13 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _buildShimmerContainerItem(height: 16.h, width: 0.2.sw),
+                  ShimmerContainerItem(height: 16.h, width: 0.2.sw),
                 ],
               ),
               Gaps.vGap16,
-              Expanded(child: _buildShimmerContainerItem()),
+              const Expanded(child: ShimmerContainerItem()),
             ],
           )),
-    );
-  }
-
-  Widget _buildCoachesWidget(
-      {required String title,
-      required Function onSeeAllTapped,
-      required List<CoachEntity> widgets}) {
-    List<CoachEntity> list1 = [];
-    List<CoachEntity> list2 = [];
-    List<CoachEntity> list3 = [];
-
-    _splitListIntoThree(widgets, list1, list2, list3);
-    return Container(
-      decoration: BoxDecoration(
-          color: AppColors.darkGrey,
-          borderRadius: BorderRadius.circular(AppConstants.borderRadius12)),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.h),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.w),
-              child: TitleWidget(
-                title: title,
-                subtitleColorTapped: onSeeAllTapped,
-                subtitle: Translation.of(context).see_all,
-              ),
-            ),
-            list1.isNotEmpty
-                ? Column(
-                    children: [
-                      Gaps.vGap16,
-                      _buildHorizontalWidget(widgets: list1),
-                    ],
-                  )
-                : const SizedBox.shrink(),
-            list2.isNotEmpty
-                ? Column(
-                    children: [
-                      Gaps.vGap16,
-                      _buildHorizontalWidget(widgets: list2),
-                    ],
-                  )
-                : const SizedBox.shrink(),
-            list3.isNotEmpty
-                ? Column(
-                    children: [
-                      Gaps.vGap16,
-                      _buildHorizontalWidget(widgets: list3),
-                    ],
-                  )
-                : const SizedBox.shrink(),
-          ],
-        ),
-      ),
     );
   }
 
@@ -399,35 +286,13 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
       child: Column(
         children: [
           HomeAppbar(controller: sn.searchTextController),
-          BuildMapWidget(),
+          const HomeMapWidget(),
           Gaps.vGap40,
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: Column(
               children: [
-                BlocBuilder<CoachCubit, CoachState>(
-                  bloc: sn.coachCubit,
-                  builder: (context, state) {
-                    return state.when(
-                      coachInitState: () => const SizedBox.shrink(),
-                      coachLoadingState: () => _buildCoachesSectionShimmer(),
-                      coachErrorState: (error, callback) =>
-                          const SizedBox.shrink(),
-                      getCoachesState: (CoachesEntity) => SizedBox(
-                        width: 1.sw,
-                        height: CoachesEntity.items!.length > 8
-                            ? 0.54.sh
-                            : CoachesEntity.items!.length > 5
-                                ? 0.37.sh
-                                : 0.23.sh,
-                        child: _buildCoachesWidget(
-                            title: Translation.of(context).most_rated_coaches,
-                            widgets: CoachesEntity.items!,
-                            onSeeAllTapped: _goToCoaches),
-                      ),
-                    );
-                  },
-                ),
+                const HomeCoachesSetions(),
                 Gaps.vGap40,
                 BlocBuilder<CategoryCubit, CategoryState>(
                   bloc: sn.categoryCubit,
@@ -583,10 +448,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     Nav.to(CategoryListScreen.routeName, context: context);
   }
 
-  void _goToCoaches() {
-    Nav.to(CoachesListScreen.routeName, context: context);
-  }
-
   void _goToRestaurant() {
     Nav.to(RestaurantView.routeName, context: context);
   }
@@ -600,41 +461,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   void _gotoCoachesScreen(CategoryEntity? categoryEntity) {
     Nav.to(CoachesListScreen.routeName,
         arguments: categoryEntity, context: context);
-  }
-
-  void _splitListIntoThree(List list, List list1, List list2, List list3) {
-    int count = 1;
-    int divider = list.length ~/ 3;
-    int addition = 0;
-    int addition2 = 0;
-    if (divider < 3) {
-      divider = list.length ~/ 2;
-      if (list.length % 2 != 0) addition = 1;
-      if (divider < 3) {
-        for (var element in list) {
-          list1.add(element);
-        }
-      } else {
-        for (var element in list) {
-          if (count <= divider + addition) {
-            list1.add(element);
-          } else {
-            list2.add(element);
-          }
-          count++;
-        }
-      }
-    } else {
-      if (list.length % 3 > 0) addition = 1;
-      if (list.length % 3 == 2) addition2 = 1;
-      for (var element in list) {
-        if (count <= divider + addition) list1.add(element);
-        if (count <= (divider) * 2 + addition + addition2 &&
-            count > divider + addition) list2.add(element);
-        if (count > (divider) * 2 + addition + addition2) list3.add(element);
-        count++;
-      }
-    }
   }
 
   LatLng? latLang;
@@ -675,167 +501,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
       Provider.of<SessionDataProvider>(context, listen: false).myLocation =
           LatLng(locationData.lat, locationData.lng);
     }
-  }
-}
-
-class BuildMapWidget extends StatefulWidget {
-  const BuildMapWidget({super.key});
-
-  @override
-  State<BuildMapWidget> createState() => _BuildMapWidgetState();
-}
-
-class _BuildMapWidgetState extends State<BuildMapWidget> {
-  @override
-  Widget build(BuildContext context) {
-    Widget buildMapPinSearchWidget(
-        {required Color color,
-        required String iconPath,
-        required String text,
-        required Function onPressed,
-        required bool selected}) {
-      return InkWell(
-        onTap: () {
-          onPressed();
-        },
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: color,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: ImageIcon(
-                  AssetImage(
-                    iconPath,
-                  ),
-                  color: AppColors.white,
-                  size: 20.w,
-                ),
-              ),
-            ),
-            Gaps.vGap4,
-            CustomText(
-              text: text,
-              fontSize: AppConstants.textSize12,
-              fontWeight: FontWeight.bold,
-              color: selected ? AppColors.accentColorLight : AppColors.white,
-            )
-          ],
-        ),
-      );
-    }
-
-    var sn = Provider.of<HomeScreenNotifier>(context);
-    sn.context = context;
-    void _getMyLocation() async {
-      var locationData = await getMyLocation();
-      if (locationData != null) {
-        setState(() {
-          sn.latLng = LatLng(locationData.latitude!, locationData.longitude!);
-          sn.markers.add(CustomMarker(
-              type: MarkerType.myLocation,
-              marker: Marker(
-                  markerId: MarkerId("my_location"), position: sn.latLng!)));
-        });
-        var prefs = await SpUtil.getInstance();
-        if (locationData.latitude != null && locationData.longitude != null) {
-          prefs.putDouble(AppConstants.KEY_LATITUDE, locationData.latitude!);
-        }
-        prefs.putDouble(AppConstants.KEY_LONGITUDE, locationData.longitude!);
-
-        Provider.of<SessionDataProvider>(context, listen: false).myLocation =
-            LatLng(locationData.latitude!, locationData.longitude!);
-
-        BlocProvider.of<MapsCubit>(context)
-            .controller
-            .moveCamera(CameraUpdate.newLatLng(sn.latLng!));
-      }
-    }
-
-    return Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(AppConstants.borderRadius32),
-              bottomLeft: Radius.circular(AppConstants.borderRadius32)),
-          child: SizedBox(
-            height: 0.53.sh,
-            child: MapWidget(
-              onMapCreated: _getMyLocation,
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 0,
-          child: SizedBox(
-            width: 1.sw,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                BlurWidget(
-                  height: 0.14.sh,
-                  width: 0.86.sw,
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        buildMapPinSearchWidget(
-                          onPressed: () async {
-                            await sn.getShopsLocations();
-                            BlocProvider.of<MapsCubit>(context).update();
-                          },
-                          color: AppColors.green,
-                          iconPath: AppConstants.STORE_ICON,
-                          text: Translation.of(context).stores,
-                          selected: sn.shopsSelected,
-                        ),
-                        buildMapPinSearchWidget(
-                          onPressed: sn.getRestaurantsLocations,
-                          color: AppColors.blue,
-                          iconPath: AppConstants.RESTAURANT_ICON,
-                          text: Translation.of(context).healthy_restaurants,
-                          selected: sn.restaurantsSelected,
-                        ),
-                        // buildMapPinSearchWidget(
-                        //     onPressed: sn.getGymsLocations,
-                        //     color: AppColors.red,
-                        //     iconPath: AppConstants.BOXER_ICON,
-                        //     text: Translation.of(context).gyms,
-                        //     selected: sn.gymsSelected),
-                        buildMapPinSearchWidget(
-                          onPressed: sn.getCoachesLocations,
-                          color: AppColors.accentColorLight,
-                          iconPath: AppConstants.WHISTLE_ICON,
-                          text: Translation.of(context).sport_coaches,
-                          selected: sn.coachesSelected,
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-            bottom: 0,
-            child: IconButton(
-                onPressed: () {
-                  BlocProvider.of<MapsCubit>(context).controller.animateCamera(
-                      CameraUpdate.newLatLng(
-                          LatLng(sn.latLng!.latitude, sn.latLng!.longitude)));
-                },
-                icon: const Icon(
-                  Icons.my_location,
-                  color: Colors.white,
-                )))
-      ],
-    );
   }
 }
 

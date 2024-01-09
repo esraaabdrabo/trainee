@@ -3,9 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
-
 import '../../../../core/common/style/gaps.dart';
-import '../../../../core/constants/app/app_constants.dart';
 import '../../../../core/navigation/nav.dart';
 import '../../../../core/params/no_params.dart';
 import '../../../../core/ui/error_ui/errors_screens/error_widget.dart';
