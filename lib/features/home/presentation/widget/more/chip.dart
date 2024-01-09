@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:upgrade_traine_project/core/constants/app/app_constants.dart';
-import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/blur_widget.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/custom_text.dart';
 
@@ -25,25 +24,13 @@ class _CustomChipWidgetState extends State<CustomChipWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (LanguageHelper.isAr(context)) {
-      rightPosition = 0.0;
-    } else {
-      leftPosition = 0.0;
-    }
     return GestureDetector(
       onTap: () => widget.onPressed(),
       child: SizedBox(
         width: 143.w,
         height: 45.h,
         child: Stack(
-          children: [
-            _Title(title: widget.title),
-            _Image(
-              rightPosition: rightPosition,
-              leftPosition: leftPosition,
-              path: widget.imgPath,
-            )
-          ],
+          children: [_Title(title: widget.title), _Image(path: widget.imgPath)],
         ),
       ),
     );
@@ -90,21 +77,13 @@ class _Title extends StatelessWidget {
 }
 
 class _Image extends StatelessWidget {
-  const _Image({
-    required this.rightPosition,
-    required this.leftPosition,
-    required this.path,
-  });
+  const _Image({required this.path});
 
-  final double? rightPosition;
-  final double? leftPosition;
   final String path;
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      right: rightPosition,
-      left: leftPosition,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(AppConstants.borderRadius32),
         child: Image.asset(
