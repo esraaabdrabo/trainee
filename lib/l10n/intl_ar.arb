@@ -212,5 +212,8 @@
 "invalid_credintials":"بيانات الدخول خاطئة",
 "search_for_chat":"ابحث عن محادثة",
 
-"off":"تخفيض"
+"off":"تخفيض",
+
+"delete_acc":"حذف الحساب",
+"delete_acc_dialog_content":"هل انت متأكد انك تريد حذف حسابك؟"
 }

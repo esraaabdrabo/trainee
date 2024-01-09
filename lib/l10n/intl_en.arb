@@ -210,5 +210,8 @@
   "the_member_left_the_call":"{name} has left the call. If you need anything, feel free to reach out. See you!",
 "the_member_decline_the_call":"{name} declined the call ",
 "invalid_credintials":"Invalid Credintials",
-"off":"Off"
+"off":"Off",
+"delete_acc":"Delete Account",
+"delete_acc_dialog_content":"Are you sure you want to delete your account?"
+
 }
