@@ -196,7 +196,7 @@ Widget _buildCoachesSectionShimmer() {
               ],
             ),
             Gaps.vGap16,
-            Expanded(child: ShimmerContainerItem()),
+            const Expanded(child: ShimmerContainerItem()),
           ],
         )),
   );
