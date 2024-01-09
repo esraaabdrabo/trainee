@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:upgrade_traine_project/core/localization/language_helper.dart';
+import 'package:upgrade_traine_project/features/home/presentation/screen/more_screen/about/about_app_screen.dart';
+import 'package:upgrade_traine_project/features/home/presentation/screen/more_screen/feedback/feedback_screen.dart';
+import 'package:upgrade_traine_project/features/home/presentation/screen/more_screen/privacy_policy/privacy_policy_screen.dart';
 import 'package:upgrade_traine_project/features/home/presentation/state_m/bloc/more_cubit.dart';
 import 'package:upgrade_traine_project/features/home/presentation/state_m/bloc/more_state.dart';
-import 'package:upgrade_traine_project/features/orders/presenation/screens/cart_view.dart';
+import 'package:upgrade_traine_project/features/home/presentation/widget/more/sections.dart';
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/style/gaps.dart';
 import '../../../../core/common/utils.dart';
@@ -19,15 +21,7 @@ import '../../../../core/ui/widgets/custom_text.dart';
 import '../../../../core/ui/widgets/title_widget.dart';
 import '../../../../generated/l10n.dart';
 import '../../../account/presentation/screen/change_password_screen.dart';
-import '../../../category/presentation/screen/category_list_screen.dart';
-import '../../../coach/presentation/screen/coaches_list_screen.dart';
-import '../../../orders/presenation/screens/order_screen.dart';
-import '../../../restaurant/presentation/screen/all_restaurants.dart';
-import '../../../shop/presentation/screen/shops_view.dart';
 import '../screen/../state_m/provider/more_screen_notifier.dart';
-import 'about_app_screen.dart';
-import 'feedback_screen.dart';
-import 'privacy_policy_screen.dart';
 
 class MoreScreenContent extends StatefulWidget {
   @override
@@ -48,73 +42,9 @@ class _MoreScreenContentState extends State<MoreScreenContent> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TitleWidget(
-              title: Translation.of(context).goto,
-            ),
+            TitleWidget(title: Translation.of(context).goto),
             Gaps.vGap16,
-            Wrap(
-              spacing: 40.w,
-              runSpacing: 16.h,
-              children: [
-                _buildChipWidget(
-                    title: Translation.of(context).categories,
-                    imgPath: AppConstants.SWIMMING_IMG,
-                    onPressed: () {
-                      Nav.to(CategoryListScreen.routeName, context: context);
-                    }),
-                _buildChipWidget(
-                    title: Translation.of(context).coaches,
-                    imgPath: AppConstants.COACH1_IMAGE,
-                    onPressed: () {
-                      Nav.to(CoachesListScreen.routeName, context: context);
-                    }),
-                _buildChipWidget(
-                    title: Translation.of(context).restaurants,
-                    imgPath: AppConstants.MOTCHY2_IMG,
-                    onPressed: () {
-                      Nav.to(RestaurantView.routeName, context: context);
-                    }),
-                // _buildChipWidget(
-                //     title: Translation.of(context).dishes,
-                //     imgPath: AppConstants.KARAM_IMG,
-                //     onPressed: () {
-                //       Nav.to(CoachProfileScreen.routeName,arguments: TempCoachModel(
-                //           name: '', job: '', location: '', rate: 5, imagePath: ''));
-                //     }),
-                _buildChipWidget(
-                    title: Translation.of(context).supplements_shops,
-                    imgPath: AppConstants.VEGGIE2_IMG,
-                    onPressed: () {
-                      Nav.to(ShopsView.routeName, context: context);
-                    }),
-                // _buildChipWidget(
-                //     title: Translation.of(context).supplements,
-                //     imgPath: AppConstants.KCAL2_IMG,
-                //     onPressed: () {
-                //
-                //     }),
-                _buildChipWidget(
-                    title: Translation.of(context).my_orders,
-                    imgPath: AppConstants.VEGGIE_IMG,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MyOrderView(),
-                          ));
-                    }),
-                _buildChipWidget(
-                    title: LanguageHelper.tr(context).cart,
-                    imgPath: AppConstants.VEGGIE2_IMG,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CartView(),
-                          ));
-                    }),
-              ],
-            ),
+            const MoreScreenSections(),
             Gaps.vGap30,
             TitleWidget(
               title: Translation.of(context).account_settings,
@@ -140,79 +70,6 @@ class _MoreScreenContentState extends State<MoreScreenContent> {
             Gaps.vGap16,
             _buildAppSettingsWidget(),
             Gaps.vGap30,
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildChipWidget(
-      {required String title,
-      required String imgPath,
-      required Function onPressed}) {
-    double? rightPosition;
-    double? leftPosition;
-    if (sn.languagesEnum == LanguagesEnum.arabic) {
-      rightPosition = 0.0;
-    } else {
-      leftPosition = 0.0;
-    }
-    return GestureDetector(
-      onTap: () {
-        onPressed();
-      },
-      child: Container(
-        width: 143.w,
-        height: 45.h,
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Padding(
-                padding: EdgeInsets.all(1.w),
-                child: BlurWidget(
-                  borderRadius: AppConstants.borderRadius32,
-                  child: Row(
-                    children: [
-                      const Spacer(
-                        flex: 4,
-                      ),
-                      Expanded(
-                        flex: 5,
-                        child: SizedBox(
-                          height: 15.h,
-                          child: FittedBox(
-                            alignment: Alignment.center,
-                            fit: BoxFit.contain,
-                            child: CustomText(
-                              textAlign: TextAlign.center,
-                              text: title,
-                              fontSize: AppConstants.textSize14,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Spacer(
-                        flex: 1,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              right: rightPosition,
-              left: leftPosition,
-              child: ClipRRect(
-                borderRadius:
-                    BorderRadius.circular(AppConstants.borderRadius32),
-                child: Image.asset(
-                  imgPath,
-                  height: 45.h,
-                  width: 45.w,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            )
           ],
         ),
       ),

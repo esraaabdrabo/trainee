@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
+import 'package:upgrade_traine_project/features/home/presentation/screen/more_screen/explore/explore_screen.dart';
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/dynamic_links.dart';
 import '../../../../core/common/session_data.dart';
@@ -12,7 +13,6 @@ import '../../../../core/ui/widgets/route_aware_widget.dart';
 import '../../../../generated/l10n.dart';
 import '../../../chat/screen/chat_screen.dart';
 import '../../../profile/presentation/screen/profile_screen.dart';
-import 'explore_screen.dart';
 import 'home_screen/home_screen.dart';
 import 'more_screen.dart';
 

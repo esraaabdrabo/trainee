@@ -37,7 +37,15 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     sn = Provider.of<HomeScreenNotifier>(context);
     sn.context = context;
 
-    return _buildHomeScreen(context);
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: Stack(
+        children: [
+          _Body(sn),
+          buildSuggestionsBloc(),
+        ],
+      ),
+    );
   }
 
   Widget buildSuggestionsBloc() {
@@ -106,49 +114,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     );
   }
 
-  Widget _buildHomeScreen(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Stack(
-        children: [
-          _buildHomeScreenBody(context),
-          buildSuggestionsBloc(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHomeScreenBody(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          HomeAppbar(controller: sn.searchTextController),
-          const HomeMapWidget(),
-          Gaps.vGap40,
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
-            child: Column(
-              children: [
-                const HomeCoachesSetions(),
-                Gaps.vGap40,
-                const HomeCategoriesSection(),
-                Gaps.vGap40,
-                const HomeRestaurantsSection(),
-                Gaps.vGap40,
-                const HomeShopsSection(),
-                SizedBox(
-                  height: 0.12.sh
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
- 
-
   LatLng? latLang;
 
   void _getNewLocation({required locationData}) async {
@@ -180,4 +145,36 @@ class TempWidget {
       required this.title,
       this.description,
       required this.id});
+}
+
+class _Body extends StatelessWidget {
+  const _Body(this.sn);
+  final HomeScreenNotifier sn;
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          HomeAppbar(controller: sn.searchTextController),
+          const HomeMapWidget(),
+          Gaps.vGap40,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            child: Column(
+              children: [
+                const HomeCoachesSetions(),
+                Gaps.vGap40,
+                const HomeCategoriesSection(),
+                Gaps.vGap40,
+                const HomeRestaurantsSection(),
+                Gaps.vGap40,
+                const HomeShopsSection(),
+                SizedBox(height: 0.12.sh),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
