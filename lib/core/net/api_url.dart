@@ -25,6 +25,7 @@ class APIUrls {
   static const API_CREATE_NEW_PASSWORD =
       "/services/app/Account/ConfirmForgotPassword";
   static const API_CHANGE_PASSWORD = "/services/app/User/ChangePassword";
+  static const API_DELETE_ACCOUNT = "/services/app/Trainee/DeleteAccount";
 
   ///TODO:passed success
   static const API_VERIFY_ACCOUNT = "/services/app/Account/VerifyAccount";

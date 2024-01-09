@@ -50,4 +50,11 @@ class MoreCubit extends Cubit<MoreState> {
         .putBool("is_notifications_enabled", isEnableNotification);
     emit(MoreChangeEnableNotificationsState());
   }
+
+  void deleteAccount(int id) async {
+    emit(MoreLoading());
+    await moreRepo.deleteAccount(id).then((value) => value.fold(
+        (l) => emit(MoreAccountDeletionFailed()),
+        (r) => emit(MoreAccountDeletedSucc())));
+  }
 }

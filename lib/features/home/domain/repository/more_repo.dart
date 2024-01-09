@@ -18,4 +18,18 @@ class MoreRepo {
       return Left(e.toString());
     }
   }
+
+  Future<Either<String, bool>> deleteAccount(int id) async {
+    final response =
+        await DioHelper.delete(APIUrls.API_DELETE_ACCOUNT, query: {"id": id});
+    try {
+      if (response.data['success'] == true) {
+        return const Right(true);
+      } else {
+        return Left(response.data['error']['details']);
+      }
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
 }

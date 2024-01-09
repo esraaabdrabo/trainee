@@ -61,4 +61,16 @@ class DioHelper {
                "Bearer $token"
         }));
   }
+   static Future<Response<dynamic>> delete(String path,
+      {Map<String, dynamic>? headers, Map<String, dynamic>? query}) async{
+    final pref = await SpUtil.getInstance();
+    final token= pref.getString(AppConstants.KEY_TOKEN);
+    dioSingleton.options.headers = headers;
+    return dioSingleton.delete(path,
+        queryParameters: query,
+        options: Options(headers: {
+          "Authorization":
+               "Bearer $token"
+        }));
+  }
 }

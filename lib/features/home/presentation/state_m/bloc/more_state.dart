@@ -15,3 +15,6 @@ class ChangePassLoaded extends MoreState {}
 class ChangePassError extends MoreState {}
 
 class MoreChangeEnableNotificationsState extends MoreState {}
+class MoreLoading extends MoreState{}
+class MoreAccountDeletedSucc extends MoreState{}
+class MoreAccountDeletionFailed extends MoreState{}
