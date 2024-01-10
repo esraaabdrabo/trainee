@@ -12,11 +12,13 @@ class HomeSectionWidget extends StatelessWidget {
       required this.onSeeAllTapped,
       required this.widgets,
       required this.onItemSelected,
+      this.tempImage,
       super.key});
   final String title;
   final Function onSeeAllTapped;
   final List<TempWidget> widgets;
   final Function(int index) onItemSelected;
+  final String? tempImage;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,7 +26,7 @@ class HomeSectionWidget extends StatelessWidget {
         TitleWidget(
           title: title,
           subtitleColorTapped: onSeeAllTapped,
-          subtitle:LanguageHelper.tr(context).see_all,
+          subtitle: LanguageHelper.tr(context).see_all,
         ),
         Gaps.vGap14,
         Expanded(
@@ -41,6 +43,7 @@ class HomeSectionWidget extends StatelessWidget {
                             child: GestureDetector(
                             onTap: () => onItemSelected(0),
                             child: ImageWithTitleWidget(
+                                tempImage: tempImage,
                                 title: widgets.elementAt(0).title,
                                 imgPath: widgets.elementAt(0).imgPath,
                                 description: widgets.elementAt(0).description),
@@ -56,6 +59,7 @@ class HomeSectionWidget extends StatelessWidget {
                                   child: GestureDetector(
                                   onTap: () => onItemSelected(1),
                                   child: ImageWithTitleWidget(
+                                      tempImage: tempImage,
                                       title: widgets.elementAt(1).title,
                                       imgPath: widgets.elementAt(1).imgPath,
                                       description:
@@ -68,6 +72,7 @@ class HomeSectionWidget extends StatelessWidget {
                                   child: GestureDetector(
                                   onTap: () => onItemSelected(2),
                                   child: ImageWithTitleWidget(
+                                      tempImage: tempImage,
                                       title: widgets.elementAt(2).title,
                                       imgPath: widgets.elementAt(2).imgPath,
                                       description:
@@ -89,6 +94,7 @@ class HomeSectionWidget extends StatelessWidget {
                           onItemSelected(3);
                         },
                         child: ImageWithTitleWidget(
+                            tempImage: tempImage,
                             title: widgets.elementAt(3).title,
                             imgPath: widgets.elementAt(3).imgPath,
                             description: widgets.elementAt(3).description),

@@ -14,10 +14,12 @@ class ImageWithTitleWidget extends StatelessWidget {
   final String? description;
   final double? textSize;
   final TextAlign? textAlign;
+  final String? tempImage;
   ImageWithTitleWidget(
       {Key? key,
       this.width,
       this.height,
+      this.tempImage,
       required this.imgPath,
       required this.title,
       this.description,
@@ -25,13 +27,45 @@ class ImageWithTitleWidget extends StatelessWidget {
       this.textAlign})
       : super(key: key);
 
-  Widget _buildContent() {
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(AppConstants.borderRadius4),
+      child: CustomImageWidget(
+          imgPath: imgPath,
+          height: height,
+          width: width,
+          tempImage: tempImage,
+          child: _Content(
+              description: description,
+              title: title,
+              textAlign: textAlign,
+              textSize: textSize)),
+    );
+  }
+}
+
+class _Content extends StatelessWidget {
+  const _Content({
+    required this.description,
+    required this.title,
+    required this.textAlign,
+    required this.textSize,
+  });
+
+  final String? description;
+  final String title;
+  final TextAlign? textAlign;
+  final double? textSize;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          stops: [0.5, 0.9],
+          stops: const [0.5, 0.9],
           colors: [
             AppColors.primaryColorLight.withOpacity(0.1),
             AppColors.primaryColorLight.withOpacity(0.8),
@@ -72,19 +106,6 @@ class ImageWithTitleWidget extends StatelessWidget {
                 ],
               ),
             ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(AppConstants.borderRadius4),
-      child: CustomImageWidget(
-        child: _buildContent(),
-        imgPath: imgPath,
-        height: height,
-        width: width,
-      ),
     );
   }
 }
