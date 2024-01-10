@@ -47,8 +47,9 @@ class CustomImageWidget extends StatelessWidget {
           width: width ?? 1.sw,
           height: height ?? 1.sh,
           decoration: BoxDecoration(
-              color: AppColors.grey,
-              image: DecorationImage(image: _getImage(tempImage).image)),
+              color: AppColors.grey.withOpacity(.5),
+              image: DecorationImage(
+                  image: _getImage(tempImage).image, fit: BoxFit.fill)),
           child: child),
     );
   }

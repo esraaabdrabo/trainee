@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/blur_widget.dart';
-import 'package:upgrade_traine_project/core/ui/widgets/custom_text.dart';
 import 'package:upgrade_traine_project/core/ui/widgets/google_map_widget.dart';
 import 'package:upgrade_traine_project/features/home/presentation/state_m/bloc/maps_cubit.dart';
 import 'package:upgrade_traine_project/features/home/presentation/state_m/provider/home_screen_notifier.dart';
@@ -56,12 +55,6 @@ class _BuildMapWidgetState extends State<HomeMapWidget> {
               ),
             ),
             Gaps.vGap4,
-            CustomText(
-              text: text,
-              fontSize: AppConstants.textSize12,
-              fontWeight: FontWeight.bold,
-              color: selected ? AppColors.accentColorLight : AppColors.white,
-            )
           ],
         ),
       );
@@ -108,14 +101,14 @@ class _BuildMapWidgetState extends State<HomeMapWidget> {
           ),
         ),
         Positioned(
-          bottom: 0,
+          bottom: 10,
           child: SizedBox(
             width: 1.sw,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 BlurWidget(
-                  height: 0.14.sh,
+                  height: 0.1.sh,
                   width: 0.86.sw,
                   child: Center(
                     child: Row(
@@ -148,7 +141,7 @@ class _BuildMapWidgetState extends State<HomeMapWidget> {
                         buildMapPinSearchWidget(
                           onPressed: sn.getCoachesLocations,
                           color: AppColors.accentColorLight,
-                          iconPath: AppConstants.WHISTLE_ICON,
+                          iconPath: AppConstants.APP_LOGO_IMG,
                           text: Translation.of(context).sport_coaches,
                           selected: sn.coachesSelected,
                         ),

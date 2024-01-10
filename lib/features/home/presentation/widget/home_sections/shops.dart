@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/common/utils.dart';
+import 'package:upgrade_traine_project/core/constants/app/app_constants.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/navigation/nav.dart';
 import 'package:upgrade_traine_project/features/home/presentation/screen/home_screen/home_screen_content.dart';
 import 'package:upgrade_traine_project/features/home/presentation/state_m/provider/home_screen_notifier.dart';
 import 'package:upgrade_traine_project/features/home/presentation/widget/home_sections/section.dart';
 import 'package:upgrade_traine_project/features/home/presentation/widget/shimmer/section_shimmer.dart';
+import 'package:upgrade_traine_project/features/restaurant/presentation/screen/all_restaurants.dart';
 import 'package:upgrade_traine_project/features/shop/presentation/screen/shop_details.dart';
 import 'package:upgrade_traine_project/features/shop/presentation/screen/shops_view.dart';
 import 'package:upgrade_traine_project/features/shop/presentation/state_m/cubit/shop_cubit.dart';
@@ -68,6 +70,7 @@ class _HomeShopsSectionState extends State<HomeShopsSection> {
               width: 1.sw,
               height: 0.38.sh,
               child: HomeSectionWidget(
+                tempImage: AppConstants.defaultShopImage,
                 title: LanguageHelper.tr(context).food_supplements,
                 widgets: categories0,
                 onSeeAllTapped: () => goToShops(),

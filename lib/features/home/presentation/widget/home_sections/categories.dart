@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/common/utils.dart';
-import 'package:upgrade_traine_project/core/constants/app/app_constants.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/navigation/nav.dart';
 import 'package:upgrade_traine_project/features/category/domain/entity/category_entity.dart';
@@ -64,7 +63,6 @@ class _HomeCategoriesSectionState extends State<HomeCategoriesSection> {
             width: 1.sw,
             height: 0.38.sh,
             child: HomeSectionWidget(
-                tempImage: AppConstants.COACH4_IMAGE,
                 title: LanguageHelper.tr(context).categories,
                 widgets: categories,
                 onItemSelected: (index) =>

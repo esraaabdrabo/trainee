@@ -165,7 +165,7 @@ Widget _buildHorizontalWidget({required List<CoachEntity> widgets}) {
           onTap: () => Nav.to(CoachProfileScreen.routeName,
               arguments: widgets[index], context: context),
           child: ImageWithTitleWidget(
-            
+            tempImage: AppConstants.COACH_COVER_IMG,
             imgPath: widgets.elementAt(index).imageUrl ?? "",
             title: widgets.elementAt(index).name ?? "",
             description: widgets.elementAt(index).specialization!.text,

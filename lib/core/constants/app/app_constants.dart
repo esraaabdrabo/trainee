@@ -45,6 +45,10 @@ class AppConstants {
   // connection, not found
 
   /// Image
+  static const defaultRestaurantImage =
+      'https://th.bing.com/th/id/OIP.MlZXr9dd8Om34xx-wydaQQHaE9?pid=ImgDet&rs=1';
+  static const defaultShopImage =
+      'https://i.pinimg.com/originals/70/97/e7/7097e7a47ec728f0c2f62631c90cd451.jpg';
   static const LOGIN_BACKGROUND = "assets/png/login_background.jpg";
   static const REGISTER_BACKGROUND = "assets/png/register_background.png";
   static const APP_LOGO_IMG = "assets/images/png/app_logo.png";

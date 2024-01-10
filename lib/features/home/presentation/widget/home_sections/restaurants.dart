@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/common/utils.dart';
+import 'package:upgrade_traine_project/core/constants/app/app_constants.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
 import 'package:upgrade_traine_project/core/navigation/nav.dart';
 import 'package:upgrade_traine_project/features/home/presentation/screen/home_screen/home_screen_content.dart';
@@ -64,6 +65,7 @@ class _HomeRestaurantsSectionState extends State<HomeRestaurantsSection> {
             width: 1.sw,
             height: 0.38.sh,
             child: HomeSectionWidget(
+              tempImage: AppConstants.defaultRestaurantImage,
               title: LanguageHelper.tr(context).restaurants,
               widgets: categories0,
               onSeeAllTapped: () => goToRestaurant(),
