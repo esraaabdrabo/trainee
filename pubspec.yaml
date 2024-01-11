@@ -122,7 +122,7 @@ dependencies:
 
   google_maps_webservice: ^0.0.19
 
-  carousel_slider: ^4.0.0
+  carousel_slider: ^4.2.1
 
   flutter_typeahead: ^4.1.1
 

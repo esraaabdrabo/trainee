@@ -32,9 +32,8 @@ class _BuildMapWidgetState extends State<HomeMapWidget> {
         required Function onPressed,
         required bool selected}) {
       return InkWell(
-        onTap: () {
-          onPressed();
-        },
+        onTap: () =>
+          onPressed(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -47,7 +46,7 @@ class _BuildMapWidgetState extends State<HomeMapWidget> {
                 padding: const EdgeInsets.all(10.0),
                 child: ImageIcon(
                   AssetImage(
-                    iconPath,
+                    iconPath
                   ),
                   color: AppColors.white,
                   size: 20.w,

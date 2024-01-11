@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -122,63 +123,69 @@ Widget _buildCoachesWidget(
               subtitle: LanguageHelper.tr(context).see_all,
             ),
           ),
-          list1.isNotEmpty
-              ? Column(
-                  children: [
-                    Gaps.vGap16,
-                    _buildHorizontalWidget(widgets: list1),
-                  ],
-                )
-              : const SizedBox.shrink(),
-          list2.isNotEmpty
-              ? Column(
-                  children: [
-                    Gaps.vGap16,
-                    _buildHorizontalWidget(widgets: list2),
-                  ],
-                )
-              : const SizedBox.shrink(),
-          list3.isNotEmpty
-              ? Column(
-                  children: [
-                    Gaps.vGap16,
-                    _buildHorizontalWidget(widgets: list3),
-                  ],
-                )
-              : const SizedBox.shrink(),
+          if (list1.isNotEmpty)
+            Column(
+              children: [
+                Gaps.vGap16,
+                _buildHorizontalWidget(data: list1),
+              ],
+            ),
+          if (list2.isNotEmpty)
+            Column(
+              children: [
+                Gaps.vGap16,
+                _buildHorizontalWidget(data: list2),
+              ],
+            ),
+          if (list3.isNotEmpty)
+            Column(
+              children: [
+                Gaps.vGap16,
+                _buildHorizontalWidget(data: list3),
+              ],
+            ),
         ],
       ),
     ),
   );
 }
 
-Widget _buildHorizontalWidget({required List<CoachEntity> widgets}) {
+Widget _buildHorizontalWidget({required List<CoachEntity> data}) {
   return SizedBox(
-    width: 1.sw,
-    height: 0.13.sh,
-    child: ListView.separated(
-      padding: EdgeInsets.symmetric(horizontal: 8.w),
-      itemCount: widgets.length,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context, index) {
-        return InkWell(
-          onTap: () => Nav.to(CoachProfileScreen.routeName,
-              arguments: widgets[index], context: context),
-          child: ImageWithTitleWidget(
-            tempImage: AppConstants.COACH_COVER_IMG,
-            imgPath: widgets.elementAt(index).imageUrl ?? "",
-            title: widgets.elementAt(index).name ?? "",
-            description: widgets.elementAt(index).specialization!.text,
-            width: 0.25.sw,
-            height: 0.113.sh,
-          ),
-        );
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return SizedBox(width: 16.w);
-      },
-    ),
-  );
+      width: 1.sw,
+      height: 0.13.sh,
+      child: CarouselSlider(
+        options: CarouselOptions(
+          enableInfiniteScroll: true,
+          autoPlay: true,
+          autoPlayCurve: Curves.ease,
+          autoPlayAnimationDuration: const Duration(milliseconds: 1000),
+          pauseAutoPlayInFiniteScroll: true,
+          pauseAutoPlayOnTouch: true,
+          scrollPhysics:const ScrollPhysics(),
+          disableCenter: true,
+          viewportFraction: .3,
+        ),
+        items: data.map((coach) {
+          return Builder(
+            builder: (BuildContext context) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2.5),
+              child: InkWell(
+                onTap: () => Nav.to(CoachProfileScreen.routeName,
+                    arguments: coach, context: context),
+                child: ImageWithTitleWidget(
+                  tempImage: AppConstants.COACH_COVER_IMG,
+                  imgPath: coach.imageUrl ?? "",
+                  title: coach.name ?? "",
+                  description: coach.specialization!.text,
+                  width: 0.25.sw,
+                  height: 0.113.sh,
+                ),
+              ),
+            ),
+          );
+        }).toList(),
+      ));
 }
 
 Widget _buildCoachesSectionShimmer() {
