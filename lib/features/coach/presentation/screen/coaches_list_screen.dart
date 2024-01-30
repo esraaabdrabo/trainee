@@ -82,12 +82,6 @@ class _CoachesListScreenState extends State<CoachesListScreen> {
                 },
                 child: const Icon(Icons.notifications)),
             Gaps.hGap20,
-            // GestureDetector(
-            //     onTap: () {
-            //       showCoachesFilterDialog(context: context);
-            //     },
-            //     child:  ImageIcon(AssetImage(AppConstants.FILTER_ICON))),
-            // Gaps.hGap12,
           ],
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,

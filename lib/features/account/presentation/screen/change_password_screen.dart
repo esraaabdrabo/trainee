@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/datasources/shared_preference.dart';
 import '../../../../core/navigation/nav.dart';
 import '../../../../core/ui/dialogs/custom_dialogs.dart';
 import '../../../../core/ui/error_ui/error_viewer/error_viewer.dart';
@@ -10,7 +9,6 @@ import '../../../../generated/l10n.dart';
 import '../screen/../state_m/provider/change_password_screen_notifier.dart';
 import '../state_m/bloc/account_cubit.dart';
 import 'change_password_screen_content.dart';
-import 'login_screen.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   static const String routeName = "/ChangePasswordScreen";

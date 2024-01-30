@@ -31,13 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      /*final session = Provider.of<SessionData>(context, listen:false);
-     await session.getFullName();
-      if(!session.hasName)*/
       sn.homeCubit.getSpecializations();
-      /*if(session.hasName)
-      Future.delayed(const Duration(seconds: 3))
-          .then((value) => Nav.off(AppMainScreen.routeName));*/
     });
     super.initState();
   }
@@ -51,14 +45,12 @@ class _SplashScreenState extends State<SplashScreen> {
           listener: (context, state) {
             debugPrint("state:$state");
             _handleOnSplashLoaded();
-    
           },
           child: SplashScreenContent(),
         ));
   }
 
-  void _handleOnSplashLoaded(//SpecializationsEntity specializationsEntity
-      ) async {
+  void _handleOnSplashLoaded() async {
     var prefs = await SpUtil.getInstance();
     double? longitude = prefs.getDouble(AppConstants.KEY_LONGITUDE);
     double? latitude = prefs.getDouble(AppConstants.KEY_LATITUDE);
@@ -67,8 +59,6 @@ class _SplashScreenState extends State<SplashScreen> {
       Provider.of<SessionDataProvider>(context, listen: false).myLocation =
           latLng;
     }
-    // Provider.of<SessionDataProvider>(context, listen: false)
-    //     .specializationsEntity = specializationsEntity;
     debugPrint("Errr");
     debugPrint("Errr${prefs.getString(AppConstants.KEY_TOKEN)}");
     if (prefs.getString(AppConstants.KEY_TOKEN) != null) {
@@ -76,6 +66,5 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       Navigator.pushNamed(context, IntroScreen.routeName);
     }
-    //  Nav.off(IntroScreen.routeName);
   }
 }

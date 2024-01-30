@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:upgrade_traine_project/features/profile/presentation/state_m/cubit/profile_cubit.dart';
 import '../../../../core/common/app_colors.dart';
@@ -12,7 +11,6 @@ import '../../../../core/ui/widgets/courses_carousel_widget.dart';
 import '../../../../core/ui/widgets/custom_text.dart';
 import '../../../../core/ui/widgets/title_widget.dart';
 import '../../../../generated/l10n.dart';
-import '../screen/../state_m/provider/profile_screen_notifier.dart';
 
 var defaultTrainneImageUrl =
     'https://www.bing.com/images/blob?bcid=RO6.8XCnsEcGqxcxoNWLuD9SqbotqVTdP3M';

@@ -5,11 +5,9 @@ import 'package:upgrade_traine_project/core/params/screen_params/account_verific
 import 'package:upgrade_traine_project/features/account/presentation/screen/account_verification_screen.dart';
 
 import '../../../../core/navigation/nav.dart';
-import '../../../../core/params/screen_params/create_new_password_screen_params.dart';
 import '../../../../core/ui/error_ui/error_viewer/error_viewer.dart';
 import '../screen/../state_m/provider/forgot_password_screen_notifier.dart';
 import '../state_m/bloc/account_cubit.dart';
-import 'create_new_password_screen.dart';
 import 'forgot_password_screen_content.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {

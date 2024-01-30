@@ -63,17 +63,7 @@ class _CoachesListScreenContentState extends State<CoachesListScreenContent> {
           Gaps.vGap24,
           const Expanded(
             child: _CoachesList(),
-
-            // child: PaginationWidget<CoachEntity>(
-            //   child: _buildCoachesList(),
-            //   getItems: (unit) async {
-            //     return sn.returnData(unit);
-            //   },
-            //   items: sn.coaches,
-            //   onDataFetched: sn.onDataFetched,
-            //   refreshController: sn.refreshController,
-            // ),
-          ),
+          )
         ],
       ),
     );

@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';                                         
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrade_traine_project/core/localization/language_helper.dart';
-import 'package:upgrade_traine_project/features/chat/screen/agora/video_call_screen.dart';
-import 'package:upgrade_traine_project/features/chat/screen/agora/voice_call_screen.dart';
-import 'package:upgrade_traine_project/features/coach/domain/entity/coach_entity.dart';
-import 'package:upgrade_traine_project/features/profile/presentation/state_m/cubit/profile_cubit.dart';
+import 'package:upgrade_traine_project/features/coach/presentation/widget/profile/coach_image.dart';
+import 'package:upgrade_traine_project/features/coach/presentation/widget/profile/courses.dart';
+import 'package:upgrade_traine_project/features/coach/presentation/widget/profile/header.dart';
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/style/gaps.dart';
 import '../../../../core/constants/app/app_constants.dart';
@@ -16,16 +15,10 @@ import '../../../../core/navigation/nav.dart';
 import '../../../../core/ui/error_ui/error_viewer/snack_bar/show_error_snackbar.dart';
 import '../../../../core/ui/widgets/blur_widget.dart';
 import '../../../../core/ui/widgets/clock_widget.dart';
-import '../../../../core/ui/widgets/courses_carousel_widget.dart';
 import '../../../../core/ui/widgets/custom_button.dart';
 import '../../../../core/ui/widgets/custom_rating_bar_widget.dart';
 import '../../../../core/ui/widgets/custom_text.dart';
 import '../../../../core/ui/widgets/title_widget.dart';
-import '../../../../core/utils/validators/error_image.dart';
-import '../../../../generated/l10n.dart';
-import '../../../chat/data/model/chat_model.dart';
-import '../../../chat/screen/chat_details_view.dart';
-import '../../../notification/presentation/controller/notification_cubit.dart';
 import '../screen/../state_m/provider/coach_profile_screen_notifier.dart';
 import '../state_m/course_cubit/course_cubit.dart';
 
@@ -54,48 +47,22 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
       child: CustomScrollView(slivers: <Widget>[
         SliverPersistentHeader(
           pinned: true,
-          delegate: CustomSliverDelegate(
-            coachModel: sn.coachEntity,
-            expandedHeight: 226.h,
-            child: _buildSubscriptionWidget(sn.subbed),
-          ),
+          delegate: CoachProfileImage(
+              coachModel: sn.coachEntity,
+              expandedHeight: .25.sh,
+              child: const CoachProfileHeader()),
         ),
+        //body
         SliverFillRemaining(
           hasScrollBody: false,
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: 70.h,
-                ),
-                BlocProvider(
-                  create: (context) => CourseCubit()
-                    ..getCoachCurrentCourses(trainerId: sn.coachEntity.id!),
-                  child: BlocBuilder<CourseCubit, CourseState>(
-               
-                    buildWhen: (previous, current) {
-                      return current is CurrentCoursesSuccess ||
-                          current is CurrentCoursesLoading;
-                    },
-                    builder: (context, state) {
-                      return state is CurrentCoursesSuccess
-                          ? CoursesCarouselWidget(
-                              courses: state.currentCoursesModel.result!.items!,
-                              title: Translation.of(context).courses,
-                            )
-                          : const CircularProgressIndicator();
-                    },
-                  ),
-                ),
-                SizedBox(
-                  height: 60.h,
-                ),
+                CoachProfileCourses(sn: sn),
                 _buildMapWidget(
                     location: LatLng(
                         sn.coachEntity.latitude!, sn.coachEntity.longitude!)),
-                SizedBox(
-                  height: 60.h,
-                ),
+                SizedBox(height: 60.h),
                 _buildRatingWidget(
                     average: sn.coachEntity.rate!,
                     fifthRate: sn.coachEntity.ratingDetails!.i5!.toDouble(),
@@ -122,10 +89,10 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
     _controller.setMapStyle(mapStyle);
   }
 
-  Widget _buildMapWidget({required LatLng location}) {
+  Widget _buildMapWidget({required LatLng? location}) {
     return SizedBox(
       height: 266.h,
-      child: location.latitude == null
+      child: location?.latitude == null
           ? const Center(
               child:
                   CustomText(text: "لا يوجد مكان محدد", color: AppColors.white),
@@ -135,7 +102,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
                   child: TitleWidget(
-                    title: Translation.of(context).coach_location,
+                    title: LanguageHelper.tr(context).coach_location,
                     subtitleColorTapped: () {},
                     titleColor: AppColors.white,
                   ),
@@ -148,7 +115,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                       _setMapStyle();
                     },
                     initialCameraPosition:
-                        CameraPosition(target: location, zoom: 16),
+                        CameraPosition(target: location!, zoom: 16),
                     zoomControlsEnabled: false,
                     markers: <Marker>{
                       Marker(
@@ -166,9 +133,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
   Widget _buildRateIndicatorWidget(String title, double percent) {
     return Row(
       children: [
-        CustomText(
-          text: title,
-        ),
+        CustomText(text: title),
         Gaps.hGap4,
         SizedBox(
           width: 150.w,
@@ -242,9 +207,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
     return BlocProvider(
       create: (context) => CourseCubit()..getReview(RefId: refId),
       child: BlocConsumer<CourseCubit, CourseState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           if (state is SuccessGetReviewData) {
             return Padding(
@@ -299,11 +262,11 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: TitleWidget(
-              title: Translation.of(context).rating_average,
+              title: LanguageHelper.tr(context).rating_average,
               subtitleColorTapped: _rate,
               titleColor: AppColors.white,
               subtitleColor: AppColors.accentColorLight,
-              subtitle: Translation.of(context).rate_now,
+              subtitle: LanguageHelper.tr(context).rate_now,
               subtitleSize: AppConstants.textSize14,
             ),
           ),
@@ -344,158 +307,6 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
     );
   }
 
-  Widget _buildSubscriptionWidget(bool subbed) {
-    return Stack(
-      children: [
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-            height: 120.h,
-            decoration: BoxDecoration(
-                color: AppColors.grey,
-                borderRadius:
-                    BorderRadius.circular(AppConstants.borderRadius10)),
-            child: Padding(
-              padding: EdgeInsets.all(12.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(
-                    text: sn.coachEntity.name!,
-                    fontSize: AppConstants.textSize16,
-                    fontWeight: FontWeight.bold,
-                    textAlign: TextAlign.start,
-                  ),
-                  const Spacer(),
-                  Row(
-                    children: [
-                      CustomText(
-                        text: sn.coachEntity.specialization?.text ?? "",
-                        color: AppColors.accentColorLight,
-                        fontSize: AppConstants.textSize14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      const Spacer(),
-                      CustomText(
-                        text:
-                            '${sn.coachEntity.hoursPrice ?? 0} ${LanguageHelper.tr(context).saudi_riyal}',
-                        fontSize: AppConstants.textSize14,
-                        color: AppColors.accentColorLight,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  // subbed
-                  //     ?
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ChatDetailsView(
-                                    chatModel: ChatModel(
-                                  traineeId: _getMyId(context),
-                                  trainerId: sn.coachEntity.id,
-                                  trainerName: sn.coachEntity.name ?? "",
-                                  trainerImage: sn.coachEntity.imageUrl ?? "",
-                                )),
-                              ));
-                        },
-                        child: ImageIcon(
-                          const AssetImage(
-                            AppConstants.CHAT_ICON,
-                          ),
-                          color: AppColors.white,
-                          size: 30.h,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () => _goToVoiceCallScreen(),
-                        child: ImageIcon(
-                          const AssetImage(
-                            AppConstants.PHONE_CALL_ICON,
-                          ),
-                          color: AppColors.white,
-                          size: 20.h,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () => _goToVideoCallScreen(),
-                        child: ImageIcon(
-                          const AssetImage(
-                            AppConstants.VIDEO_CALL_ICON,
-                          ),
-                          color: AppColors.white,
-                          size: 20.h,
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-        // !subbed
-        //     ? Positioned(
-        //         bottom: 8.h,
-        //         left: 0,
-        //         right: 0,
-        //         child: Row(
-        //           mainAxisAlignment: MainAxisAlignment.center,
-        //           children: [
-        //             SizedBox(
-        //               width: 217.w,
-        //               height: 44.h,
-        //               child: CustomElevatedButton(
-        //                 text: Translation.of(context).subscribe,
-        //                 onTap: (){
-        //                  // Navigator.push(context, MaterialPageRoute(builder: (context) => TrainerCoursesScreen(),));
-        //                 },
-        //               ),
-        //             ),
-        //           ],
-        //         ))
-        //     : const SizedBox.shrink()
-      ],
-    );
-  }
-
-  int? _getMyId(BuildContext context) {
-    return BlocProvider.of<ProfileCubit>(context).profileModel!.result!.id;
-  }
-
-  void _goToVideoCallScreen() {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => VideoCallScreen(
-              sn.coachEntity.id!,
-              _getChannelName(context),
-              remoteName: sn.coachEntity.name!,
-            )));
-    BlocProvider.of<NotificationCubit>(context)
-        .createNotifications(sn.coachEntity.id!, 1, _getChannelName(context));
-  }
-
-  void _goToVoiceCallScreen() {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => VoiceCallScreen(
-              sn.coachEntity.id!,
-              _getChannelName(context),
-              remoteName: sn.coachEntity.name!,
-            )));
-    BlocProvider.of<NotificationCubit>(context)
-        .createNotifications(sn.coachEntity.id!, 2, _getChannelName(context));
-  }
-
-  String _getChannelName(BuildContext context) =>
-      "${BlocProvider.of<ProfileCubit>(context).profileModel?.result?.id!}${sn.coachEntity.id}";
-
   void _subscribe() {
     showDialog(
       context: context,
@@ -526,13 +337,15 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             CustomText(
-                              text: Translation.of(context).course_subscription,
+                              text: LanguageHelper.tr(context)
+                                  .course_subscription,
                               fontSize: AppConstants.textSize16,
                               fontWeight: FontWeight.bold,
                             ),
                             Gaps.vGap24,
                             CustomText(
-                              text: Translation.of(context).subscription_type,
+                              text:
+                                  LanguageHelper.tr(context).subscription_type,
                               fontSize: AppConstants.textSize16,
                             ),
                             Container(
@@ -557,7 +370,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                             ),
                             Gaps.vGap24,
                             CustomText(
-                              text: Translation.of(context).weekly_hours,
+                              text: LanguageHelper.tr(context).weekly_hours,
                               fontSize: AppConstants.textSize16,
                             ),
                             Container(
@@ -583,7 +396,8 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                                     height: 44.h,
                                     width: 217.w,
                                     child: CustomElevatedButton(
-                                      text: Translation.of(context).subscribe,
+                                      text:
+                                          LanguageHelper.tr(context).subscribe,
                                       onTap: _setSubscriptionInfo,
                                     )),
                               ],
@@ -633,7 +447,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             CustomText(
-                              text: Translation.of(context).bill,
+                              text: LanguageHelper.tr(context).bill,
                               fontSize: AppConstants.textSize16,
                               fontWeight: FontWeight.bold,
                               color: AppColors.accentColorLight,
@@ -649,7 +463,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                               children: [
                                 CustomText(
                                   text:
-                                      "${sn.courses.first.cost.toString()} ${Translation.of(context).saudi_riyal}",
+                                      "${sn.courses.first.cost.toString()} ${LanguageHelper.tr(context).saudi_riyal}",
                                   fontSize: AppConstants.textSize15,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.accentColorLight,
@@ -664,7 +478,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                             ),
                             Gaps.vGap24,
                             CustomText(
-                              text: Translation.of(context).payment_way,
+                              text: LanguageHelper.tr(context).payment_way,
                               fontSize: AppConstants.textSize14,
                             ),
                             Gaps.vGap16,
@@ -697,7 +511,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                                     height: 44.h,
                                     width: 217.w,
                                     child: CustomElevatedButton(
-                                      text: Translation.of(context).pay,
+                                      text: LanguageHelper.tr(context).pay,
                                       onTap: _payment,
                                     )),
                               ],
@@ -746,7 +560,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             CustomText(
-                              text: Translation.of(context).whats_ur_rating,
+                              text: LanguageHelper.tr(context).whats_ur_rating,
                               fontSize: AppConstants.textSize16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -762,7 +576,7 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                             ),
                             Gaps.vGap24,
                             CustomText(
-                              text: Translation.of(context).whats_ur_opinion,
+                              text: LanguageHelper.tr(context).whats_ur_opinion,
                               fontSize: AppConstants.textSize16,
                             ),
                             Gaps.vGap8,
@@ -808,7 +622,8 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                                           height: 30.h,
                                           width: 104.w,
                                           child: CustomTextButton(
-                                            text: Translation.of(context).skip,
+                                            text:
+                                                LanguageHelper.tr(context).skip,
                                             onTap: () {
                                               Nav.pop();
                                             },
@@ -817,7 +632,8 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
                                           height: 30.h,
                                           width: 104.w,
                                           child: CustomElevatedButton(
-                                            text: Translation.of(context).send,
+                                            text:
+                                                LanguageHelper.tr(context).send,
                                             onTap: () {
                                               CourseCubit.get(context)
                                                   .createReview(
@@ -851,95 +667,5 @@ class _CoachProfileScreenContentState extends State<CoachProfileScreenContent> {
     setState(() {
       sn.subbed = true;
     });
-  }
-}
-
-//todo refactoring
-class CustomSliverDelegate extends SliverPersistentHeaderDelegate {
-  final double expandedHeight;
-  final bool hideTitleWhenExpanded;
-  final CoachEntity coachModel;
-  final Widget child;
-
-  CustomSliverDelegate({
-    required this.child,
-    required this.coachModel,
-    required this.expandedHeight,
-    this.hideTitleWhenExpanded = true,
-  });
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final appBarSize = expandedHeight - shrinkOffset / 1.1.h;
-    final cardTopPosition = expandedHeight - 30.h - shrinkOffset;
-    final proportion = 2 - (expandedHeight / appBarSize);
-    final percent = proportion < 0 || proportion > 1 ? 0.0 : proportion;
-
-    final appBarSize2 = expandedHeight - shrinkOffset / 2.5.h;
-    final proportion2 = 2 - (expandedHeight / appBarSize2);
-    final percent2 = proportion2 < 0 || proportion2 > 1 ? 0.0 : proportion2;
-    return SizedBox(
-      height: expandedHeight + expandedHeight / 2,
-      child: Stack(
-        children: [
-          Positioned(
-            left: 0.0,
-            right: 0.0,
-            top: 0,
-            child: Opacity(
-                opacity: percent2,
-                child: Image.network(
-                  coachModel.imageUrl ?? "",
-                  fit: BoxFit.cover,
-                  height: 250.h,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const ErrorImage();
-                  },
-                )),
-          ),
-          SizedBox(
-            height:
-                appBarSize < kToolbarHeight.h ? kToolbarHeight.h : appBarSize,
-            child: AppBar(
-              backgroundColor: AppColors.primaryColorLight
-                  .withOpacity(percent2 == 0 ? 1 : 0),
-              elevation: 0.0,
-              title: CustomText(
-                text: coachModel.name!,
-                fontSize: AppConstants.textSize18,
-              ),
-            ),
-          ),
-          Positioned(
-            left: 0.0,
-            right: 0.0,
-            top: cardTopPosition > 0 ? cardTopPosition : 0,
-            bottom: 0.0,
-            child: Visibility(
-              visible: percent == 0 ? false : true,
-              child: Opacity(
-                opacity: percent,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w * percent),
-                  child: child,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  double get maxExtent => expandedHeight + expandedHeight / 2;
-
-  @override
-  double get minExtent => kToolbarHeight;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
   }
 }

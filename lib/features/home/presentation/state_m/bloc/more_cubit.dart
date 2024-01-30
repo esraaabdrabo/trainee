@@ -57,4 +57,32 @@ class MoreCubit extends Cubit<MoreState> {
         (l) => emit(MoreAccountDeletionFailed()),
         (r) => emit(MoreAccountDeletedSucc())));
   }
+
+  Future getPrivacyPolicy() async {
+    emit(PrivacyPolicyLoading());
+    final res = await moreRepo.getPrivacyPolicy();
+    res.fold(
+      (err) {
+        Toast.show(err);
+        emit(PrivacyPolicyError());
+      },
+      (res) async {
+        emit(PrivacyPolicyLoaded(res));
+      },
+    );
+  }
+
+  Future getAboutApp() async {
+    emit(AboutAppLoading());
+    final res = await moreRepo.getAboutApp();
+    res.fold(
+      (err) {
+        Toast.show(err);
+        emit(AboutAppError());
+      },
+      (res) async {
+        emit(AboutAppLoaded(res));
+      },
+    );
+  }
 }

@@ -27,6 +27,10 @@ class APIUrls {
   static const API_CHANGE_PASSWORD = "/services/app/User/ChangePassword";
   static const API_DELETE_ACCOUNT = "/services/app/Trainee/DeleteAccount";
 
+  static const API_PRIVACY_PLICY =
+      '/services/app/Configuration/GetPrivacyPolicy';
+  static const API_ABOUT_APP = '/services/app/Configuration/GetAboutYacotch';
+
   ///TODO:passed success
   static const API_VERIFY_ACCOUNT = "/services/app/Account/VerifyAccount";
   static const API_SEND_VC = "/services/app/Account/ResendCode";

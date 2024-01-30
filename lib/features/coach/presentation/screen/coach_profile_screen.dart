@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/core/common/app_colors.dart';
 import 'package:upgrade_traine_project/features/coach/domain/entity/coach_entity.dart';
 import '../screen/../state_m/provider/coach_profile_screen_notifier.dart';
-import '../state_m/provider/coaches_list_screen_notifier.dart';
 import 'coach_profile_screen_content.dart';
 
 class CoachProfileScreen extends StatefulWidget {
@@ -27,7 +27,6 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
 
   @override
   void dispose() {
-    //  sn.closeNotifier();
     super.dispose();
   }
 
@@ -36,6 +35,12 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
     return ChangeNotifierProvider<CoachProfileScreenNotifier>.value(
       value: sn,
       child: Scaffold(
+        //this app bar is used onlt of the back button
+        appBar: AppBar(
+          iconTheme:const IconThemeData(color: AppColors.white),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: const CoachProfileScreenContent(),
       ),

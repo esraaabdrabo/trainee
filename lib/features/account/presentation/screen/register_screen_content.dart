@@ -89,11 +89,14 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
                     text: Translation.of(context).accept_on,
                   ),
                   Gaps.hGap4,
-                  CustomText(
-                    text: Translation.of(context).terms,
-                    color: AppColors.accentColorLight,
-                    fontSize: AppConstants.textSize14,
-                    fontWeight: FontWeight.bold,
+                  InkWell(
+                    onTap: () {},
+                    child: CustomText(
+                      text: Translation.of(context).terms,
+                      color: AppColors.accentColorLight,
+                      fontSize: AppConstants.textSize14,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Gaps.hGap4,
                   CustomText(
