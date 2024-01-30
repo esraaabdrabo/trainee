@@ -21,7 +21,6 @@ import '../../../../core/ui/widgets/custom_checkBox.dart';
 import '../../../../core/ui/widgets/custom_text.dart';
 import '../../../../core/ui/widgets/title_widget.dart';
 import '../../../../generated/l10n.dart';
-import '../../../account/presentation/screen/change_password_screen.dart';
 import '../screen/../state_m/provider/more_screen_notifier.dart';
 
 class MoreScreenContent extends StatefulWidget {

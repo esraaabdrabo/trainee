@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrade_traine_project/features/home/presentation/screen/more_screen/privacy_policy/privacy_policy_screen.dart';
 import '../../../../core/common/app_colors.dart';
 import '../../../../core/common/style/gaps.dart';
 import '../../../../core/constants/app/app_constants.dart';
@@ -90,7 +91,10 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
                   ),
                   Gaps.hGap4,
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      //todo giving 401 due to unauthorized req
+                      //  Nav.to(PrivacyPolicyScreen.routeName, context: context);
+                    },
                     child: CustomText(
                       text: Translation.of(context).terms,
                       color: AppColors.accentColorLight,
