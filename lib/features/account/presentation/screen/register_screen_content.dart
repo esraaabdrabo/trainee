@@ -92,8 +92,7 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
                   Gaps.hGap4,
                   InkWell(
                     onTap: () {
-                      //todo giving 401 due to unauthorized req
-                      //  Nav.to(PrivacyPolicyScreen.routeName, context: context);
+                      Nav.to(PrivacyPolicyScreen.routeName, context: context);
                     },
                     child: CustomText(
                       text: Translation.of(context).terms,
